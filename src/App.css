@@ -76,18 +76,20 @@ nav li a {
 
 /* Change the link color to #111 (black) on hover */
 nav li a:hover {
-  background-color: #111;
+  background-color: rgb(209, 193, 50);
 }
 
 nav a.active {
   background-color: #4CAF50;
-  cursor: none;
+  cursor: not-allowed;
 }
 
 /* CLASSI GENERICHE */
 .center {
   padding-left: 30%; 
   text-align: center;
+  height: 100%;
+  width: 100%;
 }
 
 
@@ -100,7 +102,10 @@ nav a.active {
 
 
 
-
+header {
+  background-color: #222;
+  color: white;
+}
 
 .App {
   text-align: center;
@@ -110,11 +115,6 @@ nav a.active {
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  color: white;
 }
 
 .App-title {

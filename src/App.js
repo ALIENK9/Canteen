@@ -2,20 +2,23 @@ import React, { Component } from 'react';
 import {
   BrowserRouter,
   Route,
+  Switch,
 } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Reservations from './components/Reservations';
-import Menu from './components/Menu';
-import Dishes from './components/Dishes';
-import Logout from './components/Logout';
+import Reservations from './components/homes/Reservations';
+import Menus from './components/homes/Menus';
+import Dishes from './components/homes/Dishes';
+import Logout from './components/homes/Logout';
 import {
   ReservationsH,
   MenuH,
   DishesH,
 } from './components/Headers';
+import CalendarPage from './components/CalendarPage';
+import ReservationsList from './components/ReservationsList';
 
 /* eslint-disable react/prefer-stateless-function */
 class App extends Component {
@@ -31,10 +34,14 @@ class App extends Component {
             <Navbar />
           </header>
           <main>
-            <Route path="/menu" component={Menu} />
-            <Route path="/reservations" component={Reservations} />
-            <Route path="/dishes" component={Dishes} />
-            <Route path="/logout" component={Logout} />
+            <Switch>
+              <Route path="/reservations/:day" component={ReservationsList} />
+              <Route path="/menus/:day" component={Menus} />
+              <Route path="/menus" component={Menus} />
+              <Route path="/reservations" component={Reservations} />
+              <Route path="/dishes" component={Dishes} />
+              <Route path="/logout" component={Logout} />
+            </Switch>
           </main>
           <footer>
             <Footer />

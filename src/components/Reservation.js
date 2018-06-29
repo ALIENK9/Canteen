@@ -27,12 +27,14 @@ const renderView = (viewList, reservations) => {
 const Reservation = ({
   name, reservations, viewList, onClick, index,
 }) => (
-  <div className="flex-item card" role="button" tabIndex={0} onClick={() => onClick(index)} onKeyPress={() => onClick(index)}>
+  // <div className="flex-item card" role="button" tabIndex={0} onClick={() => onClick(index)} onKeyPress={() => onClick(index)}>
+  <div>
     <span>
       {name}
     </span>
     { renderView(viewList, reservations) /* mostra la cosa giusta */ }
   </div>
+  // </div>
 );
 
 Reservation.propTypes = {

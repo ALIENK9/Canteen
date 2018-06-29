@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Reservation from './Reservation';
-import CalendarPage from './CalendarPage';
+import List from './List';
+import ListItem from './ListItem';
+// import { Map, fromJS } from 'immutable';
+// import CalendarPage from './CalendarPage';
 
 const items = [
   {
@@ -22,7 +25,7 @@ const items = [
 ];
 
 /* eslint-disable react/prefer-stateless-function */
-class Reservations extends Component {
+class ReservationsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,24 +48,26 @@ class Reservations extends Component {
     return (
       <div>
         <div id="listbar">
+          <h2>
+            Giornata
+            {' '}
+            {this.props.match.params.day}
+          </h2>
           {/* barra con servizi */}
-          <CalendarPage />
         </div>
-        <div id="list" className="flex-container">
-          {/* lista di items */}
+        <List>
           {items.map((item, index) => (
-            <Reservation
-              {...item}
-              viewList={this.state.clickedItems[index]}
-              key={item.name}
-              index={index}
-              onClick={this.handleClick}
-            />
+            <ListItem key={item.name} index={index} onClick={this.handleClick} role="button">
+              <Reservation
+                {...item}
+                viewList={this.state.clickedItems[index]}
+              />
+            </ListItem>
           ))}
-        </div>
+        </List>
       </div>
     );
   }
 }
 
-export default Reservations;
+export default ReservationsList;
