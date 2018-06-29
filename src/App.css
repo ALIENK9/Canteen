@@ -1,0 +1,131 @@
+/* COSE MIE*/
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+footer {
+  background-color: #777;
+  padding: 10px;
+  text-align: center;
+  color: white;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row; /* dispone gli items in riga */
+  flex-wrap: wrap; /* se non ci stanno in una riga va a capo */
+  justify-content: flex-start; /* allinea orizzontalmente gli items di una riga */
+  align-items: flex-start; /* allinea verticalmentegli elementi di una riga */
+  align-content: flex-start; /* allinea righe multiple */
+}
+
+.flex-item {
+  order: 0;
+  text-align: center;
+  padding: 0.7em;
+  margin: 0.5em;
+}
+
+.card {
+  position: relative;
+  -webkit-transition: -webkit-box-shadow .25s;
+  transition: -webkit-box-shadow .25s;
+  transition: box-shadow .25s;
+  transition: box-shadow .25s, -webkit-box-shadow .25s;
+  background-color: #188d09 !important;
+  border-radius: 0.5em;
+  color: white;
+}
+
+.card-title {
+  font-size: 1.5em; 
+  font-weight: 300;
+}
+
+/* LINK DELLA NAVBAR */
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+nav li {
+  float: left;
+}
+
+nav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+nav li a:hover {
+  background-color: #111;
+}
+
+nav a.active {
+  background-color: #4CAF50;
+  cursor: none;
+}
+
+/* CLASSI GENERICHE */
+.center {
+  padding-left: 30%; 
+  text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.App {
+  text-align: center;
+  height: 100%;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
