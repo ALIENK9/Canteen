@@ -1,10 +1,11 @@
 import * as types from './actionTypes';
+import reservations from '../data/reserve.json';
 
 const initialState = {
-  items: [
+  reservations: [
     {
       name: 'Pasta alla salsiccia',
-      reservations: [
+      reslist: [
         'Giovanni',
         'Ciccio',
         'Palladipelo',
@@ -12,8 +13,8 @@ const initialState = {
     },
     {
       name: 'Polenta e funghi',
-      reservations: [
-        'Giannoz',
+      reslist: [
+        'Gianni',
         'Ciccio',
         'IO',
       ],
@@ -21,7 +22,7 @@ const initialState = {
   ],
 };
 
-const getData = () => initialState;
+const getData = () => reservations || initialState;
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {

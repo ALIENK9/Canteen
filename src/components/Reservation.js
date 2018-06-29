@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const renderView = (viewList, reservations) => {
+/**
+ * Render the list of reservations or the numbero of reservations, depending on bool param
+ * @param {bool} viewList
+ * @param {Array} reslist
+ */
+const renderView = (viewList, reslist) => {
   if (viewList) {
     return (
       <ol>
         {
-          reservations.map(item => (
+          reslist.map(item => (
             <li key={item}>
               {item}
             </li>
@@ -19,34 +24,34 @@ const renderView = (viewList, reservations) => {
     <p>
       Prenotazioni:
       {' '}
-      {reservations.length}
+      {reslist.length}
     </p>
   );
 };
 
+/**
+ * Component to render reservations for one meal
+ * @param {Object} props
+ */
 const Reservation = ({
-  name, reservations, viewList, onClick, index,
+  name, reslist, viewList,
 }) => (
-  // <div className="flex-item card" role="button" tabIndex={0} onClick={() => onClick(index)} onKeyPress={() => onClick(index)}>
   <div>
     <span>
       {name}
     </span>
-    { renderView(viewList, reservations) /* mostra la cosa giusta */ }
+    { renderView(viewList, reslist) /* mostra la cosa giusta a seconda del parametro 'viewList' */ }
   </div>
-  // </div>
 );
 
 Reservation.propTypes = {
   name: PropTypes.string.isRequired,
-  reservations: PropTypes.arrayOf(PropTypes.string),
+  reslist: PropTypes.arrayOf(PropTypes.string),
   viewList: PropTypes.bool,
-  onClick: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
 };
 
 Reservation.defaultProps = {
-  reservations: [],
+  reslist: [],
   viewList: false,
 };
 

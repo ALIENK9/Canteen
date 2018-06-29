@@ -1,7 +1,7 @@
 import React from 'react';
 import Calendar from 'react-calendar';
 import PropTypes from 'prop-types';
-import ReservationsList from './ReservationsList';
+import ReservationsList from '../containers/ReservationsList';
 import Reservation from './Reservation';
 
 
@@ -10,8 +10,9 @@ class CalendarPage extends React.Component {
     super(props);
     this.redirect = this.redirect.bind(this);
     this.calendarConfig = {
-      locale: 'it',
+      locale: 'ita-it',
       onClickDay: this.redirect,
+      calendarType: 'ISO 8601',
     };
   }
 

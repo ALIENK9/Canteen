@@ -1,0 +1,41 @@
+{
+  "reservations": [
+    {
+      "name": "Zucchine ai ferri",
+      "type": 2,
+      "reslist": [
+        "Giovanni",
+        "Paolo",
+        "Pippo"
+      ]
+    },
+    {
+      "name": "Pasta al pomodoro",
+      "type": 1,
+      "reslist": [
+        "Giovanni",
+        "Paolo",
+        "Michela",
+        "Cipeciop",
+        "Pinocchio"
+      ]
+    },
+    {
+      "name": "Budino vaniglia",
+      "type": 3,
+      "reslist": [
+        "Piero",
+        "Paolo",
+        "Pippo",
+        "Francesca"
+      ]
+    },
+    {
+      "name": "Melanzane",
+      "type": 2,
+      "reslist": [
+        "Marina"
+      ]
+    }
+  ]
+}

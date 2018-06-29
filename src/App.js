@@ -18,7 +18,7 @@ import {
   DishesH,
 } from './components/Headers';
 import CalendarPage from './components/CalendarPage';
-import ReservationsList from './components/ReservationsList';
+import ReservationsList from './containers/ReservationsList';
 
 /* eslint-disable react/prefer-stateless-function */
 class App extends Component {

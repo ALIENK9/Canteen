@@ -1,37 +1,24 @@
 import React, { Component } from 'react';
-import Reservation from './Reservation';
-import List from './List';
-import ListItem from './ListItem';
-// import { Map, fromJS } from 'immutable';
-// import CalendarPage from './CalendarPage';
-
-const items = [
-  {
-    name: 'Pasta alla salsiccia',
-    reservations: [
-      'Giovanni',
-      'Ciccio',
-      'Palladipelo',
-    ],
-  },
-  {
-    name: 'Polenta e funghi',
-    reservations: [
-      'Giannoz',
-      'Ciccio',
-      'IO',
-    ],
-  },
-];
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import Reservation from '../components/Reservation';
+import List from '../components/List';
+import ListItem from '../components/ListItem';
+import { fetchData } from '../redux/actions';
 
 /* eslint-disable react/prefer-stateless-function */
 class ReservationsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      clickedItems: Array(items.length).fill(false),
+      clickedItems: Array(props.reservations.length).fill(false),
     };
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(fetchData());
   }
 
   /* eslint-disable react/destructuring-assignment */
@@ -56,7 +43,7 @@ class ReservationsList extends Component {
           {/* barra con servizi */}
         </div>
         <List>
-          {items.map((item, index) => (
+          {this.props.reservations.map((item, index) => (
             <ListItem key={item.name} index={index} onClick={this.handleClick} role="button">
               <Reservation
                 {...item}
@@ -70,4 +57,15 @@ class ReservationsList extends Component {
   }
 }
 
-export default ReservationsList;
+const mapStateToProps = state => ({
+  reservations: state.reservations,
+});
+
+
+ReservationsList.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  match: PropTypes.any.isRequired,
+  reservations: PropTypes.array.isRequired,
+};
+
+export default connect(mapStateToProps)(ReservationsList);
