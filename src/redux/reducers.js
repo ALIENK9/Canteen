@@ -1,33 +1,21 @@
 import * as types from './actionTypes';
-import reservations from '../data/reserve.json';
+import { immutableUpdate } from './utils';
 
-const initialState = {
-  reservations: [
-    {
-      name: 'Pasta alla salsiccia',
-      reslist: [
-        'Giovanni',
-        'Ciccio',
-        'Palladipelo',
-      ],
-    },
-    {
-      name: 'Polenta e funghi',
-      reslist: [
-        'Gianni',
-        'Ciccio',
-        'IO',
-      ],
-    },
-  ],
-};
+// const getResData = () => reservations || { reservations: [] };
+// const getMenuData = () => menu || { meals: [] };
 
-const getData = () => reservations || initialState;
-
-const rootReducer = (state = initialState, action) => {
+const rootReducer = (state = {}, action) => {
   switch (action.type) {
     case types.FETCH_RESERVATIONS_DATA:
-      return { ...state, ...getData() };
+      return { ...action.payload };
+    case types.FETCH_MENU_DATA:
+      return { ...action.payload };
+    case types.TOGGLE_MEAL: // decidere cosa fare con questa action e CONNETTERE redux a MenuList
+      return {
+        ...state,
+        meals: immutableUpdate(state.meals, action.payload.index,
+          { checked: action.payload.value }),
+      };
     default:
       return state;
   }

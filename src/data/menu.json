@@ -2,7 +2,8 @@
   "meals": [
     {
       "name": "Zucchine ai ferri",
-      "type": 2
+      "type": 2,
+      "checked": true
     },
     {
       "name": "Pasta al pomodoro",
@@ -16,8 +17,5 @@
       "name": "Melanzane",
       "type": 2
     }
-  ],
-  "selectedKeys": [
-    0, 1, 3
   ]
 }

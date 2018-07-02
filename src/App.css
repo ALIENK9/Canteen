@@ -84,12 +84,15 @@ nav a.active {
   cursor: not-allowed;
 }
 
+.checked {
+  border: 3px solid orange;
+}
+
 /* CLASSI GENERICHE */
 .center {
   padding-left: 30%; 
   text-align: center;
   height: 100%;
-  width: 100%;
 }
 
 

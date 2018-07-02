@@ -1,8 +1,7 @@
 import React from 'react';
 import Calendar from 'react-calendar';
 import PropTypes from 'prop-types';
-import ReservationsList from '../containers/ReservationsList';
-import Reservation from './Reservation';
+// import { Redirect } from 'react-router-dom';
 
 
 class CalendarPage extends React.Component {
@@ -19,6 +18,7 @@ class CalendarPage extends React.Component {
   redirect(day) {
     const { history, type } = this.props;
     history.push(`/${type}/${day}`);
+    // return <Redirect to="/ciao" />;
   }
 
   render() {

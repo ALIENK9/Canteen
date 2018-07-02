@@ -3,22 +3,22 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Reservation from '../components/Reservation';
 import List from '../components/List';
-import ListItem from '../components/ListItem';
-import { fetchData } from '../redux/actions';
+import CollapseBox from '../components/ListItems/CollapseBox';
+import { fetchData } from '../redux/reservations/actions';
 
-/* eslint-disable react/prefer-stateless-function */
+
 class ReservationsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      clickedItems: Array(props.reservations.length).fill(false),
+      clickedItems: props.reservations ? Array(props.reservations.length).fill(false) : [],
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(fetchData());
+    const { getData } = this.props;
+    getData();
   }
 
   /* eslint-disable react/destructuring-assignment */
@@ -44,12 +44,9 @@ class ReservationsList extends Component {
         </div>
         <List>
           {this.props.reservations.map((item, index) => (
-            <ListItem key={item.name} index={index} onClick={this.handleClick} role="button">
-              <Reservation
-                {...item}
-                viewList={this.state.clickedItems[index]}
-              />
-            </ListItem>
+            <CollapseBox key={item.name} index={index} onClick={this.handleClick}>
+              <Reservation {...item} viewList={this.state.clickedItems[index]} />
+            </CollapseBox>
           ))}
         </List>
       </div>
@@ -61,11 +58,20 @@ const mapStateToProps = state => ({
   reservations: state.reservations,
 });
 
+const mapDispatchToProps = dispatch => ({
+  getData: () => dispatch(fetchData()),
+});
+
 
 ReservationsList.propTypes = {
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.any.isRequired,
-  reservations: PropTypes.array.isRequired,
+  reservations: PropTypes.array,
+  getData: PropTypes.array.isRequired,
 };
 
-export default connect(mapStateToProps)(ReservationsList);
+ReservationsList.defaultProps = {
+  reservations: [],
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReservationsList);

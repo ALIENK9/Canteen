@@ -17,8 +17,8 @@ import {
   MenuH,
   DishesH,
 } from './components/Headers';
-import CalendarPage from './components/CalendarPage';
 import ReservationsList from './containers/ReservationsList';
+import MenuList from './containers/MenuList';
 
 /* eslint-disable react/prefer-stateless-function */
 class App extends Component {
@@ -29,14 +29,14 @@ class App extends Component {
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
             <Route path="/reservations" component={ReservationsH} />
-            <Route path="/menu" component={MenuH} />
+            <Route path="/menus" component={MenuH} />
             <Route path="/dishes" component={DishesH} />
             <Navbar />
           </header>
           <main>
             <Switch>
               <Route path="/reservations/:day" component={ReservationsList} />
-              <Route path="/menus/:day" component={Menus} />
+              <Route path="/menus/:day" component={MenuList} />
               <Route path="/menus" component={Menus} />
               <Route path="/reservations" component={Reservations} />
               <Route path="/dishes" component={Dishes} />
