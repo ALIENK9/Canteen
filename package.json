@@ -24,7 +24,7 @@
     "whatwg-fetch": "^2.0.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start & json-server -p 4000 --watch src/db.json",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
