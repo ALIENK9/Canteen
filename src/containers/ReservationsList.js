@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Reservation from '../components/Reservation';
+import { withRouter } from 'react-router-dom';
+import ReservationItem from '../components/ReservationItem';
 import List from '../components/List';
 import CollapseBox from '../components/ListItems/CollapseBox';
-import { fetchData } from '../redux/reservations/actions';
+import { fetchData } from '../redux/actions/reservations.actions';
 
 
 class ReservationsList extends Component {
@@ -21,9 +22,9 @@ class ReservationsList extends Component {
     getData();
   }
 
-  /* eslint-disable react/destructuring-assignment */
   handleClick(index) {
-    const clickedItems = this.state.clickedItems.slice();
+    let { clickedItems } = this.state;
+    clickedItems = clickedItems.slice();
     clickedItems[index] = !clickedItems[index];
     const state = {
       clickedItems,
@@ -32,20 +33,22 @@ class ReservationsList extends Component {
   }
 
   render() {
+    const { match, reservations } = this.props;
+    const { state } = this;
     return (
       <div>
         <div id="listbar">
           <h2>
             Giornata
             {' '}
-            {this.props.match.params.day}
+            {match.params.day}
           </h2>
           {/* barra con servizi */}
         </div>
         <List>
-          {this.props.reservations.map((item, index) => (
+          {reservations.map((item, index) => (
             <CollapseBox key={item.name} index={index} onClick={this.handleClick}>
-              <Reservation {...item} viewList={this.state.clickedItems[index]} />
+              <ReservationItem {...item} viewList={state.clickedItems[index]} />
             </CollapseBox>
           ))}
         </List>
@@ -55,7 +58,7 @@ class ReservationsList extends Component {
 }
 
 const mapStateToProps = state => ({
-  reservations: state.reservations,
+  reservations: state.reservations.list,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -64,14 +67,13 @@ const mapDispatchToProps = dispatch => ({
 
 
 ReservationsList.propTypes = {
-  dispatch: PropTypes.func.isRequired,
   match: PropTypes.any.isRequired,
   reservations: PropTypes.array,
-  getData: PropTypes.array.isRequired,
+  getData: PropTypes.func.isRequired,
 };
 
 ReservationsList.defaultProps = {
   reservations: [],
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReservationsList);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReservationsList));

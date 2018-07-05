@@ -34,11 +34,13 @@ export function immutableRemove(array, index) {
  * @param {Object} value Un oggetto con le sole proprietà da aggiornare
  */
 export function immutableUpdate(array, index, value) {
-  return array.map((item, idx) => {
+  const a = array.map((item, idx) => {
     if (index !== idx) return item;
     return {
       ...item,
       ...value,
     };
   });
+  console.debug(a);
+  return a;
 }

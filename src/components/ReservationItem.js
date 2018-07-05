@@ -9,15 +9,38 @@ import PropTypes from 'prop-types';
 const renderView = (viewList, reslist) => {
   if (viewList) {
     return (
-      <ol>
-        {
-          reslist.map(item => (
-            <li key={item}>
-              {item}
-            </li>
-          ))
-        }
-      </ol>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              Nome
+            </th>
+            <th>
+              Ora
+            </th>
+            <th>
+              Elimina
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {reslist.map(item => (
+            <tr key={item.name}>
+              <td>
+                {item.name}
+              </td>
+              <td>
+                {item.hour}
+              </td>
+              <td>
+                <button type="button">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     );
   }
   return (

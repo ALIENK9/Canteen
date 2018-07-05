@@ -1,0 +1,172 @@
+{
+  "reservations": [
+    {
+      "id": 0,
+      "name": "Zucchine ai ferri",
+      "type": 2,
+      "reslist": [
+        {
+          "name": "Giovanni",
+          "hour": "12:30"
+        },
+        {
+          "name": "Paolo",
+          "hour": "12:33"
+        },
+        {
+          "name": "Pippo",
+          "hour": "12:00"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Pasta al pomodoro",
+      "type": 1,
+      "reslist": [
+        {
+          "name": "Giovanni",
+          "hour": "12:30"
+        },
+        {
+          "name": "Paolo",
+          "hour": "12:33"
+        },
+        {
+          "name": "Pippo",
+          "hour": "12:00"
+        },
+        {
+          "name": "Panico",
+          "hour": "12:30"
+        },
+        {
+          "name": "Paola",
+          "hour": "11:40"
+        },
+        {
+          "name": "Paolina",
+          "hour": "12:00"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Budino vaniglia",
+      "type": 3,
+      "reslist": [
+        {
+          "name": "Francesca",
+          "hour": "12:30"
+        },
+        {
+          "name": "Pavero",
+          "hour": "12:33"
+        },
+        {
+          "name": "Pollo arrosto",
+          "hour": "12:00"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Melanzane",
+      "type": 2,
+      "reslist": [
+        {
+          "name": "GioCiao",
+          "hour": "12:30"
+        },
+        {
+          "name": "Giorgia",
+          "hour": "12:00"
+        }
+      ]
+    }
+  ],
+  "meals": {
+    "lunch": [
+      {
+        "id": 0,
+        "name": "Patate arroste",
+        "type": 2,
+        "checked": true
+      },
+      {
+        "id": 1,
+        "name": "Pasta verdure",
+        "type": 3,
+        "checked": true
+      },
+      {
+        "id": 2,
+        "name": "Pane all'uovo",
+        "type": 3,
+        "checked": false
+      },
+      {
+        "id": 3,
+        "name": "Uova fritte",
+        "type": 2,
+        "checked": true
+      }
+    ],
+    "dinner": [
+      {
+        "id": 0,
+        "name": "Pollo arrosto",
+        "type": 2,
+        "checked": false
+      },
+      {
+        "id": 1,
+        "name": "Spinaci al vapore",
+        "type": 3,
+        "checked": false
+      },
+      {
+        "id": 2,
+        "name": "Costolette di gallina",
+        "type": 3,
+        "checked": true
+      },
+      {
+        "id": 3,
+        "name": "Insalata fresca",
+        "type": 2,
+        "checked": true
+      },
+      {
+        "id": 4,
+        "name": "Pizza margherita",
+        "type": 1,
+        "checked": false
+      }
+    ]
+  },
+  "authentication": {
+    "user": "Gino",
+    "admin": true
+  },
+  "dishes": [
+    {
+      "id": 0,
+      "name": "Pasta sdsdadsa salame fritto",
+      "type": "PRimo",
+      "description": "Laasalalao selvatico e origano di Altamura"
+    },
+    {
+      "id": 2,
+      "name": "Pasta al salame fritto",
+      "type": "Secondo",
+      "description": "Lalalalalal salame piccante con aglio selvatico e origano di Altamura"
+    },
+    {
+      "name": "banana",
+      "type": "Primo",
+      "description": "Banane arroste",
+      "id": 3
+    }
+  ]
+}

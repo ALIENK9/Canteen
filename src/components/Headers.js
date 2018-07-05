@@ -18,4 +18,12 @@ const DishesH = () => (
   </h1>
 );
 
-export { MenuH, ReservationsH, DishesH };
+const LoginH = () => (
+  <h1>
+    Accedi al servizio
+  </h1>
+);
+
+export {
+  MenuH, ReservationsH, DishesH, LoginH,
+};

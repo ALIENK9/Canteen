@@ -4,37 +4,80 @@
       "name": "Zucchine ai ferri",
       "type": 2,
       "reslist": [
-        "Giovanni",
-        "Paolo",
-        "Pippo"
+        {
+          "name": "Giovanni",
+          "hour": "12:30"
+        },
+        {
+          "name": "Paolo",
+          "hour": "12:33"
+        },
+        {
+          "name": "Pippo",
+          "hour": "12:00"
+        }
       ]
     },
     {
       "name": "Pasta al pomodoro",
       "type": 1,
       "reslist": [
-        "Giovanni",
-        "Paolo",
-        "Michela",
-        "Cipeciop",
-        "Pinocchio"
+        {
+          "name": "Giovanni",
+          "hour": "12:30"
+        },
+        {
+          "name": "Paolo",
+          "hour": "12:33"
+        },
+        {
+          "name": "Pippo",
+          "hour": "12:00"
+        },
+        {
+          "name": "Panico",
+          "hour": "12:30"
+        },
+        {
+          "name": "Paola",
+          "hour": "11:40"
+        },
+        {
+          "name": "Paolina",
+          "hour": "12:00"
+        }
       ]
     },
     {
       "name": "Budino vaniglia",
       "type": 3,
       "reslist": [
-        "Piero",
-        "Paolo",
-        "Pippo",
-        "Francesca"
+        {
+          "name": "Francesca",
+          "hour": "12:30"
+        },
+        {
+          "name": "Pavero",
+          "hour": "12:33"
+        },
+        {
+          "name": "Pollo arrosto",
+          "hour": "12:00"
+        }
       ]
     },
     {
       "name": "Melanzane",
       "type": 2,
       "reslist": [
-        "Marina"
+        {
+          "name": "GioCiao",
+          "hour": "12:30"
+        },
+        {
+          "name": "Giorgia",
+          "hour": "12:00"
+        }
       ]
     }
   ]

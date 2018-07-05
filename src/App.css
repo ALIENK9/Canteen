@@ -1,6 +1,18 @@
 /* COSE MIE*/
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
 html, body {
   height: 100%;
+  word-break: break-all;
+  text-align: justify;
+}
+
+header {
+  padding: 1em auto;
 }
 
 body {
@@ -34,6 +46,7 @@ footer {
   text-align: center;
   padding: 0.7em;
   margin: 0.5em;
+  background-color: #97ec36;
 }
 
 .card {
@@ -42,19 +55,31 @@ footer {
   transition: -webkit-box-shadow .25s;
   transition: box-shadow .25s;
   transition: box-shadow .25s, -webkit-box-shadow .25s;
-  background-color: #188d09 !important;
+  background-color: #36ec6d !important;
   border-radius: 0.5em;
   color: white;
 }
 
-.card-title {
-  font-size: 1.5em; 
-  font-weight: 300;
+.card-subtitle {
+  font-size: 90%;
+  color: blueviolet;
+}
+
+#root {
+  height: 100%;
+}
+
+.navbar {
+  margin: 0 !important;
+}
+
+.button-toolbar {
+  margin: 0 30%;
 }
 
 /* LINK DELLA NAVBAR */
 
-nav ul {
+/* nav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -74,15 +99,14 @@ nav li a {
   text-decoration: none;
 }
 
-/* Change the link color to #111 (black) on hover */
-nav li a:hover {
+li a:hover {
   background-color: rgb(209, 193, 50);
 }
 
-nav a.active {
-  background-color: #4CAF50;
+li.active {
+  background-color: rgb(228, 205, 77);
   cursor: not-allowed;
-}
+} */
 
 .checked {
   border: 3px solid orange;
@@ -93,6 +117,14 @@ nav a.active {
   padding-left: 30%; 
   text-align: center;
   height: 100%;
+}
+
+.login-form {
+  padding: 2em 15em;
+}
+
+.login-submit {
+  margin: 0.5em auto;
 }
 
 
