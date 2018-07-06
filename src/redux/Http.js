@@ -67,8 +67,8 @@ const fetchPost = (URL, dispatch, data, onStart, onSuccess, onFail) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      body: JSON.stringify(data),
     },
+    body: JSON.stringify(data),
   };
   return fetch(URL, config)
     .then(response => Promise.all([response]))

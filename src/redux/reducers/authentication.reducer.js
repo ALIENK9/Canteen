@@ -1,4 +1,4 @@
-import * as types from '../actionTypes';
+import * as actionTypes from '../actionTypes';
 
 const initialState = {
   user: null, // string || null
@@ -11,7 +11,7 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.LOGIN_FAILURE:
+    case actionTypes.LOGIN_FAILURE:
       return {
         ...state,
         user: null,
@@ -19,7 +19,7 @@ const authReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload.error,
       };
-    case types.LOGIN_SUCCESS:
+    case actionTypes.LOGIN_SUCCESS:
       console.log(action.payload.user, action.payload.admin);
       return {
         ...state,

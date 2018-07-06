@@ -8,8 +8,15 @@ import {
 import List from '../components/List';
 import TextBox from '../components/ListItems/TextBox';
 import DishItem from '../components/DishItem';
-import { getDishes, deleteDish, clearMessages } from '../redux/actions/dishes.actions';
+import {
+  getDishes, deleteDish, clearMessages, hideAddForm, showAddForm, hideErrorForm,
+} from '../redux/actions/dishes.actions';
 import Alert from '../components/Alert';
+import Modal from '../components/modals/Modal';
+import DishForm from './DishForm';
+import ModalBody from '../components/modals/ModalBody';
+import ModalHeader from '../components/modals/ModalHeader';
+import ModalFooter from '../components/modals/ModalFooter';
 
 class DishesList extends Component {
   componentDidMount() {
@@ -17,12 +24,31 @@ class DishesList extends Component {
     getData();
   }
 
+  /* handleAdd(event) {
+    event.preventDefault();
+    const { openAddModal } = this.props;
+    openAddModal();
+  } */
+
   render() {
     const {
-      dishes, onDelete, error, success, closeAlert,
+      dishes, onDelete, error, success, closeAlert, show, closeAddModal, openAddModal,
+      addError, closeAlertForm,
     } = this.props;
     return (
       <div>
+        {console.log('doing fancy things', addError)}
+        <Modal
+          onCancel={closeAddModal}
+          show={show}
+        >
+          <ModalHeader title="Aggiungi un piatto" />
+          { addError && <Alert type="danger" message={addError} onDismiss={closeAlertForm} /> }
+          <ModalBody>
+            <DishForm />
+          </ModalBody>
+          <ModalFooter onCancel={closeAddModal} />
+        </Modal>
         <div id="listbar">
           <ButtonToolbar className="button-toolbar">
             <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
@@ -36,7 +62,7 @@ class DishesList extends Component {
                 Contorni
               </ToggleButton>
             </ToggleButtonGroup>
-            <Button className="pull-right" bsStyle="primary">
+            <Button onClick={openAddModal} className="pull-right" bsStyle="primary">
               <Glyphicon glyph="glyphicon glyphicon-plus" />
             </Button>
           </ButtonToolbar>
@@ -68,6 +94,11 @@ DishesList.propTypes = {
   error: PropTypes.string.isRequired,
   success: PropTypes.string.isRequired,
   closeAlert: PropTypes.func.isRequired,
+  show: PropTypes.bool,
+  closeAddModal: PropTypes.func.isRequired,
+  openAddModal: PropTypes.func.isRequired,
+  addError: PropTypes.string,
+  closeAlertForm: PropTypes.func,
 };
 
 DishesList.defaultProps = {
@@ -78,6 +109,9 @@ DishesList.defaultProps = {
       description: 'Pasta con il sugo di pomodoro e basilico',
     },
   ],
+  show: false,
+  addError: null,
+  closeAlertForm: () => {},
 };
 
 const mapStateToProps = state => ({
@@ -85,12 +119,17 @@ const mapStateToProps = state => ({
   error: state.dishes.error,
   success: state.dishes.success,
   loading: state.dishes.loading,
+  show: state.dishes.add.show,
+  addError: state.dishes.add.error,
 });
 
 const mapDispatchToProps = dispatch => ({
   getData: () => dispatch(getDishes()),
   onDelete: id => dispatch(deleteDish(id)),
   closeAlert: () => dispatch(clearMessages()), // todo: collegare agli alert
+  closeAddModal: () => dispatch(hideAddForm()),
+  openAddModal: () => dispatch(showAddForm()),
+  closeAlertForm: () => dispatch(hideErrorForm()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DishesList));

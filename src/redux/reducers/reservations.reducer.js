@@ -1,4 +1,4 @@
-import * as types from '../actionTypes';
+import * as actionTypes from '../actionTypes';
 
 const initialState = {
   list: [],
@@ -10,7 +10,7 @@ const initialState = {
 
 const reservationsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.FETCH_RESERVATIONS_DATA:
+    case actionTypes.FETCH_RESERVATIONS_DATA:
       return { list: action.payload };
     default:
       return state;

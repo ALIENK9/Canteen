@@ -1,4 +1,4 @@
-import * as types from '../actionTypes';
+import * as actionTypes from '../actionTypes';
 import { immutableUpdate } from '../utils';
 
 const initialState = {
@@ -13,49 +13,49 @@ const initialState = {
 
 const menusReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.FETCH_MENU_STARTED:
+    case actionTypes.FETCH_MENU_STARTED:
       return {
         ...state,
         loading: true,
         error: null,
         success: null,
       };
-    case types.FETCH_MENU_SUCCESS:
+    case actionTypes.FETCH_MENU_SUCCESS:
       return {
         ...state,
         meals: action.payload.json,
         loading: false,
       };
-    case types.FETCH_MENU_FAILURE:
+    case actionTypes.FETCH_MENU_FAILURE:
       return {
         ...state,
         error: action.payload.error,
       };
-    case types.POST_MENU_STARTED:
+    case actionTypes.POST_MENU_STARTED:
       return {
         ...state,
         loading: true,
         error: null,
       };
-    case types.POST_MENU_SUCCESS:
+    case actionTypes.POST_MENU_SUCCESS:
       return {
         ...state,
         loading: false,
         success: 'Dati salvati correttamente',
       };
-    case types.POST_MENU_FAILURE:
+    case actionTypes.POST_MENU_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload.error,
       };
-    case types.CLEAR_MESSAGES:
+    case actionTypes.CLEAR_MESSAGES:
       return {
         ...state,
         error: null,
         success: null,
       };
-    case types.TOGGLE_MEAL:
+    case actionTypes.TOGGLE_MEAL:
       return {
         ...state,
         meals: {

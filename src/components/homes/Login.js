@@ -51,7 +51,7 @@ class Login extends Component {
             Dati dell&apos;account
           </legend>
           <FormGroup
-            class="form-group"
+            className="form-group"
             controlId="formEmail"
             validationState={authentication.error && 'error'}
           >
@@ -73,7 +73,7 @@ class Login extends Component {
             )}
           </FormGroup>
           <FormGroup
-            class="form-group"
+            className="form-group"
             controlId="formPassword"
           >
             <ControlLabel>

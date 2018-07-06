@@ -151,22 +151,16 @@
   },
   "dishes": [
     {
-      "id": 0,
-      "name": "Pasta sdsdadsa salame fritto",
-      "type": "PRimo",
-      "description": "Laasalalao selvatico e origano di Altamura"
-    },
-    {
       "id": 2,
       "name": "Pasta al salame fritto",
       "type": "Secondo",
       "description": "Lalalalalal salame piccante con aglio selvatico e origano di Altamura"
     },
     {
-      "name": "banana",
-      "type": "Primo",
-      "description": "Banane arroste",
-      "id": 3
+      "name": "Polenta",
+      "type": "Contorno",
+      "description": "Farina di grano tenero, acqua",
+      "id": 5
     }
   ]
 }

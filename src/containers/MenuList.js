@@ -10,7 +10,6 @@ import {
 import List from '../components/List';
 import CheckBox from '../components/ListItems/CheckBox';
 import MenuItem from '../components/MenuItem';
-import Modal from '../components/Modal';
 import Alert from '../components/Alert';
 
 
