@@ -1,7 +1,7 @@
 import React from 'react';
-import DishesList from '../../containers/DishesList';
+import DishesList from '../../containers/dishes/DishesList';
 
-const Dishes = props => (
+const Dishes = () => (
   <DishesList />
 );
 

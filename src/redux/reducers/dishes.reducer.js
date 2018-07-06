@@ -9,6 +9,7 @@ const initialAddState = {
 const addReducer = (state = initialAddState, action) => {
   switch (action.type) {
     case actionTypes.SHOW_ADD_FORM:
+      console.log('Showing add form', state);
       return {
         show: true,
         error: null,
@@ -40,6 +41,7 @@ const initialState = {
   error: null, // string | null
   success: null, // string | null
   add: initialAddState,
+  filter: 'ALL', // ALL, PRIMO, SECONDO, CONTORNO
 };
 
 const dishesReducer = (state = initialState, action) => {
@@ -69,6 +71,11 @@ const dishesReducer = (state = initialState, action) => {
         ...state,
         error: null,
         success: null,
+      };
+    case actionTypes.FILTER_MEALS:
+      return {
+        ...state,
+        filter: action.payload.filter,
       };
     case actionTypes.SHOW_ADD_FORM: // cascata di azioni che sono rimandate al reducer di add
     case actionTypes.HIDE_ADD_FORM:

@@ -5,7 +5,8 @@ import {
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postDish } from '../redux/actions/dishes.actions';
+import { postDish, hideErrorForm } from '../../redux/actions/dishes.actions';
+import Alert from '../../components/Alert';
 
 /*
   Nome: string
@@ -39,8 +40,10 @@ class DishForm extends Component {
 
   render() {
     const { name, type, description } = this.state;
+    const { error, closeAlert } = this.props;
     return (
       <form onSubmit={e => this.handleSubmit(e)}>
+        { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
         <FormGroup controlId="name">
           <ControlLabel>
             Nome del piatto
@@ -115,18 +118,23 @@ class DishForm extends Component {
 
 DishForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  // error: PropTypes.string,
-  // closeAlert: PropTypes.func,
+  error: PropTypes.string,
+  closeAlert: PropTypes.func,
 };
 
 DishForm.defaultProps = {
-  // error: null,
-  // closeAlert: () => {},
+  error: null,
+  closeAlert: () => {},
 };
+
+const mapStateToProps = state => ({
+  error: state.dishes.add.error,
+});
 
 
 const mapDispatchToProps = dispatch => ({
   onSubmit: state => dispatch(postDish(state)),
+  closeAlert: () => dispatch(hideErrorForm()),
 });
 
-export default withRouter(connect(null, mapDispatchToProps)(DishForm));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DishForm));

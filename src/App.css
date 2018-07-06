@@ -108,6 +108,10 @@ li.active {
   cursor: not-allowed;
 } */
 
+.text-left {
+  text-align: left;
+}
+
 .checked {
   border: 3px solid orange;
 }
@@ -120,7 +124,8 @@ li.active {
 }
 
 .login-form {
-  padding: 2em 15em;
+  padding: 2em 35%;
+  text-align: left;
 }
 
 .login-submit {

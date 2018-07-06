@@ -1,13 +1,12 @@
 export const FETCH_RESERVATIONS_DATA = 'FETCH_RESERVATIONS_DATA';
 
-export const FILTER_ENTRIES = 'FILTER_ENTRIE';
-
 // GENERALI:
 export const NOTYPE = 'NOTYPE';
 export const noType = () => ({
   type: NOTYPE,
 });
 export const CLEAR_MESSAGES = 'CLEAR_MESSAGES';
+export const FILTER_MEALS = 'FILTER_MEALS';
 
 // MENU DEL GIORNO
 export const TOGGLE_MEAL = 'TOGGLE_MEAL';

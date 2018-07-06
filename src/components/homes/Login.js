@@ -44,53 +44,51 @@ class Login extends Component {
     const { user, admin } = authentication;
     return (
       <form className="login-form" onSubmit={this.handleSubmit}>
+        <h2>
+          Login
+        </h2>
         { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
         { admin && user && <Redirect to="/menus" /> /* redirige se l'admin è loggato */ }
-        <fieldset>
-          <legend>
-            Dati dell&apos;account
-          </legend>
-          <FormGroup
-            className="form-group"
-            controlId="formEmail"
-            validationState={authentication.error && 'error'}
-          >
-            <ControlLabel>
+        <FormGroup
+          className="form-group"
+          controlId="formEmail"
+          validationState={authentication.error && 'error'}
+        >
+          <ControlLabel>
               Indirizzo e-mail
-            </ControlLabel>
-            <FormControl
-              name="email"
-              type="email"
-              value={email}
-              placeholder="holas@email.com"
-              onChange={this.handleChange}
-            />
-            <FormControl.Feedback />
-            {submitted && !email && (
-              <HelpBlock>
+          </ControlLabel>
+          <FormControl
+            name="email"
+            type="email"
+            value={email}
+            placeholder="holas@email.com"
+            onChange={this.handleChange}
+          />
+          <FormControl.Feedback />
+          {submitted && !email && (
+          <HelpBlock>
                 L&apos;email è richiesta
-              </HelpBlock>
-            )}
-          </FormGroup>
-          <FormGroup
-            className="form-group"
-            controlId="formPassword"
-          >
-            <ControlLabel>
+          </HelpBlock>
+          )}
+        </FormGroup>
+        <FormGroup
+          className="form-group"
+          controlId="formPassword"
+        >
+          <ControlLabel>
               Password
-            </ControlLabel>
-            <FormControl type="password" name="password" value={password} onChange={this.handleChange} />
-            <FormControl.Feedback />
-            {submitted && !password && (
+          </ControlLabel>
+          <FormControl type="password" name="password" value={password} onChange={this.handleChange} />
+          <FormControl.Feedback />
+          {submitted && !password && (
             <HelpBlock>
               La password è richiesta
             </HelpBlock>
-            )}
-          </FormGroup>
-          <Button className="login-submit" bsStyle="primary" type="submit">
+          )}
+        </FormGroup>
+        <Button className="login-submit" bsStyle="primary" type="submit">
               Accedi
-          </Button>
-        </fieldset>
+        </Button>
       </form>
     );
   }

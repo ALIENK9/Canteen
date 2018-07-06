@@ -73,7 +73,7 @@ const fetchPost = (URL, dispatch, data, onStart, onSuccess, onFail) => {
   return fetch(URL, config)
     .then(response => Promise.all([response]))
     .then(([response]) => {
-      if (response.status === 200) {
+      if (response.status === 200 || response.status === 201) {
         console.log('posting');
         dispatch(onSuccess());
         console.log('posted');

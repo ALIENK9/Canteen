@@ -28,6 +28,13 @@ export const clearMessages = () => ({
   type: actionTypes.CLEAR_MESSAGES,
 });
 
+// DISH FILTER ACTIONS
+
+export const filterMeals = filter => ({
+  type: actionTypes.FILTER_MEALS,
+  payload: { filter },
+});
+
 // DISH ADD FORM ACTIONS
 
 export const showAddForm = () => ({
@@ -62,6 +69,6 @@ export const deleteDish = id => (dispatch) => {
 
 
 export const postDish = dish => (dispatch) => {
-  const URL = 'http://localhost:4000/dishes/ppp';
+  const URL = 'http://localhost:4000/dishes';
   return Http.post(URL, dispatch, dish, null, addDishSuccess, showErrorForm);
 };

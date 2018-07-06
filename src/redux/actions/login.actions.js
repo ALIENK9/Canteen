@@ -31,5 +31,4 @@ export const login = data => (dispatch) => {
     user: 'Ciccio',
     admin: true,
   }));
-  console.log('dhkj');
 };
