@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import ReservationItem from '../components/ReservationItem';
-import List from '../components/List';
-import CollapseBox from '../components/ListItems/CollapseBox';
-import { fetchData } from '../redux/actions/reservations.actions';
+import ReservationItem from '../../components/ReservationItem';
+import List from '../../components/List';
+import CollapseBox from '../../components/ListItems/CollapseBox';
+import { getReservations } from '../../redux/actions/reservations.actions';
+import { compareDishes } from '../utils';
 
 
 class ReservationsList extends Component {
@@ -58,11 +59,11 @@ class ReservationsList extends Component {
 }
 
 const mapStateToProps = state => ({
-  reservations: state.reservations.list,
+  reservations: state.reservations.list.sort(compareDishes),
 });
 
 const mapDispatchToProps = dispatch => ({
-  getData: () => dispatch(fetchData()),
+  getData: () => dispatch(getReservations()),
 });
 
 

@@ -11,7 +11,7 @@ import {
 import Alert from '../../components/Alert';
 import Toolbar from './Toolbar';
 import AddModal from './AddModal';
-import getVisibleDishes from './getVisible';
+import { getVisibleDishes, mapTypeToString } from '../utils';
 
 class DishesList extends Component {
   componentDidMount() {
@@ -32,10 +32,11 @@ class DishesList extends Component {
         <List>
           {dishes.map(dish => (
             <TextBox key={dish.id} id={dish.id} onDelete={onDelete}>
+              {console.log('sdjkdsds', dish.id)}
               <DishItem
                 // id={dish.id}
                 name={dish.name}
-                type={dish.type}
+                type={mapTypeToString(dish.type)}
                 description={dish.description}
                 // onDelete={onDelete}
               />

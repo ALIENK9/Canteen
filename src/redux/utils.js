@@ -21,10 +21,12 @@ export function immutableInsert(array, index, value) {
 }
 
 export function immutableRemove(array, index) {
-  return [
+  const arr = [
     ...array.slice(0, index),
     ...array.slice(index + 1),
   ];
+  console.log(index, arr);
+  return arr;
 }
 
 /**

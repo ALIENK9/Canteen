@@ -61,6 +61,8 @@ const fetchDelete = (URL, dispatch, onStart, onSuccess, onFail) => {
     });
 };
 
+// todo: dovrei inserire nell'oggetto in memori anche l'ID che viene dato al nuovo oggetto
+// nella risposta del server
 const fetchPost = (URL, dispatch, data, onStart, onSuccess, onFail) => {
   dispatch(onStart());
   const config = {
@@ -75,7 +77,7 @@ const fetchPost = (URL, dispatch, data, onStart, onSuccess, onFail) => {
     .then(([response]) => {
       if (response.status === 200 || response.status === 201) {
         console.log('posting');
-        dispatch(onSuccess());
+        dispatch(onSuccess(data));
         console.log('posted');
       } else {
         console.log('error posting data');

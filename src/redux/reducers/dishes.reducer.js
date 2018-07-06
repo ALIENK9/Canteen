@@ -1,5 +1,5 @@
 import * as actionTypes from '../actionTypes';
-import { immutableRemove } from '../utils';
+import { immutableRemove, immutableInsert, immutableAdd } from '../utils';
 
 const initialAddState = {
   show: false, // bool
@@ -64,7 +64,17 @@ const dishesReducer = (state = initialState, action) => {
       return {
         ...state,
         list: immutableRemove(state.list,
-          state.list.map(dish => dish.name).indexOf(action.payload.id)),
+          state.list.map(dish => dish.id).indexOf(action.payload.id)),
+      };
+    case actionTypes.ADD_DISH_SUCCESS:
+      return {
+        ...state,
+        list: immutableAdd(state.list, action.payload.dish),
+        add: {
+          ...state.add,
+          show: false,
+          error: null,
+        },
       };
     case actionTypes.CLEAR_MESSAGES:
       return {

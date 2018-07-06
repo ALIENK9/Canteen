@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
-import ReservationsList from '../containers/ReservationsList';
+import ReservationsList from '../containers/reservations/ReservationsList';
 
 const TabsReservation = () => (
   <Tabs defaultActiveKey={2} id="uncontrolled-tab">

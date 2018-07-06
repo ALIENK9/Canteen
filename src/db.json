@@ -151,16 +151,28 @@
   },
   "dishes": [
     {
-      "name": "Polenta",
-      "type": "Conno",
-      "description": "Farina di grano tcqua",
-      "id": 4
+      "name": "sadsadasdsadsada",
+      "type": 1,
+      "description": "sadsadsadsadsadsadsad",
+      "id": 7
     },
     {
-      "name": "Pasta",
-      "type": "Contorno",
-      "description": "Pasta al dente con radici di mandragola",
-      "id": 5
+      "name": "SDASADSAD",
+      "type": 3,
+      "description": "SDASDSAD",
+      "id": 10
+    },
+    {
+      "name": "asASASASASAS",
+      "type": 1,
+      "description": "ASAS",
+      "id": 11
+    },
+    {
+      "name": "dasdsadas",
+      "type": 1,
+      "description": "aa",
+      "id": 12
     }
   ]
 }

@@ -1,18 +1,25 @@
 import * as actionTypes from '../actionTypes';
-import * as data from '../../db.json';
+import Http from '../Http';
 
 
-// const parseData = response => response.json();
-// const failure = err => console.error(`FAILURE ${err}`);
-
-// const getRequest = () => fetch('/localhost:4000/reservations/', { method: 'get' })
-// .then(parseData).then(ciao => ciao);
-
-export const fetchData = () => ({
-  type: actionTypes.FETCH_RESERVATIONS_DATA,
-  payload: data.reservations,
+export const fetchReservationsStarted = () => ({
+  type: actionTypes.FETCH_RESERVATIONS_STARTED,
 });
 
-export const filterData = () => {
+export const fetchReservaionsSuccess = json => ({
+  type: actionTypes.FETCH_RESERVATIONS_SUCCESS,
+  payload: { json },
+});
 
+export const fetchReservaionsFailure = error => ({
+  type: actionTypes.FETCH_RESERVATIONS_FAILURE,
+  payload: { error },
+});
+
+// ASYNC ACTIONS
+
+export const getReservations = () => (dispatch) => {
+  const URL = 'http://localhost:4000/reservations';
+  return Http.get(URL, dispatch, fetchReservationsStarted, fetchReservaionsSuccess,
+    fetchReservaionsFailure);
 };

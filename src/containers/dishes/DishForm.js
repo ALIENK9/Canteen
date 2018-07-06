@@ -20,7 +20,7 @@ class DishForm extends Component {
     super(props);
     this.state = {
       name: '',
-      type: 'Secondo',
+      type: '2',
       description: '',
     };
   }
@@ -35,7 +35,7 @@ class DishForm extends Component {
     event.preventDefault();
     const { onSubmit } = this.props;
     const { type, name } = this.state;
-    if (type && name) onSubmit(this.state);
+    if (type && name) onSubmit({ ...this.state, type: Number.parseInt(type, 10) });
   }
 
   render() {
@@ -68,8 +68,8 @@ class DishForm extends Component {
           </p>
           <Radio
             name="type"
-            checked={type === 'Primo' ? 'checked' : false}
-            value="Primo"
+            checked={type === '1' ? 'checked' : false}
+            value="1"
             onChange={e => this.handleChange(e)}
             inline
           >
@@ -77,8 +77,8 @@ class DishForm extends Component {
           </Radio>
           <Radio
             name="type"
-            checked={type === 'Secondo' ? 'checked' : false}
-            value="Secondo"
+            checked={type === '2' ? 'checked' : false}
+            value="2"
             onChange={e => this.handleChange(e)}
             inline
           >
@@ -86,8 +86,8 @@ class DishForm extends Component {
           </Radio>
           <Radio
             name="type"
-            checked={type === 'Contorno' ? 'checked' : false}
-            value="Contorno"
+            checked={type === '3' ? 'checked' : false}
+            value="3"
             onChange={e => this.handleChange(e)}
             inline
           >
