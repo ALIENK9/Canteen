@@ -1,11 +1,11 @@
 export const getVisibleDishes = (dishes, filter) => {
   switch (filter) {
     case 'MAIN':
-      return dishes.filter(dish => dish.type === 'Primo');
+      return dishes.filter(dish => dish.type === 1);
     case 'SECOND':
-      return dishes.filter(dish => dish.type === 'Secondo');
+      return dishes.filter(dish => dish.type === 2);
     case 'SIDE':
-      return dishes.filter(dish => dish.type === 'Contorno');
+      return dishes.filter(dish => dish.type === 3);
     case 'ALL':
     default:
       return dishes;

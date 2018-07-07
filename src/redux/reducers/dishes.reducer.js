@@ -1,5 +1,5 @@
 import * as actionTypes from '../actionTypes';
-import { immutableRemove, immutableInsert, immutableAdd } from '../utils';
+import { immutableRemove, immutableAdd } from '../utils';
 
 const initialAddState = {
   show: false, // bool
@@ -91,7 +91,7 @@ const dishesReducer = (state = initialState, action) => {
     case actionTypes.HIDE_ADD_FORM:
     case actionTypes.SHOW_ERROR_FORM:
     case actionTypes.HIDE_ERROR_FORM:
-      console.log('showing error');
+      console.log('showing error in form');
       return {
         ...state,
         add: addReducer(state.add, action),
