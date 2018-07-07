@@ -139,7 +139,7 @@ export default class Http {
    * @param {Function} onSuccess Function called on success of the request
    * @param {Function} onFail Function called in case of fail
    */
-  static post(URL, dispatch, data, onStart, onSuccess, onFail) {
+  static post(URL, dispatch, data, onStart, onSuccess, onFail) { // todo: vedi sopra (id)
     const startFunction = onStart || noType;
     return fetchPost(URL, dispatch, data, startFunction, onSuccess, onFail);
   }

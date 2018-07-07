@@ -9,15 +9,17 @@ class CalendarPage extends React.Component {
     super(props);
     this.redirect = this.redirect.bind(this);
     this.calendarConfig = {
-      locale: 'ita-it',
       onClickDay: this.redirect,
       calendarType: 'ISO 8601',
+      className: 'calendar',
     };
   }
 
   redirect(day) {
     const { history, type } = this.props;
-    history.push(`/${type}/${day}`);
+    // todo: possibilmente rimuovere 'type' in favore di un push sull'URL precedente
+    const localDate = day.toISOString().substring(0, 10);
+    history.push(`/${type}/${localDate}`);
     // return <Redirect to="/ciao" />;
   }
 

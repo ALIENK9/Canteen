@@ -101,12 +101,13 @@ nav li a {
 
 li a:hover {
   background-color: rgb(209, 193, 50);
-}
-
-li.active {
-  background-color: rgb(228, 205, 77);
-  cursor: not-allowed;
 } */
+
+.active a {
+  background-color: rgb(228, 205, 77) !important;
+  background-image: none !important;
+  cursor: not-allowed !important;
+}
 
 .text-left {
   text-align: left;
@@ -118,10 +119,13 @@ li.active {
 
 /* CLASSI GENERICHE */
 .center {
-  padding-left: 30%; 
+  padding: 1em 20%; 
   text-align: center;
   height: 100%;
 }
+
+
+.calendar {}
 
 .login-form {
   padding: 2em 35%;
@@ -135,7 +139,6 @@ li.active {
 .help-block-error {
   color: red;
 }
-
 
 
 
