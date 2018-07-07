@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Table } from 'react-bootstrap';
 
 /**
  * Render the list of reservations or the numbero of reservations, depending on bool param
@@ -9,17 +10,14 @@ import PropTypes from 'prop-types';
 const renderView = (viewList, reslist) => {
   if (viewList) {
     return (
-      <table>
+      <Table hover>
         <thead>
           <tr>
             <th>
               Nome
             </th>
             <th>
-              Ora
-            </th>
-            <th>
-              Elimina
+              Orario
             </th>
           </tr>
         </thead>
@@ -32,15 +30,10 @@ const renderView = (viewList, reslist) => {
               <td>
                 {item.hour}
               </td>
-              <td>
-                <button type="button">
-                  Delete
-                </button>
-              </td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     );
   }
   return (
@@ -60,9 +53,9 @@ const Reservation = ({
   name, reslist, viewList,
 }) => (
   <div>
-    <span>
+    <h3>
       {name}
-    </span>
+    </h3>
     { renderView(viewList, reslist) /* mostra la cosa giusta a seconda del parametro 'viewList' */ }
   </div>
 );
