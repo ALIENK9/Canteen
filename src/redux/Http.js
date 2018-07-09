@@ -13,7 +13,7 @@ const fetchGet = (URL, dispatch, onStart, onSuccess, onFail) => {
         dispatch(onSuccess(json));
       } else {
         console.log('hdsdjshkdh');
-        dispatch(onFail(`Problema con la richiesta GET: ${response.statusText}`));
+        dispatch(onFail(`Problema con la richiesta GET: ${response.status} ${response.statusText}`));
       }
     });
 };
@@ -33,7 +33,7 @@ const fetchPut = (URL, dispatch, data, onStart, onSuccess, onFail) => {
       if (response.ok === true) {
         dispatch(onSuccess());
       } else {
-        dispatch(onFail(`Problema con la richiesta PUT: ${response.statusText}`));
+        dispatch(onFail(`Problema con la richiesta PUT: ${response.status} ${response.statusText}`));
       }
     });
 };
@@ -56,7 +56,7 @@ const fetchDelete = (URL, dispatch, onStart, onSuccess, onFail) => {
         console.log('deleted');
       } else {
         console.log('error deleting');
-        dispatch(onFail(`Problema con la richiesta DELETE: ${response.statusText}`));
+        dispatch(onFail(`Problema con la richiesta DELETE: ${response.status} ${response.statusText}`));
       }
     });
 };
@@ -73,15 +73,14 @@ const fetchPost = (URL, dispatch, data, onStart, onSuccess, onFail) => {
     body: JSON.stringify(data),
   };
   return fetch(URL, config)
-    .then(response => Promise.all([response]))
-    .then(([response]) => {
+    .then(response => Promise.all([response, response.json()]))
+    .then(([response, json]) => {
       if (response.status === 200 || response.status === 201) {
-        console.log('posting');
-        dispatch(onSuccess(data));
-        console.log('posted');
+        dispatch(onSuccess(json));
+        console.log(`posted${JSON.stringify(json)}`);
       } else {
         console.log('error posting data');
-        dispatch(onFail(`Problema con la richiesta POST: ${response.statusText}`));
+        dispatch(onFail(`Problema con la richiesta POST: ${response.status} ${response.statusText}`));
       }
     });
 };

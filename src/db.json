@@ -1,4 +1,16 @@
 {
+  "prenotazioni": [
+    {
+      "name": "Pippo baudo",
+      "meals": ["Pastasciutta", "Polaretti", "Popospao"],
+      "id": 1
+    },
+    {
+      "name": "Porto Fino",
+      "meals": ["Minestrina", "Pastasciutta", "Baobab"],
+      "id": 2
+    }
+  ],
   "reservations": [
     {
       "id": 0,
@@ -85,7 +97,10 @@
       ]
     }
   ],
-  "meals": {},
+  "meals": {
+    "dinner": [],
+    "lunch": []
+  },
   "authentication": {
     "user": "Gino",
     "admin": true
@@ -96,12 +111,6 @@
       "type": 1,
       "description": "sadsadsadsadsadsadsad",
       "id": 7
-    },
-    {
-      "name": "SDASADSAD",
-      "type": 3,
-      "description": "SDASDSAD",
-      "id": 10
     },
     {
       "name": "asASASASASAS",
@@ -116,9 +125,9 @@
       "id": 12
     },
     {
-      "name": "xzsadsad",
-      "type": 3,
-      "description": "dsasdsad",
+      "name": "sasasa",
+      "type": 2,
+      "description": "asas",
       "id": 13
     }
   ]
