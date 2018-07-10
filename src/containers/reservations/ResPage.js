@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import SwitcherView from './SwitcherView';
-import Panel from '../Panel';
-import TabsReservation from './TabsReservation';
-import ReservationsList from './ReservationsList';
-import UserList from './UserList';
-// import { getReservations, deleteReservation } from '../../redux/actions/reservations.actions';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import SwitcherView from '../../components/reservations/SwitcherView';
+import Panel from '../../components/Panel';
+import TabsReservation from '../../components/reservations/TabsReservation';
+import ReservationsList from '../../components/reservations/ReservationsList';
+import UserList from '../../components/reservations/UserList';
+import Alert from '../../components/Alert';
+import { getReservations, deleteReservation, clearMessages } from '../../redux/actions/reservations.actions';
 
 class ResPage extends Component {
   constructor(props) {
@@ -47,13 +50,16 @@ class ResPage extends Component {
 
   render() {
     const { moment, view } = this.state;
-    const { list, match } = this.props;
+    const {
+      list, match, error, closeAlert,
+    } = this.props;
     const { day } = match.params;
     return (
       <Panel title={`Prenotazioni del giorno ${day}`}>
         <SwitcherView activeKey={view === 'user' ? 2 : 1} onSelect={this.handleViewSelect} />
         <TabsReservation activeKey={moment === 'lunch' ? 1 : 2} onSelect={this.handleMomentSelect} />
         {console.log(list)}
+        { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
         { view === 'users' && <UserList list={list} moment={moment} onDelete={this.handleDelete} /> }
         { view === 'meals' && <ReservationsList list={list} /> }
       </Panel>
@@ -66,10 +72,24 @@ ResPage.propTypes = {
   list: PropTypes.array,
   getData: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  closeAlert: PropTypes.func.isRequired,
+  error: PropTypes.string.isRequired,
 };
 
 ResPage.defaultProps = {
   list: [],
 };
 
-export default ResPage;
+const mapStateToProps = state => ({
+  list: state.reservations.list,
+  error: state.reservations.error,
+  success: state.reservations.success,
+});
+
+const mapDispatchToProps = dispatch => ({
+  getData: (mode, moment) => dispatch(getReservations(mode, moment)),
+  onDelete: (moment, id) => dispatch(deleteReservation(moment, id)),
+  closeAlert: () => dispatch(clearMessages()),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ResPage));

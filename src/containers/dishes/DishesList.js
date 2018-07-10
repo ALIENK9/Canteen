@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import List from '../../components/List';
 import TextBox from '../../components/ListItems/TextBox';
-import DishItem from '../../components/DishItem';
+import DishItem from '../../components/dishes/DishItem';
 import {
   getDishes, deleteDish, clearMessages,
 } from '../../redux/actions/dishes.actions';
@@ -38,7 +38,6 @@ class DishesList extends Component {
                 name={dish.name}
                 type={mapTypeToString(dish.type)}
                 description={dish.description}
-                // onDelete={onDelete}
               />
             </TextBox>
           ))}
@@ -77,7 +76,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getData: () => dispatch(getDishes()),
   onDelete: id => dispatch(deleteDish(id)),
-  closeAlert: () => dispatch(clearMessages()), // todo: collegare agli alert
+  closeAlert: () => dispatch(clearMessages()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DishesList));

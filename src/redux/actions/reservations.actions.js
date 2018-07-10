@@ -21,6 +21,10 @@ export const removeReservationSuccess = id => ({
   payload: { id },
 });
 
+export const clearMessages = () => ({
+  type: actionTypes.CLEAR_MESSAGES,
+});
+
 
 // ASYNC ACTIONS
 
