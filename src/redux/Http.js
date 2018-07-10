@@ -9,7 +9,7 @@ const fetchGet = (URL, dispatch, onStart, onSuccess, onFail) => {
     .then(response => Promise.all([response, response.json()]))
     .then(([response, json]) => {
       if (response.status === 200) {
-        console.log(json);
+        console.log('Dati ', json);
         dispatch(onSuccess(json));
       } else {
         console.log('hdsdjshkdh');

@@ -1,17 +1,18 @@
 {
-  "prenotazioni": [
-    {
-      "name": "Pippo baudo",
-      "meals": ["Pastasciutta", "Polaretti", "Popospao"],
-      "id": 1
-    },
+  "userLunch": [
     {
       "name": "Porto Fino",
-      "meals": ["Minestrina", "Pastasciutta", "Baobab"],
+      "meals": [
+        "Minestrina",
+        "Pastasciutta",
+        "Baobab"
+      ],
+      "hour": "12:33",
       "id": 2
     }
   ],
-  "reservations": [
+  "userDinner": [],
+  "mealsLunch": [
     {
       "id": 0,
       "name": "Zucchine ai ferri",
@@ -61,7 +62,9 @@
           "hour": "12:00"
         }
       ]
-    },
+    }
+  ],
+  "mealsDinner": [
     {
       "id": 2,
       "name": "Budino vaniglia",
@@ -111,12 +114,6 @@
       "type": 1,
       "description": "sadsadsadsadsadsadsad",
       "id": 7
-    },
-    {
-      "name": "asASASASASAS",
-      "type": 1,
-      "description": "ASAS",
-      "id": 11
     },
     {
       "name": "dasdsadas",

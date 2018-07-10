@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const MenuItem = ({ name }) => (
-  <div>
-    <span>
+  <div className="w3-container w3-center">
+    <strong>
       {name}
-    </span>
+    </strong>
   </div>
 );
 

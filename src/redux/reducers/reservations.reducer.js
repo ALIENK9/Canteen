@@ -1,4 +1,5 @@
 import * as actionTypes from '../actionTypes';
+import { immutableRemove } from '../utils';
 
 const initialState = {
   list: [],
@@ -19,9 +20,16 @@ const reservationsReducer = (state = initialState, action) => {
       return {
         ...state,
         list: action.payload.json,
-        error: false,
+        error: null,
       };
-    case actionTypes.FETCH_RESERVATIONS_FAILURE:
+    case actionTypes.REMOVE_RESERVATION_SUCCESS:
+      return {
+        ...state,
+        list: immutableRemove(state.list,
+          state.list.map(reserv => reserv.id).indexOf(action.payload.id)),
+        error: null,
+      };
+    case actionTypes.RESERVATION_REQUEST_FAILURE:
       return {
         ...state,
         list: [],

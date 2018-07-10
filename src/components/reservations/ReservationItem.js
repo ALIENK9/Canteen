@@ -50,18 +50,22 @@ const renderView = (viewList, reslist) => {
  * @param {Object} props
  */
 const Reservation = ({
-  name, reslist, viewList,
+  name, type, reslist, viewList,
 }) => (
-  <div>
-    <h3>
+  <div className="w3-container w3-center">
+    <strong>
       {name}
-    </h3>
+    </strong>
+    <div className="card-subtitle">
+      {type}
+    </div>
     { renderView(viewList, reslist) /* mostra la cosa giusta a seconda del parametro 'viewList' */ }
   </div>
 );
 
 Reservation.propTypes = {
   name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
   reslist: PropTypes.arrayOf(PropTypes.string),
   viewList: PropTypes.bool,
 };
