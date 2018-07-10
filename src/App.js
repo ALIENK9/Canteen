@@ -20,7 +20,7 @@ import {
   LoginH,
 } from './components/Headers';
 import TabsMenu from './components/TabsMenu';
-import TabsReservation from './components/TabsReservation';
+import ConnectedResPage from './containers/reservations/ConnectedResPage';
 
 /* eslint-disable react/prefer-stateless-function */
 class App extends Component {
@@ -37,7 +37,7 @@ class App extends Component {
           </header>
           <Jumbotron componentClass="main">
             <Switch>
-              <Route path="/reservations/:day" component={TabsReservation} />
+              <Route path="/reservations/:day" component={ConnectedResPage} />
               <Route path="/menus/:day" component={TabsMenu} />
               <Route path="/menus" component={Menus} />
               <Route path="/reservations" component={Reservations} />
