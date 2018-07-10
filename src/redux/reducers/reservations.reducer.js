@@ -35,6 +35,11 @@ const reservationsReducer = (state = initialState, action) => {
         list: [],
         error: action.payload.error,
       };
+    case actionTypes.CLEAR_MESSAGES:
+      return {
+        ...state,
+        error: null,
+      };
     default:
       return state;
   }
