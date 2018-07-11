@@ -13,11 +13,12 @@ const ModalBody = ({ children, styles }) => (
 
 
 ModalBody.propTypes = {
-  children: PropTypes.any.isRequired,
+  children: PropTypes.node,
   styles: PropTypes.string,
 };
 
 ModalBody.defaultProps = {
+  children: null,
   styles: '',
 };
 

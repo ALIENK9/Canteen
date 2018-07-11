@@ -116,16 +116,16 @@
       "id": 7
     },
     {
-      "name": "dasdsadas",
-      "type": 1,
-      "description": "aa",
-      "id": 12
-    },
-    {
       "name": "sasasa",
       "type": 2,
       "description": "asas",
       "id": 13
+    },
+    {
+      "name": "Polletto",
+      "type": 1,
+      "description": "Pollo con vedure e fiori di papavero alle spezie orientali",
+      "id": 14
     }
   ]
 }

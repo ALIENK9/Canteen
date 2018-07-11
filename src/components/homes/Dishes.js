@@ -1,8 +1,8 @@
 import React from 'react';
-import DishesList from '../../containers/dishes/DishesList';
+import DishPage from '../../containers/dishes/DishPage';
 
 const Dishes = () => (
-  <DishesList />
+  <DishPage />
 );
 
 export default Dishes;

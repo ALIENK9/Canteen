@@ -12,7 +12,8 @@ import CheckBox from '../components/ListItems/CheckBox';
 import MenuItem from '../components/MenuItem';
 import Alert from '../components/Alert';
 
-
+// TODO: applicare lo schema con pagina principale che ho fatto anche per reservations e dishes
+// (che vanno uniformati)
 class MenuList extends Component {
   componentDidMount() {
     const { getData } = this.props;

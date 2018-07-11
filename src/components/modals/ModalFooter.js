@@ -18,12 +18,13 @@ const ModalFooter = ({ children, onCancel, styles }) => (
 
 
 ModalFooter.propTypes = {
-  children: PropTypes.any.isRequired,
+  children: PropTypes.node,
   onCancel: PropTypes.func.isRequired,
   styles: PropTypes.string,
 };
 
 ModalFooter.defaultProps = {
+  children: null,
   styles: '',
 };
 

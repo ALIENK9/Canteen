@@ -43,6 +43,18 @@ class ReservationsList extends Component {
   }
 }
 
+ReservationsList.propTypes = {
+  // match: PropTypes.any.isRequired,
+  list: PropTypes.array,
+  // getData: PropTypes.func.isRequired,
+};
+
+ReservationsList.defaultProps = {
+  list: [],
+};
+
+export default ReservationsList;
+
 
 /* class ReservationsList extends Component {
   constructor(props) {
@@ -95,18 +107,5 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getData: () => dispatch(getReservations()),
 }); */
-
-
-ReservationsList.propTypes = {
-  // match: PropTypes.any.isRequired,
-  list: PropTypes.array,
-  // getData: PropTypes.func.isRequired,
-};
-
-ReservationsList.defaultProps = {
-  list: [],
-};
-
-export default ReservationsList;
 
 // export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReservationsList));

@@ -11,7 +11,7 @@ import Footer from './components/Footer';
 import Reservations from './components/homes/Reservations';
 import Menus from './components/homes/Menus';
 import Dishes from './components/homes/Dishes';
-import Logout from './components/homes/Logout';
+// import Logout from './components/homes/Logout';
 import Login from './components/homes/Login';
 import {
   ReservationsH,
@@ -42,7 +42,7 @@ class App extends Component {
               <Route path="/menus" component={Menus} />
               <Route path="/reservations" component={Reservations} />
               <Route path="/dishes" component={Dishes} />
-              <Route path="/logout" component={Logout} />
+              {/* <Route path="/logout" component={Logout} /> */}
               <Route path="/" component={Login} />
             </Switch>
           </Jumbotron>

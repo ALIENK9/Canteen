@@ -49,7 +49,7 @@ const renderView = (viewList, reslist) => {
  * Component to render reservations for one meal
  * @param {Object} props
  */
-const Reservation = ({
+const ReservationItem = ({
   name, type, reslist, viewList,
 }) => (
   <div className="w3-container w3-center">
@@ -63,16 +63,19 @@ const Reservation = ({
   </div>
 );
 
-Reservation.propTypes = {
+ReservationItem.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  reslist: PropTypes.arrayOf(PropTypes.string),
+  reslist: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    hour: PropTypes.string,
+  })),
   viewList: PropTypes.bool,
 };
 
-Reservation.defaultProps = {
+ReservationItem.defaultProps = {
   reslist: [],
   viewList: false,
 };
 
-export default Reservation;
+export default ReservationItem;

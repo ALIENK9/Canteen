@@ -10,6 +10,8 @@ import UserList from '../../components/reservations/UserList';
 import Alert from '../../components/Alert';
 import { getReservations, deleteReservation, clearMessages } from '../../redux/actions/reservations.actions';
 
+// REVIEW: si potrebbero connettere i componenti liste e inserire lo stato locale dei tabs in redux
+// in modo da avere più componenti connessi e meno passaggi di props
 class ResPage extends Component {
   constructor(props) {
     super(props);
@@ -73,17 +75,20 @@ ResPage.propTypes = {
   getData: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   closeAlert: PropTypes.func.isRequired,
-  error: PropTypes.string.isRequired,
+  error: PropTypes.string,
+  // success: PropTypes.string,
 };
 
 ResPage.defaultProps = {
+  error: '',
+  // success: '',
   list: [],
 };
 
 const mapStateToProps = state => ({
   list: state.reservations.list,
   error: state.reservations.error,
-  success: state.reservations.success,
+  // success: state.reservations.success,
 });
 
 const mapDispatchToProps = dispatch => ({

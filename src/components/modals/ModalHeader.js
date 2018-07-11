@@ -17,11 +17,12 @@ const ModalHeader = ({ children, title, styles }) => (
 
 ModalHeader.propTypes = {
   title: PropTypes.string.isRequired,
-  children: PropTypes.any.isRequired,
+  children: PropTypes.node,
   styles: PropTypes.string,
 };
 
 ModalHeader.defaultProps = {
+  children: null,
   styles: '',
 };
 
