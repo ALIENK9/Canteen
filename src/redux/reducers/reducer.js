@@ -1,4 +1,4 @@
-import reservationsReducer from './reservations.reducer';
+import reservationsReducer from './reservations/reservations.reducer';
 import menusReducer from './menus.reducer';
 import dishesReducer from './dishes.reducer';
 import authReducer from './authentication.reducer';

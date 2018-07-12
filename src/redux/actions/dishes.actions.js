@@ -38,20 +38,20 @@ export const filterMeals = filter => ({
 // DISH ADD FORM ACTIONS
 
 export const showAddForm = () => ({
-  type: actionTypes.SHOW_ADD_FORM,
+  type: actionTypes.SHOW_ADD_DISH_FORM,
 });
 
 export const hideAddForm = () => ({
-  type: actionTypes.HIDE_ADD_FORM,
+  type: actionTypes.HIDE_ADD_DISH_FORM,
 });
 
 export const showErrorForm = error => ({
-  type: actionTypes.SHOW_ERROR_FORM,
+  type: actionTypes.SHOW_DISH_ERROR_FORM,
   payload: { error },
 });
 
 export const hideErrorForm = () => ({
-  type: actionTypes.HIDE_ERROR_FORM,
+  type: actionTypes.HIDE_DISH_ERROR_FORM,
 });
 
 

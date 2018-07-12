@@ -1,48 +1,48 @@
-import * as actionTypes from '../actionTypes';
-import { immutableRemove } from '../utils';
+import * as actionTypes from '../../actions/reservations/actionTypes';
+import { immutableRemove, immutableAdd } from '../../utils';
 
-const initialState = {
+const init = {
   list: [],
-  loading: false, // bool
-  error: null, // string || null
-  success: null, // string || null
+  daymeals: [],
 };
 
 
-const reservationsReducer = (state = initialState, action) => {
+const data = (state = init, action) => {
   switch (action.type) {
-    case actionTypes.FETCH_RESERVATIONS_STARTED:
-      return {
-        ...state,
-        loading: true,
-      };
     case actionTypes.FETCH_RESERVATIONS_SUCCESS:
       return {
         ...state,
         list: action.payload.json,
-        error: null,
       };
     case actionTypes.REMOVE_RESERVATION_SUCCESS:
       return {
         ...state,
         list: immutableRemove(state.list,
           state.list.map(reserv => reserv.id).indexOf(action.payload.id)),
-        error: null,
       };
     case actionTypes.RESERVATION_REQUEST_FAILURE:
       return {
         ...state,
         list: [],
-        error: action.payload.error,
       };
-    case actionTypes.CLEAR_MESSAGES:
+    case actionTypes.ADD_RESERVATION_SUCCESS:
       return {
         ...state,
-        error: null,
+        list: immutableAdd(state.list, action.payload.json),
+      };
+    case actionTypes.LOAD_DAYMEALS_SUCCESS:
+      return {
+        ...state,
+        daymeals: action.payload.json,
+      };
+    case actionTypes.LOAD_DAYMEALS_FAILURE:
+      return {
+        ...state,
+        daymeals: [],
       };
     default:
       return state;
   }
 };
 
-export default reservationsReducer;
+export default data;

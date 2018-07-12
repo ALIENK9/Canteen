@@ -1,17 +1,76 @@
 {
-  "userLunch": [
+  "userLunch": [],
+  "userDinner": [
     {
-      "name": "Porto Fino",
+      "name": "Cena Cewna",
       "meals": [
-        "Minestrina",
-        "Pastasciutta",
-        "Baobab"
+        {
+          "name": "Polletti",
+          "id": 0
+        },
+        {
+          "name": "Pollo2",
+          "id": 1
+        },
+        {
+          "name": "Arance",
+          "id": 2
+        }
       ],
-      "hour": "12:33",
-      "id": 2
+      "hour": "12:29",
+      "id": 1
     }
   ],
-  "userDinner": [],
+  "todayMeals": [
+    {
+      "name": "Pasta al pomodoro",
+      "type": 1,
+      "description": "Pasta con pomodoro siciliano",
+      "id": 1
+    },
+    {
+      "name": "Pasta al pesto",
+      "type": 1,
+      "description": "Pasta con pesto e noci",
+      "id": 2
+    },
+    {
+      "name": "Pasta in bianco",
+      "type": 1,
+      "description": "Pasta olio e formaggio",
+      "id": 3
+    },
+    {
+      "name": "Petto di pollo",
+      "type": 2,
+      "description": "Petto di gallina grigliato e verdure",
+      "id": 4
+    },
+    {
+      "name": "Polpettone",
+      "type": 2,
+      "description": "Polpettone di carne bovina",
+      "id": 5
+    },
+    {
+      "name": "Cotoletta vegetariana",
+      "type": 2,
+      "description": "Verdure tritate e fritte",
+      "id": 6
+    },
+    {
+      "name": "Patate arroste",
+      "type": 3,
+      "description": "patate al forno",
+      "id": 7
+    },
+    {
+      "name": "Insalata mista",
+      "type": 3,
+      "description": "Insalata gentile",
+      "id": 8
+    }
+  ],
   "mealsLunch": [
     {
       "id": 0,

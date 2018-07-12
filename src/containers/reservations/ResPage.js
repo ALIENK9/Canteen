@@ -2,99 +2,115 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import SwitcherView from '../../components/reservations/SwitcherView';
 import Panel from '../../components/Panel';
-import TabsReservation from '../../components/reservations/TabsReservation';
-import ReservationsList from '../../components/reservations/ReservationsList';
-import UserList from '../../components/reservations/UserList';
+import ReservationsList from './ReservationsList';
+import UserList from './UserList';
 import Alert from '../../components/Alert';
-import { getReservations, deleteReservation, clearMessages } from '../../redux/actions/reservations.actions';
+import { clearMessages, changeSelectedMoment, changeSelectedView } from '../../redux/actions/reservations/reservations.actions';
+import AddReservationModal from './AddReservationModal';
+import Tabs from '../../components/Tabs';
 
-// REVIEW: si potrebbero connettere i componenti liste e inserire lo stato locale dei tabs in redux
-// in modo da avere più componenti connessi e meno passaggi di props
+// REVIEW: togliere logs
+
 class ResPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      view: 'meals',
-      moment: 'lunch',
-    };
-    this.handleMomentSelect = this.handleMomentSelect.bind(this);
-    this.handleViewSelect = this.handleViewSelect.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
+    this.handleMomentChange = this.handleMomentChange.bind(this);
+    this.handleViewChange = this.handleViewChange.bind(this);
   }
 
-  componentDidMount() {
-    this.handleViewSelect(1); // simula il click iniziale
+  componentDidMount() { // due tab sono inizialmente cliccabii
+    this.handleMomentChange(1);
+    this.handleViewChange(1);
   }
 
-  handleMomentSelect(key) {
-    const { getData } = this.props;
-    const { view } = this.state;
-    const moment = key === 1 ? 'lunch' : 'dinner';
-    this.setState({ moment });
-    getData(view, moment);
+  handleViewChange(key) {
+    const { onViewChange } = this.props;
+    const newView = key === 1 ? 'meals' : 'users';
+    onViewChange(newView);
   }
 
-  handleViewSelect(key) {
-    const { getData } = this.props;
-    const { moment } = this.state;
-    const view = key === 1 ? 'meals' : 'users';
-    this.setState({ view });
-    getData(view, moment);
+  handleMomentChange(key) {
+    const { onMomentChange } = this.props;
+    const newMom = key === 1 ? 'lunch' : 'dinner';
+    onMomentChange(newMom);
   }
 
-  handleDelete(id) {
-    const { onDelete } = this.props;
-    const { moment } = this.state;
-    onDelete(moment, id);
-  }
 
   render() {
-    const { moment, view } = this.state;
     const {
-      list, match, error, closeAlert,
+      match, error, closeAlert, view, moment,
     } = this.props;
     const { day } = match.params;
+    const views = ['Vista pasti', 'Vista utenti'];
+    const moments = ['Pranzo', 'Cena'];
     return (
       <Panel title={`Prenotazioni del giorno ${day}`}>
-        <SwitcherView activeKey={view === 'user' ? 2 : 1} onSelect={this.handleViewSelect} />
-        <TabsReservation activeKey={moment === 'lunch' ? 1 : 2} onSelect={this.handleMomentSelect} />
-        {console.log(list)}
+        <Tabs tabs={views} activeKey={view === 'meals' ? 1 : 2} onSelect={this.handleViewChange} />
+        <Tabs tabs={moments} activeKey={moment === 'lunch' ? 1 : 2} onSelect={this.handleMomentChange} />
+        <AddReservationModal />
+        {console.log('Res Page view ', view)}
         { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
-        { view === 'users' && <UserList list={list} moment={moment} onDelete={this.handleDelete} /> }
-        { view === 'meals' && <ReservationsList list={list} /> }
+        { view === 'users' && <UserList /> }
+        { view === 'meals' && <ReservationsList /> }
       </Panel>
     );
   }
 }
 
+
+/* const ResPage = ({
+  match, error, closeAlert, view, list,
+}) => {
+  const { day } = match.params;
+  const views = ['Vista pasti', 'Vista utenti'];
+  const moments = ['Pranzo', 'Cena'];
+  return (
+    <Panel title={`Prenotazioni del giorno ${day}`}>
+      <SwitcherView tabs={views} />
+      <SwitcherMoment tabs={moments} />
+      <AddReservationModal />
+      {console.log('Res Page view ', view)}
+      { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
+      { view === 'users' && <UserList list={list} /> }
+      { view === 'meals' && <ReservationsList list={list} /> }
+    </Panel>
+  );
+}; */
+
+
 ResPage.propTypes = {
   match: PropTypes.object.isRequired,
-  list: PropTypes.array,
-  getData: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
+  // getData: PropTypes.func.isRequired,
+  // onDelete: PropTypes.func.isRequired,
   closeAlert: PropTypes.func.isRequired,
   error: PropTypes.string,
-  // success: PropTypes.string,
+  view: PropTypes.oneOf(['users', 'meals']),
+  moment: PropTypes.oneOf(['lunch', 'dinner']),
+  onViewChange: PropTypes.func.isRequired,
+  onMomentChange: PropTypes.func.isRequired,
 };
 
 ResPage.defaultProps = {
   error: '',
+  view: 'meals',
   // success: '',
-  list: [],
+  moment: 'lunch',
 };
 
 const mapStateToProps = state => ({
-  list: state.reservations.list,
-  error: state.reservations.error,
+  list: state.reservations.data.list,
+  error: state.reservations.messages.error,
+  view: state.reservations.ui.view,
   // success: state.reservations.success,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getData: (mode, moment) => dispatch(getReservations(mode, moment)),
-  onDelete: (moment, id) => dispatch(deleteReservation(moment, id)),
+  // getData: (mode, moment) => dispatch(getReservations(mode, moment)),
+  // onDelete: (moment, id) => dispatch(deleteReservation(moment, id)),
   closeAlert: () => dispatch(clearMessages()),
+  onMomentChange: moment => dispatch(changeSelectedMoment(moment)),
+  onViewChange: view => dispatch(changeSelectedView(view)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ResPage));

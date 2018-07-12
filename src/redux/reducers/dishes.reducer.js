@@ -8,24 +8,24 @@ const initialAddState = {
 
 const addReducer = (state = initialAddState, action) => {
   switch (action.type) {
-    case actionTypes.SHOW_ADD_FORM:
+    case actionTypes.SHOW_ADD_DISH_FORM:
       console.log('Showing add form', state);
       return {
         show: true,
         error: null,
       };
-    case actionTypes.HIDE_ADD_FORM:
+    case actionTypes.HIDE_ADD_DISH_FORM:
       return {
         show: false,
         error: null,
       };
-    case actionTypes.SHOW_ERROR_FORM:
+    case actionTypes.SHOW_DISH_ERROR_FORM:
       console.log('reducing error form: ', action.payload.error);
       return {
         ...state,
         error: action.payload.error,
       };
-    case actionTypes.HIDE_ERROR_FORM:
+    case actionTypes.HIDE_DISH_ERROR_FORM:
       return {
         ...state,
         error: null,
@@ -87,10 +87,10 @@ const dishesReducer = (state = initialState, action) => {
         ...state,
         filter: action.payload.filter,
       };
-    case actionTypes.SHOW_ADD_FORM: // cascata di azioni che sono rimandate al reducer di add
-    case actionTypes.HIDE_ADD_FORM:
-    case actionTypes.SHOW_ERROR_FORM:
-    case actionTypes.HIDE_ERROR_FORM:
+    case actionTypes.SHOW_ADD_DISH_FORM: // cascata di azioni che sono rimandate al reducer di add
+    case actionTypes.HIDE_ADD_DISH_FORM:
+    case actionTypes.SHOW_DISH_ERROR_FORM:
+    case actionTypes.HIDE_DISH_ERROR_FORM:
       console.log('showing error in form');
       return {
         ...state,

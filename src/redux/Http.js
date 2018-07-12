@@ -15,7 +15,8 @@ const fetchGet = (URL, dispatch, onStart, onSuccess, onFail) => {
         console.log('hdsdjshkdh');
         dispatch(onFail(`Problema con la richiesta GET: ${response.status} ${response.statusText}`));
       }
-    });
+    })
+    .catch(err => alert(`catch: ${err}`));
 };
 
 const fetchPut = (URL, dispatch, data, onStart, onSuccess, onFail) => {
