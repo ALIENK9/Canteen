@@ -141,6 +141,8 @@ export default class Http {
    */
   static post(URL, dispatch, data, onStart, onSuccess, onFail) { // todo: vedi sopra (id)
     const startFunction = onStart || noType;
+    console.log('Posting data: ', data);
+    console.log('URL: ', URL);
     return fetchPost(URL, dispatch, data, startFunction, onSuccess, onFail);
   }
 }

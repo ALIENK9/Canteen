@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { filterMeals, showAddForm } from '../../redux/actions/dishes.actions';
 
-
+// HACK: uniformarla utilizzando il component 'Toolbar' e creando DishToolbar container
 class Toolbar extends PureComponent {
   render() {
     const {

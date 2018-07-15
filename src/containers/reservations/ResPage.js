@@ -9,6 +9,8 @@ import Alert from '../../components/Alert';
 import { clearMessages, changeSelectedMoment, changeSelectedView } from '../../redux/actions/reservations/reservations.actions';
 import AddReservationModal from './AddReservationModal';
 import Tabs from '../../components/Tabs';
+// import Toolbar from '../../components/Toolbar';
+import ResToolbar from './ResToolbar';
 
 // REVIEW: togliere logs
 
@@ -44,10 +46,18 @@ class ResPage extends Component {
     const { day } = match.params;
     const views = ['Vista pasti', 'Vista utenti'];
     const moments = ['Pranzo', 'Cena'];
+    /* const toolbarConfig = {
+      buttons: [],
+      add: {
+        presence: true,
+        func:
+      },
+    }; */
     return (
       <Panel title={`Prenotazioni del giorno ${day}`}>
         <Tabs tabs={views} activeKey={view === 'meals' ? 1 : 2} onSelect={this.handleViewChange} />
         <Tabs tabs={moments} activeKey={moment === 'lunch' ? 1 : 2} onSelect={this.handleMomentChange} />
+        <ResToolbar view={view} />
         <AddReservationModal />
         {console.log('Res Page view ', view)}
         { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }

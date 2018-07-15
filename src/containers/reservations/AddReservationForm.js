@@ -19,6 +19,7 @@ class AddReservationForm extends Component {
       sidedish: '',
       hour: '',
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -33,20 +34,50 @@ class AddReservationForm extends Component {
   }
 
   handleSubmit(event) {
-    const { onSubmit, moment } = this.props;
+    event.preventDefault();
+    const {
+      onSubmit, moment, view, dayMeals,
+    } = this.props;
     const {
       username, maindish, seconddish, sidedish, hour,
     } = this.state;
-    event.preventDefault();
-    onSubmit({
+
+    // campi obbbligatori
+    if (!username || !maindish || !seconddish || !sidedish) return;
+
+    // TALE COSA ESISTE PER L'UNICO SCOPO DI OTTENERE IL NOME DELLA PIETANZA DA MOSTRARE
+    const mealsid = [ // id come numeri dei patti scelti
+      Number.parseInt(maindish, 10),
+      Number.parseInt(seconddish, 10),
+      Number.parseInt(sidedish, 10),
+    ];
+    const onlyIds = dayMeals.map(meal => meal.id);
+    const mealsIndex = [ // indici degli elementi scelti nell'array dayMeals
+      onlyIds.indexOf(mealsid[0]),
+      onlyIds.indexOf(mealsid[1]),
+      onlyIds.indexOf(mealsid[2]),
+    ];
+    // -----------------------fine tale cosa----------------------------------------------
+    const dato = {
       name: username,
       meals: [
-        Number.parseInt(maindish, 10),
-        Number.parseInt(seconddish, 10),
-        Number.parseInt(sidedish, 10),
+        {
+          id: mealsid[0],
+          name: dayMeals[mealsIndex[0]].name,
+        },
+        {
+          id: mealsid[1],
+          name: dayMeals[mealsIndex[1]].name,
+        },
+        {
+          id: mealsid[2],
+          name: dayMeals[mealsIndex[2]].name,
+        },
       ],
       hour,
-    }, moment);
+    };
+    console.log('Dato propnto: ', dato);
+    onSubmit(dato, moment, view);
   }
 
   render() {
@@ -84,13 +115,13 @@ class AddReservationForm extends Component {
             <p>
               Scegli il
               {' '}
-              {mapTypeToString(obj.type)}
+              {mapTypeToString(obj.type).toLowerCase()}
             </p>
             { dayMeals.filter(meal => meal.type === obj.type).map(meal => (
               <Radio
                 id={meal.id}
                 name={obj.inputname}
-                checked={state[obj.inputname] === meal.name}
+                checked={state[obj.inputname] === meal.id.toString()}
                 value={meal.id}
                 onChange={e => this.handleChange(e)}
                 inline
@@ -145,6 +176,7 @@ AddReservationForm.defaultProps = {
 const mapStateToProps = state => ({
   error: state.reservations.messages.error,
   moment: state.reservations.ui.moment,
+  view: state.reservations.ui.view,
   dayMeals: state.reservations.data.daymeals,
 });
 

@@ -16,7 +16,7 @@ const AddModal = ({ onHide, show }) => (
   >
     <ModalHeader title="Aggiungi un piatto" />
     <ModalBody>
-      {show && <AddReservationForm />}
+      <AddReservationForm />
     </ModalBody>
     <ModalFooter onCancel={onHide} />
   </Modal>

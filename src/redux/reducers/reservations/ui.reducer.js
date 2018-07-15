@@ -25,6 +25,7 @@ const ui = (state = init, action) => {
         ...state,
         addModalShow: true,
       };
+    case actionTypes.ADD_RESERVATION_SUCCESS:
     case actionTypes.ADD_MODAL_HIDE:
       return {
         ...state,

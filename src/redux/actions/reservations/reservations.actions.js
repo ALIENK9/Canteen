@@ -105,7 +105,8 @@ export const getDayMeals = (day, moment) => (dispatch) => {
   return Http.get(URL, dispatch, null, loadDayMealsSuccess, requestFailure);
 };
 
-export const postReservation = (data, moment) => (dispatch) => {
+// REVIEW: trovare il modo di evitare l'aggiunta del json se è aperto il tab 'vista pasti'
+export const postReservation = (data, moment, currentView) => (dispatch) => {
   const baseURL = 'http://localhost:4000/';
   const URL = baseURL.concat(moment === 'lunch' ? 'userLunch/' : 'userDinner/');
   return Http.post(URL, dispatch, data, null, addReservationSuccess, requestFailure);
