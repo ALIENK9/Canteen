@@ -1,7 +1,7 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import React from 'react';
 import Modal from '../../components/modals/Modal';
 import ModalBody from '../../components/modals/ModalBody';
 import ModalFooter from '../../components/modals/ModalFooter';

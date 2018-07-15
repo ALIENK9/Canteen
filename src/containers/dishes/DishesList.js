@@ -7,7 +7,7 @@ import TextBox from '../../components/ListItems/TextBox';
 import DishItem from '../../components/dishes/DishItem';
 import {
   getDishes, deleteDish,
-} from '../../redux/actions/dishes.actions';
+} from '../../redux/actions/dishes/dishes.actions';
 import { getVisibleDishes, mapTypeToString } from '../utils';
 
 class DishesList extends Component {

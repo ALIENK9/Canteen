@@ -12,6 +12,7 @@ class CalendarPage extends React.Component {
       onClickDay: this.redirect,
       calendarType: 'ISO 8601',
       className: 'calendar',
+      activeStartDate: new Date(),
     };
   }
 

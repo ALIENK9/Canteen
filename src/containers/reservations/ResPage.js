@@ -9,7 +9,6 @@ import Alert from '../../components/Alert';
 import { clearMessages, changeSelectedMoment, changeSelectedView } from '../../redux/actions/reservations/reservations.actions';
 import AddReservationModal from './AddReservationModal';
 import Tabs from '../../components/Tabs';
-// import Toolbar from '../../components/Toolbar';
 import ResToolbar from './ResToolbar';
 
 // REVIEW: togliere logs
@@ -26,6 +25,7 @@ class ResPage extends Component {
     this.handleViewChange(1);
   }
 
+  // NOTE: Funzioni per controllare i Tabs. Lasciarli componenti controllati
   handleViewChange(key) {
     const { onViewChange } = this.props;
     const newView = key === 1 ? 'meals' : 'users';

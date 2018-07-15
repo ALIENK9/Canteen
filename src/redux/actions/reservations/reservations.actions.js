@@ -1,4 +1,4 @@
-import * as actionTypes from './actionTypes';
+import * as actionTypes from './reservations.actionTypes';
 import Http from '../../Http';
 
 
@@ -106,7 +106,7 @@ export const getDayMeals = (day, moment) => (dispatch) => {
 };
 
 // REVIEW: trovare il modo di evitare l'aggiunta del json se è aperto il tab 'vista pasti'
-export const postReservation = (data, moment, currentView) => (dispatch) => {
+export const postReservation = (data, moment) => (dispatch) => {
   const baseURL = 'http://localhost:4000/';
   const URL = baseURL.concat(moment === 'lunch' ? 'userLunch/' : 'userDinner/');
   return Http.post(URL, dispatch, data, null, addReservationSuccess, requestFailure);

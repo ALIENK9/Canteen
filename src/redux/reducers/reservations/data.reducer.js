@@ -1,4 +1,4 @@
-import * as actionTypes from '../../actions/reservations/actionTypes';
+import * as actionTypes from '../../actions/reservations/reservations.actionTypes';
 import { immutableRemove, immutableAdd } from '../../utils';
 
 const init = {

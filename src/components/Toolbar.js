@@ -1,18 +1,22 @@
-import React from 'react';
 import {
   Button, Glyphicon, ToggleButton, ToggleButtonGroup, ButtonToolbar,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 // REVIEW: POTREBBE ESSERE PIÙ ESTENSIBILE
+/**
+ *
+ * @param {Object} props to know what buttons, searchbar and add button
+ */
 const Toolbar = ({
   buttons, search, add, // showAll, showMain, showSecond, showSide, openAddModal,
 }) => (
   <div id="listbar">
     <ButtonToolbar className="button-toolbar">
       <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
-        {buttons.map(button => (
-          <ToggleButton onClick={button.func} value={1}>
+        {buttons.map((button, index) => (
+          <ToggleButton onClick={button.func} value={index + 1}>
             {button.title}
           </ToggleButton>
         ))}

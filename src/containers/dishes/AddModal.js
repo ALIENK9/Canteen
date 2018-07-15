@@ -6,7 +6,7 @@ import Modal from '../../components/modals/Modal';
 import ModalBody from '../../components/modals/ModalBody';
 import ModalFooter from '../../components/modals/ModalFooter';
 import ModalHeader from '../../components/modals/ModalHeader';
-import { hideAddForm } from '../../redux/actions/dishes.actions';
+import { hideAddForm } from '../../redux/actions/dishes/dishes.actions';
 import DishForm from './DishForm';
 
 const AddModal = ({ close, show }) => (

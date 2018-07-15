@@ -5,7 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postDish, hideErrorForm } from '../../redux/actions/dishes.actions';
+import { postDish, hideErrorForm } from '../../redux/actions/dishes/dishes.actions';
 import Alert from '../../components/Alert';
 
 /*

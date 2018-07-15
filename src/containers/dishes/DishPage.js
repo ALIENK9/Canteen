@@ -1,20 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import Toolbar from './Toolbar';
+import React from 'react';
+import PropTypes from 'prop-types';
+import DishToolbar from './DishToolbar';
 import AddModal from './AddModal';
 import DishesList from './DishesList';
 import Alert from '../../components/Alert';
 import Panel from '../../components/Panel';
-import { clearMessages } from '../../redux/actions/dishes.actions';
+import { clearMessages } from '../../redux/actions/dishes/dishes.actions';
 
 // REVIEW: uniformare con lo schema di Reservations nel quale solo ma
 // Page è connessa e gli altri sono dumb components
 const DishPage = ({ success, error, closeAlert }) => (
   <Panel title="Piatti disponibili">
     <AddModal />
-    <Toolbar />
+    <DishToolbar />
     { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
     { success && <Alert type="success" message={success} onDismiss={closeAlert} /> }
     <DishesList />

@@ -1,5 +1,5 @@
-import * as actionTypes from '../actionTypes';
-import Http from '../Http';
+import * as actionTypes from './dishes.actionsTypes';
+import Http from '../../Http';
 
 export const addDishSuccess = dish => ({
   type: actionTypes.ADD_DISH_SUCCESS,
