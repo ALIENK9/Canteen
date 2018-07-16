@@ -37,7 +37,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  show: state.dishes.add.show,
+  show: state.dishes.ui.addModalShow,
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddModal));

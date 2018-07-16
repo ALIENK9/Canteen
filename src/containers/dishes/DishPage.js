@@ -33,8 +33,8 @@ DishPage.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  success: state.dishes.success,
-  error: state.dishes.error,
+  success: state.dishes.messages.success,
+  error: state.dishes.messages.error,
 });
 
 const mapDispatchToProps = dispatch => ({

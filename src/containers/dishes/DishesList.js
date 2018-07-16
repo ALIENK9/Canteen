@@ -60,8 +60,8 @@ DishesList.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  dishes: getVisibleDishes(state.dishes.list, state.dishes.filter),
-  loading: state.dishes.loading,
+  dishes: getVisibleDishes(state.dishes.data.list, state.dishes.ui.filter),
+  loading: state.dishes.ui.loading,
 });
 
 const mapDispatchToProps = dispatch => ({

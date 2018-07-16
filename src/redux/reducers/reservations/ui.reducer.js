@@ -31,6 +31,16 @@ const ui = (state = init, action) => {
         ...state,
         addModalShow: false,
       };
+    case actionTypes.FETCH_RESERVATIONS_STARTED:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actionTypes.FETCH_RESERVATIONS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
     default:
       return state;
   }

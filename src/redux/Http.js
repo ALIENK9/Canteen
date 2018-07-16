@@ -16,7 +16,7 @@ const fetchGet = (URL, dispatch, onStart, onSuccess, onFail) => {
         dispatch(onFail(`Problema con la richiesta GET: ${response.status} ${response.statusText}`));
       }
     })
-    .catch(err => alert(`catch: ${err}`));
+    .catch(err => dispatch(onFail(`Eccezione: probabimente il serve non risponde:\n ${err}`)));
 };
 
 const fetchPut = (URL, dispatch, data, onStart, onSuccess, onFail) => {

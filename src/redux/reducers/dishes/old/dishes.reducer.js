@@ -1,3 +1,4 @@
+/*
 import * as actionTypes from '../actionTypes';
 import { immutableRemove, immutableAdd } from '../utils';
 
@@ -8,28 +9,7 @@ const initialAddState = {
 
 const addReducer = (state = initialAddState, action) => {
   switch (action.type) {
-    case actionTypes.SHOW_ADD_DISH_FORM:
-      console.log('Showing add form', state);
-      return {
-        show: true,
-        error: null,
-      };
-    case actionTypes.HIDE_ADD_DISH_FORM:
-      return {
-        show: false,
-        error: null,
-      };
-    case actionTypes.SHOW_DISH_ERROR_FORM:
-      console.log('reducing error form: ', action.payload.error);
-      return {
-        ...state,
-        error: action.payload.error,
-      };
-    case actionTypes.HIDE_DISH_ERROR_FORM:
-      return {
-        ...state,
-        error: null,
-      };
+
     default:
       return state;
   }
@@ -102,3 +82,4 @@ const dishesReducer = (state = initialState, action) => {
 };
 
 export default dishesReducer;
+*/

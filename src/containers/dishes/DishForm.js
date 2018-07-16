@@ -128,7 +128,7 @@ DishForm.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  error: state.dishes.add.error,
+  error: state.dishes.messages.addFormError,
 });
 
 

@@ -4,6 +4,8 @@ import {
 import PropTypes from 'prop-types';
 import React from 'react';
 
+/* eslint-disable react/no-array-index-key */
+
 // REVIEW: POTREBBE ESSERE PIÙ ESTENSIBILE
 /**
  *
@@ -16,7 +18,7 @@ const Toolbar = ({
     <ButtonToolbar className="button-toolbar">
       <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
         {buttons.map((button, index) => (
-          <ToggleButton onClick={button.func} value={index + 1}>
+          <ToggleButton onClick={button.func} value={index + 1} key={index}>
             {button.title}
           </ToggleButton>
         ))}

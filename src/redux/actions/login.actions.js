@@ -1,5 +1,5 @@
 import * as actionTypes from '../actionTypes';
-import Http from '../Http';
+// import Http from '../Http';
 
 export const loginRequest = data => ({
   type: actionTypes.LOGIN_REQUEST,
