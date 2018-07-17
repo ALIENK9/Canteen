@@ -1,0 +1,26 @@
+@startuml react-redux
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 2
+skinparam titleBorderColor red
+skinparam titleBackgroundColor Aqua-CadetBlue
+
+title Interazione react-redux 
+
+
+node Component {
+	node "State" as Browser
+  node "Redux props" as Rprops
+}
+node HTMLView
+
+node "Redux Store" as Store
+
+node Reducer
+node Dispatch
+
+Store ---> Component : state
+Component --> Dispatch
+Component <--> HTMLView
+Dispatch --> Reducer : action 
+
+@enduml

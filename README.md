@@ -1,5 +1,5 @@
 # dolphin
-Interfaccia del servizio di prenotazione mensa. Per ora solo parte _admin_.
+Graphic Interface del servizio di prenotazione mensa. Per ora solo parte _admin_.
 
 ## Utilizzo
 1. Eseguire `npm install` per installare le dipendenze
