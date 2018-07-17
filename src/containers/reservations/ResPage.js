@@ -20,7 +20,7 @@ class ResPage extends Component {
     this.handleViewChange = this.handleViewChange.bind(this);
   }
 
-  componentDidMount() { // due tab sono inizialmente cliccabii
+  componentDidMount() { // due tab sono inizialmente cliccati
     this.handleMomentChange(1);
     this.handleViewChange(1);
   }

@@ -256,8 +256,20 @@
     }
   ],
   "meals": {
-    "dinner": [],
-    "lunch": []
+    "dinner": [
+      {
+        "name": "Pasta pugno chiuso",
+        "id": 0,
+        "checked": true
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Pasta pesto lunch",
+        "id": 0,
+        "checked": true
+      }
+    ]
   },
   "authentication": {
     "user": "Gino",
@@ -293,12 +305,6 @@
       "type": 3,
       "description": "t",
       "id": 16
-    },
-    {
-      "name": "7",
-      "type": 1,
-      "description": "7",
-      "id": 17
     }
   ]
 }

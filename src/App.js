@@ -19,8 +19,8 @@ import {
   DishesH,
   LoginH,
 } from './components/Headers';
-import TabsMenu from './components/TabsMenu';
 import ResPage from './containers/reservations/ResPage';
+import MenuPage from './containers/menus/MenuPage';
 
 /* eslint-disable react/prefer-stateless-function */
 class App extends Component {
@@ -38,7 +38,7 @@ class App extends Component {
           <Jumbotron componentClass="main">
             <Switch>
               <Route path="/reservations/:day" component={ResPage} />
-              <Route path="/menus/:day" component={TabsMenu} />
+              <Route path="/menus/:day" component={MenuPage} />
               <Route path="/menus" component={Menus} />
               <Route path="/reservations" component={Reservations} />
               <Route path="/dishes" component={Dishes} />

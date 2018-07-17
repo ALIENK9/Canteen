@@ -1,5 +1,5 @@
 import reservationsReducer from './reservations/reservations.reducer';
-import menusReducer from './menus.reducer';
+import menusReducer from './menus/menus.reducer';
 import dishesReducer from './dishes/dishes.reducer';
 import authReducer from './authentication.reducer';
 

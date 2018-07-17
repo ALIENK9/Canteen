@@ -1,6 +1,8 @@
+// @deprecated da MenusPage e Tabs
+
 import React from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
-import MenuList from '../containers/MenuList';
+// import MenuList from '../containers/MenuList';
 
 const TabsMenu = () => (
   <Tabs defaultActiveKey={1} id="uncontrolled-tab">

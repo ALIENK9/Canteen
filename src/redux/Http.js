@@ -20,6 +20,7 @@ const fetchGet = (URL, dispatch, onStart, onSuccess, onFail) => {
 };
 
 const fetchPut = (URL, dispatch, data, onStart, onSuccess, onFail) => {
+  console.log('PUT data: ', data);
   dispatch(onStart());
   const config = {
     method: 'PUT',

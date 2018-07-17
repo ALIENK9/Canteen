@@ -28,7 +28,7 @@ const Tabs = ({
 }) => (
   <BTabs defaultActiveKey={activeKey} onSelect={onSelect} id="component-tabs">
     {tabs.map((title, index) => (
-      <Tab eventKey={index + 1} title={title} />
+      <Tab eventKey={index + 1} key={title} title={title} />
     ))}
   </BTabs>
 );
