@@ -12,7 +12,7 @@ import Reservations from './components/homes/Reservations';
 import Menus from './components/homes/Menus';
 import Dishes from './components/homes/Dishes';
 // import Logout from './components/homes/Logout';
-import Login from './components/homes/Login';
+// import Login from './components/homes/Login';
 import {
   ReservationsH,
   MenuH,
@@ -21,6 +21,7 @@ import {
 } from './components/Headers';
 import ResPage from './containers/reservations/ResPage';
 import MenuPage from './containers/menus/MenuPage';
+import LoginPage from './containers/login/LoginPage';
 
 /* eslint-disable react/prefer-stateless-function */
 class App extends Component {
@@ -43,7 +44,7 @@ class App extends Component {
               <Route path="/reservations" component={Reservations} />
               <Route path="/dishes" component={Dishes} />
               {/* <Route path="/logout" component={Logout} /> */}
-              <Route path="/" component={Login} />
+              <Route path="/" component={LoginPage} />
             </Switch>
           </Jumbotron>
           <footer>

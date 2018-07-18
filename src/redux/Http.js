@@ -2,10 +2,22 @@ import { noType } from './actionTypes';
 
 // import fetch from 'whatwg-fetch';
 
+// todo: per gli errori servità mostrare anche l'errore inviato dal server nel body della response
+
+function setFetchHeaders() {
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+  };
+  console.log('header: ', headers);
+  return headers;
+}
+
 
 const fetchGet = (URL, dispatch, onStart, onSuccess, onFail) => {
   dispatch(onStart());
-  return fetch(URL, { method: 'GET' })
+  const headers = setFetchHeaders();
+  return fetch(URL, { method: 'GET', headers })
     .then(response => Promise.all([response, response.json()]))
     .then(([response, json]) => {
       if (response.status === 200) {
@@ -22,11 +34,10 @@ const fetchGet = (URL, dispatch, onStart, onSuccess, onFail) => {
 const fetchPut = (URL, dispatch, data, onStart, onSuccess, onFail) => {
   console.log('PUT data: ', data);
   dispatch(onStart());
+  const headers = setFetchHeaders();
   const config = {
     method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify(data),
   };
   return fetch(URL, config)
@@ -43,11 +54,10 @@ const fetchPut = (URL, dispatch, data, onStart, onSuccess, onFail) => {
 
 const fetchDelete = (URL, dispatch, onStart, onSuccess, onFail) => {
   dispatch(onStart());
+  const headers = setFetchHeaders();
   const config = {
     method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
   };
   return fetch(URL, config)
     .then(response => Promise.all([response]))
@@ -67,22 +77,24 @@ const fetchDelete = (URL, dispatch, onStart, onSuccess, onFail) => {
 // nella risposta del server
 const fetchPost = (URL, dispatch, data, onStart, onSuccess, onFail) => {
   dispatch(onStart());
+  const headers = setFetchHeaders();
   const config = {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify(data),
   };
+  console.log('Posted body', config.body);
+
   return fetch(URL, config)
     .then(response => Promise.all([response, response.json()]))
     .then(([response, json]) => {
       if (response.status === 200 || response.status === 201) {
         dispatch(onSuccess(json));
-        console.log(`posted${JSON.stringify(json)}`);
+        console.log(`posted ${JSON.stringify(json)}`);
       } else {
         console.log('error posting data');
-        dispatch(onFail(`Problema con la richiesta POST: ${response.status} ${response.statusText}`));
+        dispatch(onFail(`Problema con la richiesta POST: ${response.status} ${response.statusText}`,
+          json));
       }
     });
 };

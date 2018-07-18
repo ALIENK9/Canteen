@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.1.1",
+    "jsonwebtoken": "^8.3.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-bootstrap": "^0.32.1",
@@ -17,6 +18,7 @@
     "react-test-renderer": "^16.4.1",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
+    "validator": "^10.4.0",
     "whatwg-fetch": "^2.0.4"
   },
   "scripts": {
@@ -24,11 +26,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "server": "json-server -p 4000 --watch src/db.json",
+    "server": "nodemon src/server/server.js",
+    "strver": "json-server -p 4000 --watch src/server/db.json --middlewares src/server/server.js",
     "all": "react-scripts start & json-server -p 4000 --watch src/db.json"
   },
   "devDependencies": {
     "babel-preset-stage-0": "^6.24.1",
+    "body-parser": "^1.18.3",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^5.0.1",

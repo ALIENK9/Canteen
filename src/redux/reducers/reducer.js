@@ -1,7 +1,7 @@
 import reservationsReducer from './reservations/reservations.reducer';
 import menusReducer from './menus/menus.reducer';
 import dishesReducer from './dishes/dishes.reducer';
-import authReducer from './authentication.reducer';
+import authReducer from './authentication/authentication.reducer';
 
 // const getResData = () => reservations || { reservations: [] };
 // const getMenuData = () => menu || { meals: [] };

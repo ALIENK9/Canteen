@@ -39,25 +39,6 @@
       "id": 4
     },
     {
-      "name": "sasas",
-      "meals": [
-        {
-          "id": 3,
-          "name": "Pasta in bianco"
-        },
-        {
-          "id": 6,
-          "name": "Cotoletta vegetariana"
-        },
-        {
-          "id": 8,
-          "name": "Insalata mista"
-        }
-      ],
-      "hour": "13:24",
-      "id": 5
-    },
-    {
       "name": "sdfghjkl",
       "meals": [
         {
@@ -273,15 +254,10 @@
   },
   "authentication": {
     "user": "Gino",
-    "admin": true
+    "admin": true,
+    "error": null
   },
   "dishes": [
-    {
-      "name": "sadsadasdsadsada",
-      "type": 1,
-      "description": "sadsadsadsadsadsadsad",
-      "id": 7
-    },
     {
       "name": "sasasa",
       "type": 2,
