@@ -10,6 +10,7 @@ import { clearMessages, changeSelectedMoment, changeSelectedView } from '../../r
 import AddReservationModal from './AddReservationModal';
 import Tabs from '../../components/Tabs';
 import ResToolbar from './ResToolbar';
+import Loader from '../../components/Loader/Loader';
 
 // REVIEW: togliere logs
 
@@ -41,7 +42,7 @@ class ResPage extends Component {
 
   render() {
     const {
-      match, error, closeAlert, view, moment,
+      match, error, closeAlert, view, moment, loading,
     } = this.props;
     const { day } = match.params;
     const views = ['Vista pasti', 'Vista utenti'];
@@ -58,6 +59,7 @@ class ResPage extends Component {
         <Tabs tabs={views} activeKey={view === 'meals' ? 1 : 2} onSelect={this.handleViewChange} />
         <Tabs tabs={moments} activeKey={moment === 'lunch' ? 1 : 2} onSelect={this.handleMomentChange} />
         <ResToolbar view={view} />
+        <Loader loading={loading} />
         <AddReservationModal />
         {console.log('Res Page view ', view)}
         { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
@@ -99,6 +101,7 @@ ResPage.propTypes = {
   moment: PropTypes.oneOf(['lunch', 'dinner']),
   onViewChange: PropTypes.func.isRequired,
   onMomentChange: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
 };
 
 ResPage.defaultProps = {
@@ -106,12 +109,14 @@ ResPage.defaultProps = {
   view: 'meals',
   // success: '',
   moment: 'lunch',
+  loading: false,
 };
 
 const mapStateToProps = state => ({
   list: state.reservations.data.list,
   error: state.reservations.messages.error,
   view: state.reservations.ui.view,
+  loading: state.reservations.ui.loading,
   // success: state.reservations.success,
 });
 

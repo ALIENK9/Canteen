@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Loader from '../components/Loader/Loader';
 
 
 export class RequireRoleBase extends Component {
@@ -25,33 +26,39 @@ export class RequireRoleBase extends Component {
   }
 
   componentDidUpdate(oldProps) {
-    const { isAuthenticated: oldAuth, currentUserRole: oldRole } = oldProps;
-    const { isAuthenticated: newAuth, currentUserRole: newRole } = this.props;
-    if (oldAuth !== newAuth || oldRole !== newRole) this.ensureAuth(this.props);
+    const { isAuthenticated: oldAuth, currentUserRole: oldRole, isRehydrated: oldr } = oldProps;
+    const { isAuthenticated: newAuth, currentUserRole: newRole, isRehydrated: newr } = this.props;
+    if (oldAuth !== newAuth || oldRole !== newRole || oldr !== newr) this.ensureAuth(this.props);
   }
 
 
   ensureAuth(props) {
-    const { isAuthenticated, requiredRole, currentUserRole } = props;
+    const {
+      isAuthenticated, isRehydrated, requiredRole, currentUserRole,
+    } = props;
+    if (!isRehydrated) { // finchè lo stato non è settato non fa nulla
+      return false;
+    }
     if (!isAuthenticated) {
-      this.redirect = '/login';
+      this.redirect = '/login'; // non autenticato
     } else if (!RequireRoleBase.hasRequiredRole(requiredRole, currentUserRole)) {
-      this.redirect = '/forbidden';
+      this.redirect = '/forbidden'; // autenticato ma non ha i permessi
     } else {
-      this.redirect = null;
+      this.redirect = null; // autenticato e con i permessi
     }
     return true;
   }
 
   render() {
     const {
-      /* isAuthenticated, */children, requiredRole, currentUserRole,
+      /* isAuthenticated, isRehydrated, requiredRole, currentUserRole, */ children, isRehydrated,
     } = this.props;
-    if (!RequireRoleBase.hasRequiredRole(requiredRole, currentUserRole)) {
+    /* if (!isRehydrated || !RequireRoleBase.hasRequiredRole(requiredRole, currentUserRole)) {
       return null;
-    } // hack: propbabilmente si può migliorare la logica qui
+    } */ // hack: propbabilmente si può migliorare la logica qui
     return ( // autenticato && ruolo giusto
       <div>
+        <Loader loading={!isRehydrated} />
         {this.redirect && <Redirect to={this.redirect} />}
         {children}
       </div>
@@ -61,22 +68,26 @@ export class RequireRoleBase extends Component {
 
 RequireRoleBase.propTypes = {
   children: PropTypes.node.isRequired,
+  isRehydrated: PropTypes.bool,
   isAuthenticated: PropTypes.bool.isRequired,
   requiredRole: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string]),
   currentUserRole: PropTypes.string,
 };
 
 RequireRoleBase.defaultProps = {
+  isRehydrated: false,
   requiredRole: '',
   currentUserRole: 'guest',
 };
 
+/* eslint-disable no-underscore-dangle */
 const mapStateToProps = (state) => {
   const authentication = state.authentication || {};
   let role = '';
   if (authentication.isAuthenticated) role = authentication.user.admin ? 'admin' : 'user';
   else role = 'guest';
   return {
+    isRehydrated: state._persist.rehydrated,
     isAuthenticated: authentication.isAuthenticated,
     currentUserRole: role,
   };

@@ -77,6 +77,11 @@ footer {
   margin: 0 30%;
 }
 
+/* così lo spinner è al centro del Jumbotron */
+main {
+  position: relative;
+}
+
 /* LINK DELLA NAVBAR */
 
 /* nav ul {
