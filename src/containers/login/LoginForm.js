@@ -38,7 +38,7 @@ class LoginForm extends Component {
 
   handleChange(e) {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value.trim() });
   }
 
 
@@ -49,9 +49,6 @@ class LoginForm extends Component {
     const { loading } = this.props;
     return (
       <form onSubmit={this.handleSubmit}>
-        <h1>
-          Login
-        </h1>
         <FormGroup
           className="form-group"
           controlId="formEmail"

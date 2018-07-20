@@ -3,15 +3,14 @@ import {
   BrowserRouter,
   Route,
   Switch,
+  Redirect,
 } from 'react-router-dom';
 import { Jumbotron } from 'react-bootstrap';
 import './App.css';
-import Navbar from './components/Navbar';
+import Navbar from './containers/Navbar';
 import Footer from './components/Footer';
 import Reservations from './components/homes/Reservations';
 import Menus from './components/homes/Menus';
-import Dishes from './components/homes/Dishes';
-// import Logout from './components/homes/Logout';
 // import Login from './components/homes/Login';
 import {
   ReservationsH,
@@ -22,6 +21,10 @@ import {
 import ResPage from './containers/reservations/ResPage';
 import MenuPage from './containers/menus/MenuPage';
 import LoginPage from './containers/login/LoginPage';
+import DishPage from './containers/dishes/DishPage';
+// import AdminPage from './containers/AdminPage';
+import { RequireRole } from './containers/Auth';
+import Welcome from './containers/Welcome';
 
 /* eslint-disable react/prefer-stateless-function */
 class App extends Component {
@@ -38,13 +41,14 @@ class App extends Component {
           </header>
           <Jumbotron componentClass="main">
             <Switch>
-              <Route path="/reservations/:day" component={ResPage} />
-              <Route path="/menus/:day" component={MenuPage} />
-              <Route path="/menus" component={Menus} />
-              <Route path="/reservations" component={Reservations} />
-              <Route path="/dishes" component={Dishes} />
-              {/* <Route path="/logout" component={Logout} /> */}
-              <Route path="/" component={LoginPage} />
+              <Route path="/reservations/:day" component={RequireRole(ResPage, { requiredRole: 'admin' })} />
+              <Route path="/menus/:day" component={RequireRole(MenuPage, { requiredRole: 'admin' })} />
+              <Route path="/menus" component={RequireRole(Menus, { requiredRole: 'admin' })} />
+              <Route path="/reservations" component={RequireRole(Reservations, { requiredRole: 'admin' })} />
+              <Route path="/dishes" component={RequireRole(DishPage, { requiredRole: 'admin' })} />
+              <Route path="/login" component={RequireRole(LoginPage, { requiredRole: '' })} />
+              <Route path="/home" component={Welcome} />
+              <Redirect from="/" to="/home" />
             </Switch>
           </Jumbotron>
           <footer>

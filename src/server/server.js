@@ -44,7 +44,7 @@ server.post('/admin/login', (req, res) => {
     res.status(status).json({ status, message });
     return;
   }
-  const accessToken = createToken({ identifier, password });
+  const accessToken = createToken({ identifier, password, admin: true });
   console.log('accesstoken cre', accessToken);
   res.status(200).json({ token: accessToken });
 });
@@ -57,7 +57,7 @@ server.all('*', (req, res, next) => {
     const status = 401;
     const message = 'Bad authorization header';
     res.status(status).json({ status, message });
-    return;
+    return req;
   }
   try {
     verifyToken(req.headers.authorization.split(' ')[1]);

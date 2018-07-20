@@ -10,13 +10,17 @@ import { clearMessages } from '../../redux/actions/login/login.actions';
 class LoginPage extends PureComponent {
   render() {
     const {
-      error, closeAlert, redirect, admin, // in futuro servirà per capire se l'user è admin
+      error, closeAlert, isAuthenticated, admin, // in futuro servirà per capire se l'user è admin
     } = this.props;
     return (
       <div className="row">
         <div className="col-md-4 col-md-offset-4">
+          <h1>
+            Login
+          </h1>
           { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
-          { redirect && <Redirect to="/menus" /> /* redirige se l'admin è loggato */ }
+          {console.log('Login admin?', isAuthenticated, admin)}
+          { isAuthenticated && admin && <Redirect to="/home" /> /* redirige se l'admin è loggato */ }
           <LoginForm />
         </div>
       </div>
@@ -26,21 +30,21 @@ class LoginPage extends PureComponent {
 
 LoginPage.propTypes = {
   error: PropTypes.string,
-  redirect: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
   closeAlert: PropTypes.func.isRequired,
   admin: PropTypes.bool,
 };
 
 LoginPage.defaultProps = {
   error: '',
-  redirect: false,
+  isAuthenticated: false,
   admin: false,
 };
 
 const mapStateToProps = state => ({
   error: state.authentication.error,
-  admin: state.authentication.admin,
-  redirect: state.authentication.redirect,
+  admin: state.authentication.user.admin,
+  isAuthenticated: state.authentication.isAuthenticated,
 });
 
 

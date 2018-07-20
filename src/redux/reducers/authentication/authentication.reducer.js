@@ -1,17 +1,20 @@
 import * as actionTypes from '../../actions/login/login.actionTypes';
+import isEmptyObject from '../../../validation/validationUtils';
 
 const initialState = {
-  user: null, // string || null
-  token: '', // string
-  admin: false, // bool
+  isAuthenticated: false,
+  user: {
+    name: '',
+    admin: false,
+  }, // string || null
+  // token: '', // string
   loading: false, // bool
   error: '', // string || null
-  redirect: false,
   success: '', // string || null
 };
 
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case actionTypes.LOGIN_REQUEST:
       return {
@@ -22,24 +25,35 @@ const authReducer = (state = initialState, action) => {
     case actionTypes.LOGIN_FAILURE:
       return {
         ...state,
-        user: null,
-        admin: false,
+        isAuthenticated: false,
+        user: {
+          name: '',
+          admin: false,
+        },
         loading: false,
         error: action.payload.error,
-        redirect: false,
-        token: '',
       };
     case actionTypes.LOGIN_SUCCESS:
       console.log(action.payload.user, action.payload.admin);
       return {
         ...state,
-        user: action.payload.auth.user,
-        admin: action.payload.auth.admin,
+        isAuthenticated: !!action.payload.auth.identifier,
+        user: {
+          name: action.payload.auth.identifier,
+          admin: action.payload.auth.admin,
+        },
         loading: false,
         error: '',
-        redirect: true,
-        token: action.payload.auth.token,
       };
+    case actionTypes.SET_CURRENT_USER: {
+      const { user } = action.payload;
+      return {
+        ...state,
+        isAuthenticated: !isEmptyObject(user),
+        user,
+        loading: false,
+      };
+    }
     case actionTypes.CLEAR_MESSAGES:
       return {
         ...state,
