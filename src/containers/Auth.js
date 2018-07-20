@@ -4,7 +4,7 @@ import { withRouter, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Loader from '../components/Loader/Loader';
 
-
+/* eslint-disable react/no-unused-prop-types */
 export class RequireRoleBase extends Component {
   static hasRequiredRole(requiredRole, currentUserRole) {
     let hasReqRole = false;

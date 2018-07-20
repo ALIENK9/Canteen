@@ -4,5 +4,6 @@
  * @param {Object} object
  */
 export default function isEmptyObject(object) {
-  return Object.getOwnPropertyNames(object).length === 0 && object.constructor === Object;
+  return !object
+  || (Object.getOwnPropertyNames(object).length === 0 && object.constructor === Object);
 }
