@@ -6,7 +6,7 @@ import {
   Navbar as NavBar, NavItem, Nav,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { logout } from '../redux/actions/login/login.actions';
+import { logout } from '../redux/actions/authentication/authentication.actions';
 
 class Navbar extends PureComponent {
   constructor(props) {
@@ -30,7 +30,7 @@ class Navbar extends PureComponent {
 
     // const guestLinks = ();
 
-    const userLinks = (<div />);
+    const userLinks = (<NavItem />);
 
     const adminLinks = (
       <React.Fragment>

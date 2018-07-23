@@ -1,20 +1,19 @@
-import * as actionTypes from '../../actions/login/login.actionTypes';
-import isEmptyObject from '../../../validation/validationUtils';
+import { combineReducers } from 'redux';
+import user from './user.reducer';
+import messages from './messages.reducer';
+import ui from './ui.reducer';
+import isAuthenticated from './isAuthenticated.reducer';
 
-const initialState = {
-  isAuthenticated: false,
-  user: {
-    name: '',
-    admin: false,
-  }, // string || null
-  // token: '', // string
-  loading: false, // bool
-  error: '', // string || null
-  success: '', // string || null
-};
+const authReducer = combineReducers({
+  isAuthenticated,
+  user,
+  messages,
+  ui,
+});
 
+export default authReducer;
 
-const authReducer = (state = initialState, action = {}) => {
+/* const s = (state = initialState, action = {}) => {
   switch (action.type) {
     case actionTypes.LOGIN_REQUEST:
       return {
@@ -63,6 +62,4 @@ const authReducer = (state = initialState, action = {}) => {
     default:
       return state;
   }
-};
-
-export default authReducer;
+}; */

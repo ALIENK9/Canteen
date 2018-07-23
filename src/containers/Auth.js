@@ -60,7 +60,7 @@ export class RequireRoleBase extends Component {
       <div>
         <Loader loading={!isRehydrated} />
         {this.redirect && <Redirect to={this.redirect} />}
-        {children}
+        {isRehydrated && children}
       </div>
     );
   }

@@ -4,7 +4,7 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LoginForm from './LoginForm';
 import Alert from '../../components/Alert';
-import { clearMessages } from '../../redux/actions/login/login.actions';
+import { clearMessages } from '../../redux/actions/authentication/authentication.actions';
 
 
 class LoginPage extends PureComponent {
@@ -42,7 +42,7 @@ LoginPage.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  error: state.authentication.error,
+  error: state.authentication.messages.error,
   admin: state.authentication.user.admin,
   isAuthenticated: state.authentication.isAuthenticated,
 });

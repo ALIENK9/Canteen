@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import Http from '../../Http';
-import * as actionTypes from './login.actionTypes';
+import * as actionTypes from './authentication.actionTypes';
 
 export const loginRequest = () => ({
   type: actionTypes.LOGIN_REQUEST,
@@ -14,7 +14,8 @@ export const loginRequest = () => ({
   fatto da redux-persist)
 - far reindirizzare alla home quando si fa il logout
 */
-export const loginSuccess = ({ token }) => {
+// @deprecated
+/* export const loginSuccess = ({ token }) => {
   localStorage.setItem('authToken', token);
   console.log('Token in action', token);
   const auth = jwt.decode(token);
@@ -23,7 +24,7 @@ export const loginSuccess = ({ token }) => {
     type: actionTypes.LOGIN_SUCCESS,
     payload: { auth },
   });
-};
+}; */
 
 export const loginFailure = (error, json) => {
   console.log(json);
@@ -40,7 +41,7 @@ const setCurrentUser = (userObject) => {
   const decoded = jwt.decode(token) || {};
   const user = {
     ...decoded,
-    ...userObject, // contiene solo token
+    ...userObject, // dovrebbe contenere solo token
   };
   console.log('Decoded token', user);
   return {
@@ -61,6 +62,5 @@ export const login = data => (dispatch) => {
 }; // ora chiama setCurrentUser
 
 export const logout = () => (dispatch) => { // dovrà fare il redirect
-  localStorage.removeItem('token'); // non servirà più una volta appurato che persiste lo stato correttamente
   dispatch(setCurrentUser({}));
 };

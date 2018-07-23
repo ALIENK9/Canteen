@@ -1,13 +1,17 @@
 import { noType } from './actionTypes';
 
-// import fetch from 'whatwg-fetch';
-
 // todo: per gli errori servità mostrare anche l'errore inviato dal server nel body della response
 
-function setFetchHeaders() {
+function getFetchHeaders() {
+  const root = JSON.parse(sessionStorage.getItem('persist:root')) || { authentication: { user: { token: null } } };
+  console.log('root', root, typeof root);
+  const { authentication } = root;
+  const { user } = JSON.parse(authentication);
+  console.log('user', user);
+  const { token } = user;
   const headers = {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+    Authorization: `Bearer ${token}`,
   };
   console.log('header: ', headers);
   return headers;
@@ -16,7 +20,7 @@ function setFetchHeaders() {
 
 const fetchGet = (URL, dispatch, onStart, onSuccess, onFail) => {
   dispatch(onStart());
-  const headers = setFetchHeaders();
+  const headers = getFetchHeaders();
   return fetch(URL, { method: 'GET', headers })
     .then(response => Promise.all([response, response.json()]))
     .then(([response, json]) => {
@@ -34,7 +38,7 @@ const fetchGet = (URL, dispatch, onStart, onSuccess, onFail) => {
 const fetchPut = (URL, dispatch, data, onStart, onSuccess, onFail) => {
   console.log('PUT data: ', data);
   dispatch(onStart());
-  const headers = setFetchHeaders();
+  const headers = getFetchHeaders();
   const config = {
     method: 'PUT',
     headers,
@@ -54,7 +58,7 @@ const fetchPut = (URL, dispatch, data, onStart, onSuccess, onFail) => {
 
 const fetchDelete = (URL, dispatch, onStart, onSuccess, onFail) => {
   dispatch(onStart());
-  const headers = setFetchHeaders();
+  const headers = getFetchHeaders();
   const config = {
     method: 'DELETE',
     headers,
@@ -75,7 +79,7 @@ const fetchDelete = (URL, dispatch, onStart, onSuccess, onFail) => {
 
 const fetchPost = (URL, dispatch, data, onStart, onSuccess, onFail) => {
   dispatch(onStart());
-  const headers = setFetchHeaders();
+  const headers = getFetchHeaders();
   const config = {
     method: 'POST',
     headers,

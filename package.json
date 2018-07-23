@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.1.1",
+    "fetch-defaults": "^1.0.0",
     "jsonwebtoken": "^8.3.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
@@ -15,9 +16,9 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
     "react-spinners": "^0.3.2",
-    "react-test-renderer": "^16.4.1",
     "redux": "^4.0.0",
     "redux-persist": "^5.10.0",
+    "redux-persist-transform-filter": "0.0.18",
     "redux-thunk": "^2.3.0",
     "validator": "^10.4.0",
     "whatwg-fetch": "^2.0.4"
@@ -45,6 +46,7 @@
     "json-server": "^0.14.0",
     "redux-mock-store": "^1.5.3",
     "redux-testkit": "^1.0.6",
-    "seamless-immutable": "^7.1.3"
+    "seamless-immutable": "^7.1.3",
+    "react-test-renderer": "^16.4.1"
   }
 }

@@ -23,7 +23,7 @@ function createToken(payload) {
 }
 
 // Verify the token
-function verifyToken(token) {
+async function verifyToken(token) {
   return jwt.verify(token, SECRET_KEY, (err, decode) => (decode !== undefined ? decode : err));
 }
 
@@ -50,7 +50,7 @@ server.post('/admin/login', (req, res) => {
 });
 
 // verifica token ad ogni richiesta tranne che nella route precedente
-server.all('*', (req, res, next) => {
+server.all('*', async (req, res, next) => {
   console.log('path', req.path);
   if (req.path === '/admin/login') return next();
   if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer') {
@@ -60,7 +60,7 @@ server.all('*', (req, res, next) => {
     return req;
   }
   try {
-    verifyToken(req.headers.authorization.split(' ')[1]);
+    await verifyToken(req.headers.authorization.split(' ')[1]);
     next();
   } catch (err) {
     const status = 401;

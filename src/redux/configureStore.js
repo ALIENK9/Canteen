@@ -1,21 +1,22 @@
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
-import { persistReducer, persistStore } from 'redux-persist';
-import storage from 'redux-persist/lib/storage/session';
+import { /* persistReducer, */ persistStore } from 'redux-persist';
+// import storage from 'redux-persist/lib/storage/session';
 import rootReducer from './reducers/reducer';
 
-const persistConfig = {
+
+/* const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['authentication'], // only authentication will be persisted
+  // whitelist: ['authentication'],
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer); */
 
 /* eslint-disable no-underscore-dangle */
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const store = createStore(
-  persistedReducer, /* preloadedState, */ composeEnhancers(
+  rootReducer, /* preloadedState, */ composeEnhancers(
     applyMiddleware(thunk),
   ),
 );

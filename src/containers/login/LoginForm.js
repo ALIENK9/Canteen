@@ -6,7 +6,7 @@ import {
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import validateLogin from '../../validation/login.validator';
-import { login } from '../../redux/actions/login/login.actions';
+import { login } from '../../redux/actions/authentication/authentication.actions';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -101,11 +101,11 @@ LoginForm.propTypes = {
 };
 
 LoginForm.defaultProps = {
-  loading: true,
+  loading: false,
 };
 
 const mapStateToProps = state => ({
-  loading: state.authentication.loading,
+  loading: state.authentication.ui.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
