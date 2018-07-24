@@ -2,28 +2,6 @@
   "userLunch": [
     {
       "user": {
-        "id": 9,
-        "name": "Cewbecca Pranzolo"
-      },
-      "meals": [
-        {
-          "id": 2,
-          "name": "Pasta al pesto"
-        },
-        {
-          "id": 5,
-          "name": "Polpettone"
-        },
-        {
-          "id": 7,
-          "name": "Patate arroste"
-        }
-      ],
-      "hour": "12:34",
-      "id": 2
-    },
-    {
-      "user": {
         "id": 7,
         "name": "Andrea Pinochiello"
       },
@@ -68,28 +46,6 @@
     },
     {
       "user": {
-        "id": 4,
-        "name": "Pegonia Zastelli"
-      },
-      "meals": [
-        {
-          "id": 1,
-          "name": "Pasta al pomodoro"
-        },
-        {
-          "id": 5,
-          "name": "Polpettone"
-        },
-        {
-          "id": 7,
-          "name": "Patate arroste"
-        }
-      ],
-      "hour": "",
-      "id": 8
-    },
-    {
-      "user": {
         "id": 6,
         "name": "Pollo Arrosto"
       },
@@ -109,31 +65,31 @@
       ],
       "hour": "",
       "id": 9
-    }
-  ],
-  "userDinner": [
+    },
     {
       "user": {
-        "id": 1,
-        "name": "Carla de Carli"
+        "id": 2,
+        "name": "Pippo Baudo"
       },
       "meals": [
         {
-          "name": "Polletti",
-          "id": 0
+          "id": 1,
+          "name": "Pasta al pomodoro"
         },
         {
-          "name": "Pollo2",
-          "id": 1
+          "id": 5,
+          "name": "Polpettone"
         },
         {
-          "name": "Arance",
-          "id": 2
+          "id": 7,
+          "name": "Patate arroste"
         }
       ],
-      "hour": "12:29",
-      "id": 1
-    },
+      "hour": "12:45",
+      "id": 10
+    }
+  ],
+  "userDinner": [
     {
       "user": {
         "id": 3,
@@ -155,6 +111,64 @@
       ],
       "hour": "12:13",
       "id": 3
+    },
+    {
+      "user": {
+        "id": 5,
+        "name": "Pistolero Fulminato"
+      },
+      "meals": [
+        {
+          "id": 1,
+          "name": "Pasta al pomodoro"
+        },
+        {
+          "id": 5,
+          "name": "Polpettone"
+        },
+        {
+          "id": 7,
+          "name": "Patate arroste"
+        }
+      ],
+      "hour": "12:21",
+      "id": 4
+    },
+    {
+      "user": {
+        "id": 2,
+        "name": "Pippo Baudo"
+      },
+      "meals": [
+        {
+          "id": 1,
+          "name": "Pasta al pomodoro"
+        },
+        {
+          "id": 5,
+          "name": "Polpettone"
+        },
+        {
+          "id": 7,
+          "name": "Patate arroste"
+        }
+      ],
+      "hour": "",
+      "id": 5
+    },
+    {
+      "user": {
+        "id": 3,
+        "name": "Fiordaliso Profumato"
+      },
+      "meals": [
+        {
+          "id": "sumitiFantasia",
+          "name": "Un panin coa porcheta"
+        }
+      ],
+      "hour": null,
+      "id": 7
     }
   ],
   "users": [
@@ -338,6 +352,16 @@
       {
         "name": "Pasta pugno chiuso",
         "id": 0,
+        "checked": false
+      },
+      {
+        "name": "Pasta pomodoro",
+        "id": 1,
+        "checked": true
+      },
+      {
+        "name": "Pasta verdure",
+        "id": 1,
         "checked": true
       }
     ],

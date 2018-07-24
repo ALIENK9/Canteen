@@ -3,14 +3,16 @@
     {
       "id": 1,
       "name": "bruno",
-      "email": "bruno@bruno.bruno",
-      "password": "brunomars"
+      "identifier": "bruno@bruno.bruno",
+      "password": "brunomars",
+      "admin": true
     },
     {
       "id": 2,
       "name": "nilson",
-      "email": "nilson@email.com",
-      "password": "nilsonaaaaa"
+      "identifier": "nilson@email.com",
+      "password": "nilsonaaaaa",
+      "admin": false
     }
   ]
 }

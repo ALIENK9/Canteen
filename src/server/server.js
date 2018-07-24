@@ -30,12 +30,12 @@ async function verifyToken(token) {
 // Check if the user exists in database
 function isAuthenticated({ identifier, password }) {
   console.log(userdb);
-  return userdb.users.findIndex(user => user.email === identifier
+  return userdb.users.findIndex(user => user.identifier === identifier
      && user.password === password) !== -1;
 }
 
 // verifica credenziali e invia token todo: fornire Nome Cognome e admin
-server.post('/admin/login', (req, res) => {
+server.post('/login', (req, res) => {
   const { identifier, password } = req.body;
   if (!isAuthenticated({ identifier, password })) {
     const status = 401;
@@ -44,7 +44,7 @@ server.post('/admin/login', (req, res) => {
     res.status(status).json({ status, message });
     return;
   }
-  const accessToken = createToken({ identifier, password, admin: true });
+  const accessToken = createToken({ identifier, admin: true });
   console.log('accesstoken cre', accessToken);
   res.status(200).json({ token: accessToken });
 });

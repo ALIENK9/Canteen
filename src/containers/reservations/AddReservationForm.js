@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  FormGroup, ControlLabel, FormControl, HelpBlock, Button, Radio,
+  FormGroup, ControlLabel, FormControl, HelpBlock, Button, Radio, Checkbox,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -20,10 +20,12 @@ class AddReservationForm extends Component {
       maindish: '1',
       seconddish: '5',
       sidedish: '7',
+      lunchbag: false,
       hour: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
   }
 
   componentDidMount() {
@@ -52,13 +54,20 @@ class AddReservationForm extends Component {
     this.setState({ user: selectedOption });
   }
 
+
+  handleCheckboxChange(e) {
+    const { checked } = e.target;
+    console.log(checked);
+    this.setState({ lunchbag: checked });
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     const {
       onSubmit, moment, view, dayMeals,
     } = this.props;
     const {
-      user, maindish, seconddish, sidedish, hour,
+      user, maindish, seconddish, sidedish, hour, lunchbag,
     } = this.state;
 
     // campi obbbligatori
@@ -77,9 +86,11 @@ class AddReservationForm extends Component {
       onlyIds.indexOf(mealsid[2]),
     ];
     // -----------------------fine tale cosa----------------------------------------------
-    const dato = {
-      user: { id: user.value, name: user.label },
-      // NOTE: user: Object con { name: "Nome Cognome", id: (id) }
+    const userSubmit = { id: user.value, name: user.label };
+
+    // NOTE: user: Object con { name: "Nome Cognome", id: (id) }
+    const dato = !lunchbag ? {
+      user: userSubmit,
       meals: [
         {
           id: mealsid[0],
@@ -95,6 +106,15 @@ class AddReservationForm extends Component {
         },
       ],
       hour,
+    } : {
+      user: userSubmit,
+      meals: [
+        {
+          id: 'sumitiFantasia',
+          name: 'Panino al sacco',
+        },
+      ],
+      hour: null,
     };
     console.log('Dato pronto per submit: ', dato);
     onSubmit(dato, moment, view);
@@ -102,7 +122,7 @@ class AddReservationForm extends Component {
 
   render() {
     const { state } = this;
-    const { user, hour } = state;
+    const { user, hour, lunchbag } = state;
     const {
       error, closeAlert, dayMeals, users,
     } = this.props;
@@ -111,36 +131,41 @@ class AddReservationForm extends Component {
       { type: 2, inputname: 'seconddish' },
       { type: 3, inputname: 'sidedish' },
     ];
+    const unsernameInput = 'username';
 
-    // const users = [{ label: 'Pippo Baudo', value: 1 }, { label: 'Giovanni', value: 2 }];
-
+    /* eslint-disable jsx-a11y/label-has-for */
     return (
       <form onSubmit={this.handleSubmit}>
         { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
-        <FormGroup controlId="username">
-          <ControlLabel>
-            Nome e cognome
-          </ControlLabel>
-          {/* TODO: fare la fetch e ottenere i nomi */ console.log('Utenti', users) }
+
+        <FormGroup>
+          <label htmlFor={unsernameInput}>
+            Nome utente
+          </label>
           <Select
             options={users}
+            inputId={unsernameInput}
             onChange={opt => this.handleSelectChange(opt)}
             placeholder="Mario Bianchi"
           />
-          {// TODO: comment to be removed
-          /* <FormControl
-            type="text"
-            name="username"
-            value={username}
-            placeholder="Mario Rossi"
-            onChange={e => this.handleChange(e)}
-          /> */}
+
           {!user.value && (
           <HelpBlock bsClass="help-block-error">
             L&apos;intestatario della prenotazione &egrave; richiesto
           </HelpBlock>
           )}
         </FormGroup>
+
+        <FormGroup controlId="lunchbag">
+          <Checkbox
+            checked={state.lunchbag}
+            title="Pranzo al sacco (panino)"
+            onChange={e => this.handleCheckboxChange(e)}
+          >
+          Pranzo al sacco
+          </Checkbox>
+        </FormGroup>
+
         {typesArray.map(obj => (
           <FormGroup key={obj.type}>
             <p>
@@ -156,6 +181,7 @@ class AddReservationForm extends Component {
                 checked={state[obj.inputname] === meal.id.toString()}
                 value={meal.id}
                 onChange={e => this.handleChange(e)}
+                disabled={!!lunchbag}
                 inline
               >
                 {meal.name}
@@ -169,6 +195,7 @@ class AddReservationForm extends Component {
             Orario pasto
           </ControlLabel>
           <FormControl
+            disabled={!!lunchbag}
             name="hour"
             type="time"
             value={hour}

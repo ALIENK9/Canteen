@@ -57,7 +57,7 @@ export const clearMessages = () => ({
 
 
 export const login = data => (dispatch) => {
-  const URL = 'http://localhost:4000/admin/login';
+  const URL = 'http://localhost:4000/login';
   return Http.post(URL, dispatch, data, loginRequest, setCurrentUser, loginFailure);
 }; // ora chiama setCurrentUser
 
