@@ -5,32 +5,51 @@ import {
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import Select from 'react-select';
 import Alert from '../../components/Alert';
 import { mapTypeToString } from '../utils';
-import { getDayMeals, clearMessages, postReservation } from '../../redux/actions/reservations/reservations.actions';
+import {
+  getDayMeals, postReservation, hideErrorForm, getUserList,
+} from '../../redux/actions/reservations/reservations.actions';
 
 class AddReservationForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      maindish: '',
-      seconddish: '',
-      sidedish: '',
+      user: { label: '', value: null },
+      maindish: '1',
+      seconddish: '5',
+      sidedish: '7',
       hour: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
   componentDidMount() {
-    const { getMeals, match, moment } = this.props;
+    const {
+      getUsers, getMeals, match, moment,
+    } = this.props;
     const { day } = match.params;
     getMeals(day, moment);
+    getUsers();
   }
 
+  /**
+   * Handle user interactions with input changing local state whenever user types or select
+   * @param {Event} event
+   */
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
+  }
+
+  /**
+   * Handle change of selection for react-select component
+   * @param {Object} selectedOption The selection object contining 'label' and 'value'
+   */
+  handleSelectChange(selectedOption) {
+    this.setState({ user: selectedOption });
   }
 
   handleSubmit(event) {
@@ -39,11 +58,11 @@ class AddReservationForm extends Component {
       onSubmit, moment, view, dayMeals,
     } = this.props;
     const {
-      username, maindish, seconddish, sidedish, hour,
+      user, maindish, seconddish, sidedish, hour,
     } = this.state;
 
     // campi obbbligatori
-    if (!username || !maindish || !seconddish || !sidedish) return;
+    if (!user.value || !maindish || !seconddish || !sidedish) return;
 
     // TALE COSA ESISTE PER L'UNICO SCOPO DI OTTENERE IL NOME DELLA PIETANZA DA MOSTRARE
     const mealsid = [ // id come numeri dei patti scelti
@@ -59,7 +78,8 @@ class AddReservationForm extends Component {
     ];
     // -----------------------fine tale cosa----------------------------------------------
     const dato = {
-      name: username,
+      user: { id: user.value, name: user.label },
+      // NOTE: user: Object con { name: "Nome Cognome", id: (id) }
       meals: [
         {
           id: mealsid[0],
@@ -76,19 +96,23 @@ class AddReservationForm extends Component {
       ],
       hour,
     };
-    console.log('Dato propnto: ', dato);
+    console.log('Dato pronto per submit: ', dato);
     onSubmit(dato, moment, view);
   }
 
   render() {
     const { state } = this;
-    const { username, hour } = state;
-    const { error, closeAlert, dayMeals } = this.props;
+    const { user, hour } = state;
+    const {
+      error, closeAlert, dayMeals, users,
+    } = this.props;
     const typesArray = [
       { type: 1, inputname: 'maindish' },
       { type: 2, inputname: 'seconddish' },
       { type: 3, inputname: 'sidedish' },
     ];
+
+    // const users = [{ label: 'Pippo Baudo', value: 1 }, { label: 'Giovanni', value: 2 }];
 
     return (
       <form onSubmit={this.handleSubmit}>
@@ -97,21 +121,28 @@ class AddReservationForm extends Component {
           <ControlLabel>
             Nome e cognome
           </ControlLabel>
-          <FormControl
+          {/* TODO: fare la fetch e ottenere i nomi */ console.log('Utenti', users) }
+          <Select
+            options={users}
+            onChange={opt => this.handleSelectChange(opt)}
+            placeholder="Mario Bianchi"
+          />
+          {// TODO: comment to be removed
+          /* <FormControl
             type="text"
             name="username"
             value={username}
             placeholder="Mario Rossi"
             onChange={e => this.handleChange(e)}
-          />
-          {!username && (
+          /> */}
+          {!user.value && (
           <HelpBlock bsClass="help-block-error">
             L&apos;intestatario della prenotazione &egrave; richiesto
           </HelpBlock>
           )}
         </FormGroup>
         {typesArray.map(obj => (
-          <FormGroup>
+          <FormGroup key={obj.type}>
             <p>
               Scegli il
               {' '}
@@ -119,6 +150,7 @@ class AddReservationForm extends Component {
             </p>
             { dayMeals.filter(meal => meal.type === obj.type).map(meal => (
               <Radio
+                key={meal.id}
                 id={meal.id}
                 name={obj.inputname}
                 checked={state[obj.inputname] === meal.id.toString()}
@@ -162,27 +194,37 @@ AddReservationForm.propTypes = {
     description: PropTypes.string,
     id: PropTypes.number,
   })),
+  users: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    id: PropTypes.number,
+  })),
+  getUsers: PropTypes.func.isRequired,
   getMeals: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
   moment: PropTypes.oneOf(['lunch', 'dinner']),
+  view: PropTypes.oneOf(['meals', 'users']),
 };
 
 AddReservationForm.defaultProps = {
   error: '',
   dayMeals: [],
+  users: [],
   moment: 'lunch',
+  view: 'users',
 };
 
 const mapStateToProps = state => ({
-  error: state.reservations.messages.error,
+  error: state.reservations.messages.addFormError,
   moment: state.reservations.ui.moment,
   view: state.reservations.ui.view,
   dayMeals: state.reservations.data.daymeals,
+  users: state.reservations.data.users.map(({ id, name }) => ({ value: id, label: name })),
 });
 
 const mapDispatchToProps = dispatch => ({
+  getUsers: () => dispatch(getUserList()),
   getMeals: (day, moment) => dispatch(getDayMeals(day, moment)),
-  closeAlert: () => dispatch(clearMessages()),
+  closeAlert: () => dispatch(hideErrorForm()),
   onSubmit: (state, moment) => dispatch(postReservation(state, moment)),
 });
 

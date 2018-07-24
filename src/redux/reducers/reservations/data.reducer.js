@@ -4,6 +4,7 @@ import { immutableRemove, immutableAdd } from '../../utils';
 const init = {
   list: [],
   daymeals: [],
+  users: [],
 };
 
 
@@ -30,6 +31,12 @@ const data = (state = init, action) => {
         ...state,
         list: immutableAdd(state.list, action.payload.json),
       };
+    case actionTypes.LOAD_FORM_DATA_STARTED:
+      return {
+        ...state,
+        daymeals: [],
+        users: [],
+      };
     case actionTypes.LOAD_DAYMEALS_SUCCESS:
       return {
         ...state,
@@ -39,6 +46,16 @@ const data = (state = init, action) => {
       return {
         ...state,
         daymeals: [],
+      };
+    case actionTypes.LOAD_USERS_SUCCESS:
+      return {
+        ...state,
+        users: action.payload.json,
+      };
+    case actionTypes.LOAD_USERS_FAILURE:
+      return {
+        ...state,
+        users: [],
       };
     default:
       return state;

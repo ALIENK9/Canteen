@@ -41,12 +41,13 @@ class UserList extends Component {
     console.log('UserList list', list);
     return (
       <List>
-        { list.map(user => (
-          <TextBox key={user.id} id={user.id} onDelete={this.handleDelete}>
+        { list.map(reserv => (
+          <TextBox key={reserv.id} id={reserv.id} onDelete={this.handleDelete}>
+            {console.log(reserv)}
             <UserReservationItem
-              name={user.name}
-              hour={user.hour}
-              meals={user.meals}
+              name={reserv.user ? reserv.user.name : 'Help'}
+              hour={reserv.hour}
+              meals={reserv.meals}
             />
           </TextBox>
         )) }
@@ -74,7 +75,10 @@ UserList.propTypes = {
       name: PropTypes.string,
       id: PropTypes.number,
     })),
-    name: PropTypes.string,
+    user: PropTypes.shape({
+      name: PropTypes.string,
+      id: PropTypes.number,
+    }),
     hour: PropTypes.string,
   })),
   view: PropTypes.oneOf(['users', 'meals']),
@@ -88,11 +92,11 @@ UserList.defaultProps = {
     {
       id: 0,
       meals: [],
-      name: '',
+      user: { name: '', id: null },
       hour: '00:00',
     },
   ],
-  view: 'meals',
+  view: 'users',
   moment: 'lunch',
   getData: () => {},
   onDelete: () => {},

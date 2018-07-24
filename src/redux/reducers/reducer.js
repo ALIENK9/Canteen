@@ -14,6 +14,7 @@ const rootReducer = combineReducers({
   menus: menusReducer,
   dishes: dishesReducer,
   authentication: authReducer,
+  _persist: {}, // sembra necessario come valore di default per 'rehydrated'
 });
 
 // export default rootReducer;
@@ -29,6 +30,15 @@ const persistConfig = {
   blacklist: ['reservations', 'dishes', 'menus'],
   stateReconciler: autoMergeLevel1,
   transforms: [
+    /* createTransform(transformAuth,
+      state => ({
+        ...state,
+        authentication: {
+          ...state.authentication,
+          messages: { error: '', success: '' },
+          ui: { loading: false },
+        },
+      }), { whitelist: 'authReducer' }), */
     transformAuth,
   ],
 };

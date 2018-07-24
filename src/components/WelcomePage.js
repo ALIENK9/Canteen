@@ -21,8 +21,13 @@ const WelcomePage = ({ username, welcomeText }) => (
 );
 
 WelcomePage.propTypes = {
-  welcomeText: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
+  welcomeText: PropTypes.string,
+  username: PropTypes.string,
+};
+
+WelcomePage.defaultProps = {
+  welcomeText: '',
+  username: '',
 };
 
 export default WelcomePage;

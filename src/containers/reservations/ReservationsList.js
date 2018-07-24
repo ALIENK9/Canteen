@@ -72,7 +72,10 @@ ReservationsList.propTypes = {
 };
 
 ReservationsList.defaultProps = {
-  list: [],
+  list: [{
+    name: '',
+    hour: '00:00',
+  }],
   view: 'meals',
   moment: 'lunch',
   getData: () => [],

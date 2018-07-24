@@ -1,7 +1,11 @@
+import { isEmpty } from 'lodash';
 import { noType } from './actionTypes';
 
 // todo: per gli errori servità mostrare anche l'errore inviato dal server nel body della response
 
+/**
+ * Return header with authorization token obtained from sessionStorage
+ */
 function getFetchHeaders() {
   const root = JSON.parse(sessionStorage.getItem('persist:root')) || { authentication: { user: { token: null } } };
   console.log('root', root, typeof root);
@@ -17,22 +21,37 @@ function getFetchHeaders() {
   return headers;
 }
 
+/**
+ * Utility to dispatch onFail action with provided error
+ * @param {Function} dispatch redux dispatch function
+ * @param {Function} onFail action creator to be dispatched on fail with error
+ * @param {String} error the error message returned with rejection
+ */
+function handleRejectionError(dispatch, onFail, error) {
+  dispatch(onFail(`C'è stato un errore di connessione al server:
+   controlla la connessione o attendi qualche minuto. L'errore completo è: ${error}`));
+}
 
+// TODO: gestire rejection e mostrare errori decenti anche nelle altre richieste
 const fetchGet = (URL, dispatch, onStart, onSuccess, onFail) => {
   dispatch(onStart());
   const headers = getFetchHeaders();
   return fetch(URL, { method: 'GET', headers })
-    .then(response => Promise.all([response, response.json()]))
+    .then(response => Promise.all([response, response.json()]),
+      error => handleRejectionError(dispatch, onFail, error)) // gestisce il reject della fetch
     .then(([response, json]) => {
       if (response.status === 200) {
         console.log('Dati ', json);
         dispatch(onSuccess(json));
       } else {
-        console.log('hdsdjshkdh');
-        dispatch(onFail(`Problema con la richiesta GET: ${response.status} ${response.statusText}`));
+        console.log('Errore GET in corso');
+        const errorMessage = isEmpty(response)
+          ? 'Errore: la richiesta GET al server non ha ricevuto risposta'
+          : `Errore: la richiesta GET è fallita con il seguente codice ${response.status} ${response.statusText}`;
+        dispatch(onFail(errorMessage));
       }
-    })
-    .catch(err => dispatch(onFail(`Eccezione: probabimente il serve non risponde:\n ${err}`)));
+    });
+  // .catch(err => dispatch(onFail(`Eccezione: probabimente il server non risponde:\n ${err}`)));
 };
 
 const fetchPut = (URL, dispatch, data, onStart, onSuccess, onFail) => {
