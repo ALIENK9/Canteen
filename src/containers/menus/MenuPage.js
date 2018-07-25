@@ -7,7 +7,8 @@ import Panel from '../../components/Panel';
 import Tabs from '../../components/Tabs';
 import Alert from '../../components/Alert';
 import MenuList from './MenuList';
-import { putMenus, changeSelectedMoment } from '../../redux/actions/menus/menus.actions';
+import { putMenus, changeSelectedMoment, clearMessages } from '../../redux/actions/menus/menus.actions';
+import Loader from '../../components/Loader/Loader';
 
 class MenuPage extends Component {
   constructor(props) {
@@ -31,17 +32,23 @@ class MenuPage extends Component {
 
   render() {
     const {
-      match, moment, error, closeAlert,
+      match, moment, error, success, closeAlert, loading,
     } = this.props;
     const { day } = match.params;
     const moments = ['Pranzo', 'Cena'];
     return (
       <Panel title={`Scelta menù del giorno ${day}`}>
-        <Tabs tabs={moments} activeKey={moment === 'lunch' ? 1 : 2} onSelect={this.handleMomentChange} />
+        <Tabs
+          tabs={moments}
+          activeKey={moment === 'lunch' ? 1 : 2}
+          onSelect={this.handleMomentChange}
+        />
         { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
+        { success && <Alert type="success" message={success} onDismiss={closeAlert} /> }
+        <Loader loading={loading} />
         <MenuList />
         <Button bsStyle="primary" type="submit" onClick={e => this.handleSubmit(e)}>
-            Conferma e salva
+          Conferma e salva
         </Button>
       </Panel>
     );
@@ -50,8 +57,10 @@ class MenuPage extends Component {
 
 MenuPage.propTypes = {
   match: PropTypes.object.isRequired,
+  loading: PropTypes.array,
   moment: PropTypes.oneOf(['lunch', 'dinner']),
   error: PropTypes.string,
+  success: PropTypes.string,
   closeAlert: PropTypes.func,
   onMomentChange: PropTypes.func,
   onSubmit: PropTypes.func,
@@ -71,6 +80,8 @@ MenuPage.propTypes = {
 
 MenuPage.defaultProps = {
   moment: 'lunch',
+  loading: true,
+  success: '',
   error: '',
   closeAlert: () => {},
   onMomentChange: () => {},
@@ -82,12 +93,15 @@ MenuPage.defaultProps = {
 };
 
 const mapStateToProps = state => ({
+  loading: state.menus.ui.loading,
   meals: state.menus.data.meals,
   moment: state.menus.ui.moment,
   error: state.menus.messages.error,
+  success: state.menus.messages.success,
 });
 
 const mapDispatchToProps = dispatch => ({
+  closeAlert: () => dispatch(clearMessages()),
   onSubmit: meals => dispatch(putMenus(meals)),
   onMomentChange: moment => dispatch(changeSelectedMoment(moment)),
 });

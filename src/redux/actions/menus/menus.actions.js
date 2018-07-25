@@ -26,6 +26,7 @@ export const postMenuStarted = () => ({
 
 export const postMenuSuccess = () => ({
   type: actionTypes.POST_MENU_SUCCESS,
+  payload: { success: 'Dati salvati correttamente' },
 });
 
 export const postMenuFailure = error => ({

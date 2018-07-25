@@ -1,5 +1,5 @@
 import Validator from 'validator';
-import isEmptyObject from './validationUtils';
+import { isEmpty } from 'lodash';
 
 export default function validateLogin(data) {
   const errors = {};
@@ -12,6 +12,6 @@ export default function validateLogin(data) {
 
   return {
     errors,
-    isValid: isEmptyObject(errors),
+    isValid: isEmpty(errors),
   };
 }

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { PacmanLoader } from 'react-spinners';
 import List from '../../components/List';
 import CheckBox from '../../components/ListItems/CheckBox';
 import MenuItem from '../../components/MenuItem';
@@ -18,7 +17,7 @@ class MenuList extends Component {
 
   render() {
     const {
-      meals, onItemClick, moment, loading,
+      meals, onItemClick, moment,
     } = this.props;
     return (
       <List>
@@ -55,7 +54,6 @@ MenuList.propTypes = {
   getData: PropTypes.func.isRequired,
   // match: PropTypes.any.isRequired,
   moment: PropTypes.string.isRequired,
-  loading: PropTypes.bool,
   // error: PropTypes.string,
   // success: PropTypes.string,
   // closeMessage: PropTypes.func.isRequired,
@@ -66,7 +64,6 @@ MenuList.defaultProps = {
     lunch: [],
     dinner: [],
   },
-  loading: true, // mostra lo spinner (bool)
   // error: '', // messaggio di errore
   // success: '', // conferma di successo oppure vuoto
 };

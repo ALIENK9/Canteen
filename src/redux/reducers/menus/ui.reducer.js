@@ -5,7 +5,7 @@ const init = {
   moment: 'lunch',
 };
 
-const ui = (state = init, action) => {
+const ui = (state = init, action = {}) => {
   switch (action.type) {
     case actionTypes.POST_MENU_STARTED:
     case actionTypes.FETCH_MENU_STARTED:

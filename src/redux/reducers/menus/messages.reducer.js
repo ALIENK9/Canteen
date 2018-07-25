@@ -5,13 +5,13 @@ const init = {
   success: '',
 };
 
-const messages = (state = init, action) => {
+const messages = (state = init, action = {}) => {
   switch (action.type) {
     case actionTypes.POST_MENU_SUCCESS:
       return {
         ...state,
         error: '',
-        success: 'Dati salvati correttamente',
+        success: action.payload.success,
       };
     case actionTypes.POST_MENU_FAILURE:
     case actionTypes.FETCH_MENU_FAILURE:
