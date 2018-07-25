@@ -44,6 +44,12 @@ export const changeSelectedMoment = moment => ({
 });
 
 
+export const filterMeals = filter => ({
+  type: actionTypes.FILTER_MEALS,
+  payload: { filter },
+});
+
+
 // ASYNC
 
 export const getMenus = () => (dispatch) => {

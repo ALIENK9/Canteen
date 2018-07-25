@@ -6,6 +6,7 @@ import List from '../../components/List';
 import CheckBox from '../../components/ListItems/CheckBox';
 import MenuItem from '../../components/MenuItem';
 import { getMenus, clearMessages, toggleMeal } from '../../redux/actions/menus/menus.actions';
+import { mapTypeToString, getVisibleDishes } from '../utils';
 
 // TODO: applicare lo schema con pagina principale che ho fatto anche per reservations e dishes
 // (che vanno uniformati)
@@ -29,7 +30,7 @@ class MenuList extends Component {
             checked={meal.checked}
             param={moment}
           >
-            <MenuItem name={meal.name} />
+            <MenuItem name={meal.name} type={mapTypeToString(meal.type)} />
           </CheckBox>
         ))}
       </List>
@@ -68,13 +69,20 @@ MenuList.defaultProps = {
   // success: '', // conferma di successo oppure vuoto
 };
 
-const mapStateToProps = state => ({
-  meals: state.menus.data.meals,
-  loading: state.menus.ui.loading,
-  moment: state.menus.ui.moment,
-  error: state.menus.messages.error,
-  success: state.menus.messages.success,
-});
+const mapStateToProps = (state) => {
+  const { lunch, dinner } = state.menus.data.meals;
+  const { filter } = state.menus.ui;
+  return {
+    meals: {
+      lunch: getVisibleDishes(lunch, filter),
+      dinner: getVisibleDishes(dinner, filter),
+    },
+    loading: state.menus.ui.loading,
+    moment: state.menus.ui.moment,
+    error: state.menus.messages.error,
+    success: state.menus.messages.success,
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   getData: () => dispatch(getMenus()),

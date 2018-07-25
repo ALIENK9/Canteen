@@ -1,11 +1,10 @@
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import Toolbar from '../../components/Toolbar';
-import { addModalShow, filterMeals } from '../../redux/actions/reservations/reservations.actions';
+import { filterMeals } from '../../redux/actions/menus/menus.actions';
 
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  buttons: ownProps.view === 'meals' ? [
+const mapDispatchToProps = dispatch => ({
+  buttons: [
     {
       title: 'Tutti',
       func: () => dispatch(filterMeals('ALL')),
@@ -22,12 +21,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       title: 'Contorni',
       func: () => dispatch(filterMeals('SIDE')),
     },
-  ] : [],
-  search: { presence: false, func: () => {} },
+  ],
+  search: {
+    presence: false,
+  },
   add: {
-    // REVIEW: trick un po' sporco per avere acesso alla prop 'view' e nascondere la barra
-    presence: ownProps.view === 'users',
-    func: () => dispatch(addModalShow()),
+    presence: false,
   },
 });
 

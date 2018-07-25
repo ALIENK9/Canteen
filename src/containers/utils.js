@@ -18,8 +18,14 @@ export const compareDishes = (a, b) => {
 };
 
 export const mapTypeToString = (type) => {
-  if (type === 1) return 'Primo';
-  if (type === 2) return 'Secondo';
-  if (type === 3) return 'Contorno';
-  return 'Unknown';
+  switch (type) {
+    case 1:
+      return 'Primo';
+    case 2:
+      return 'Secondo';
+    case 3:
+      return 'Contorno';
+    default:
+      return 'Unknown';
+  }
 };

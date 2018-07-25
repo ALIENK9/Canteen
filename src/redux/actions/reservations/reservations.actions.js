@@ -80,6 +80,11 @@ export const changeSelectedMoment = moment => ({
   payload: { moment },
 });
 
+export const filterMeals = filter => ({
+  type: actionTypes.FILTER_MEALS,
+  payload: { filter },
+});
+
 // form error
 export const hideErrorForm = () => ({
   type: actionTypes.HIDE_RESERVATION_ERROR_FORM,

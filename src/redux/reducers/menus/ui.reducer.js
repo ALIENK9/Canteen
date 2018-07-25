@@ -3,6 +3,7 @@ import * as actionTypes from '../../actions/menus/menus.actionTypes';
 const init = {
   loading: false,
   moment: 'lunch',
+  filter: 'ALL',
 };
 
 const ui = (state = init, action = {}) => {
@@ -25,6 +26,11 @@ const ui = (state = init, action = {}) => {
       return {
         ...state,
         moment: action.payload.moment,
+      };
+    case actionTypes.FILTER_MEALS:
+      return {
+        ...state,
+        filter: action.payload.filter,
       };
     default:
       return state;

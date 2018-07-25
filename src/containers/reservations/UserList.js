@@ -41,9 +41,9 @@ class UserList extends Component {
     console.log('UserList list', list);
     return (
       <List>
+        {console.log('ddddddddddddddddddddaaaaaaaaaaaaaaaati', list)}
         { list.map(reserv => (
           <TextBox key={reserv.id} id={reserv.id} onDelete={this.handleDelete}>
-            {console.log(reserv)}
             <UserReservationItem
               name={reserv.user ? reserv.user.name : 'Help'}
               hour={reserv.hour}

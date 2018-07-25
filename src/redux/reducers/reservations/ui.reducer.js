@@ -5,6 +5,7 @@ const init = {
   view: 'meals',
   moment: 'lunch',
   addModalShow: false,
+  filter: 'ALL',
 };
 
 
@@ -40,6 +41,11 @@ const ui = (state = init, action) => {
       return {
         ...state,
         loading: false,
+      };
+    case actionTypes.FILTER_MEALS:
+      return {
+        ...state,
+        filter: action.payload.filter,
       };
     default:
       return state;

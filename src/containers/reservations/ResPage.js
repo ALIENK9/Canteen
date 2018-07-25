@@ -22,8 +22,24 @@ class ResPage extends Component {
   }
 
   componentDidMount() { // due tab sono inizialmente cliccati
+    console.log('I mounted respage');
     this.handleMomentChange(1);
     this.handleViewChange(1);
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log('I updated respage');
+    const {
+      view: ov, moment: om, error: oe, loading: ol,
+    } = prevProps;
+    const {
+      view, moment, error, loading,
+    } = this.props;
+    if (view !== ov || moment !== om || error !== oe || loading !== ol) {
+      console.log('I detected change');
+      if (view !== ov) this.handleViewChange(view);
+      if (moment !== om) this.handleMomentChange(moment);
+    }
   }
 
   // NOTE: Funzioni per controllare i Tabs. Lasciarli componenti controllati
@@ -47,15 +63,10 @@ class ResPage extends Component {
     const { day } = match.params;
     const views = ['Vista pasti', 'Vista utenti'];
     const moments = ['Pranzo', 'Cena'];
-    /* const toolbarConfig = {
-      buttons: [],
-      add: {
-        presence: true,
-        func:
-      },
-    }; */
+
     return (
       <Panel title={`Prenotazioni del giorno ${day}`}>
+        {view}
         <Tabs tabs={views} activeKey={view === 'meals' ? 1 : 2} onSelect={this.handleViewChange} />
         <Tabs tabs={moments} activeKey={moment === 'lunch' ? 1 : 2} onSelect={this.handleMomentChange} />
         <ResToolbar view={view} />
@@ -93,8 +104,6 @@ class ResPage extends Component {
 
 ResPage.propTypes = {
   match: PropTypes.object.isRequired,
-  // getData: PropTypes.func.isRequired,
-  // onDelete: PropTypes.func.isRequired,
   closeAlert: PropTypes.func.isRequired,
   error: PropTypes.string,
   view: PropTypes.oneOf(['users', 'meals']),
@@ -109,7 +118,7 @@ ResPage.defaultProps = {
   view: 'meals',
   // success: '',
   moment: 'lunch',
-  loading: false,
+  loading: true,
 };
 
 const mapStateToProps = state => ({

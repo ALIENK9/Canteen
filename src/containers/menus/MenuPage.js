@@ -9,6 +9,7 @@ import Alert from '../../components/Alert';
 import MenuList from './MenuList';
 import { putMenus, changeSelectedMoment, clearMessages } from '../../redux/actions/menus/menus.actions';
 import Loader from '../../components/Loader/Loader';
+import MenuToolbar from './MenuToolbar';
 
 class MenuPage extends Component {
   constructor(props) {
@@ -45,6 +46,7 @@ class MenuPage extends Component {
         />
         { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
         { success && <Alert type="success" message={success} onDismiss={closeAlert} /> }
+        <MenuToolbar />
         <Loader loading={loading} />
         <MenuList />
         <Button bsStyle="primary" type="submit" onClick={e => this.handleSubmit(e)}>
