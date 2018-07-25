@@ -352,7 +352,8 @@
       {
         "name": "Pasta pugno chiuso",
         "id": 0,
-        "checked": false
+        "type": 1,
+        "checked": true
       },
       {
         "name": "Pasta pomodoro",
@@ -361,7 +362,17 @@
       },
       {
         "name": "Pasta verdure",
-        "id": 1,
+        "id": 2,
+        "checked": false
+      },
+      {
+        "name": "Pasta jkjsks 11",
+        "id": 3,
+        "checked": true
+      },
+      {
+        "name": "Pasta psadsadasda",
+        "id": 4,
         "checked": true
       }
     ],
@@ -373,10 +384,29 @@
       }
     ]
   },
-  "authentication": {
-    "user": "Gino",
-    "admin": true,
-    "error": null
+  "mealsManfrediVecchiaIdea": {
+    "date": "gg-mm-aa",
+    "dinner": {
+      "id": "asfd",
+      "primi": [
+        {
+          "id": "as",
+          "name": "sd<sdsda"
+        }
+      ],
+      "secondi": [
+        {}
+      ]
+    },
+    "lunch": {
+      "id": "asfd",
+      "primi": [
+        {}
+      ],
+      "secondi": [
+        {}
+      ]
+    }
   },
   "dishes": [
     {

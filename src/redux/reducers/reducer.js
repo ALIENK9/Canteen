@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import { createFilter } from 'redux-persist-transform-filter';
+// import { createFilter } from 'redux-persist-transform-filter';
 import autoMergeLevel1 from 'redux-persist/es/stateReconciler/autoMergeLevel1';
 import storage from 'redux-persist/lib/storage/session';
-import { persistReducer } from 'redux-persist';
+import { persistReducer, createTransform } from 'redux-persist';
 import reservationsReducer from './reservations/reservations.reducer';
 import menusReducer from './menus/menus.reducer';
 import dishesReducer from './dishes/dishes.reducer';
@@ -14,15 +14,30 @@ const rootReducer = combineReducers({
   menus: menusReducer,
   dishes: dishesReducer,
   authentication: authReducer,
-  _persist: {}, // sembra necessario come valore di default per 'rehydrated'
+  _persist: { rehydrated: false }, // sembra necessario come valore di default per 'rehydrated'
 });
 
 // export default rootReducer;
 
-const transformAuth = createFilter(
+const transformAuth = createTransform(
+  stateToBePersisted => ({
+    isAuthenticated: stateToBePersisted.isAuthenticated,
+    user: stateToBePersisted.user,
+  }),
+  stateToBeRehydrated => ({
+    ...stateToBeRehydrated,
+    messages: {
+      error: '',
+      success: '',
+    },
+    ui: { loading: false },
+  }),
+  { whitelist: ['authentication'] },
+);
+/* createFilter(
   'authentication',
   ['user', 'isAuthenticated'],
-);
+); */
 
 const persistConfig = {
   key: 'root',
@@ -30,15 +45,6 @@ const persistConfig = {
   blacklist: ['reservations', 'dishes', 'menus'],
   stateReconciler: autoMergeLevel1,
   transforms: [
-    /* createTransform(transformAuth,
-      state => ({
-        ...state,
-        authentication: {
-          ...state.authentication,
-          messages: { error: '', success: '' },
-          ui: { loading: false },
-        },
-      }), { whitelist: 'authReducer' }), */
     transformAuth,
   ],
 };
