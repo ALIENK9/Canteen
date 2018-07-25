@@ -66,7 +66,6 @@ class ResPage extends Component {
 
     return (
       <Panel title={`Prenotazioni del giorno ${day}`}>
-        {view}
         <Tabs tabs={views} activeKey={view === 'meals' ? 1 : 2} onSelect={this.handleViewChange} />
         <Tabs tabs={moments} activeKey={moment === 'lunch' ? 1 : 2} onSelect={this.handleMomentChange} />
         <ResToolbar view={view} />
