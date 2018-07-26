@@ -114,7 +114,7 @@ export const getReservations = (mode, moment) => (dispatch) => {
   else if (mode === 'meals') URL = URL.concat(moment === 'lunch' ? 'mealsLunch' : 'mealsDinner');
   else URL = null;
   console.log(URL, moment, mode);
-  return Http.get(URL, dispatch, fetchReservationsStarted, fetchReservationsSuccess,
+  return Http.get(URL, null, dispatch, fetchReservationsStarted, fetchReservationsSuccess,
     requestFailure);
 };
 

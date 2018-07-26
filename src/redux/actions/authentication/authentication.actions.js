@@ -30,7 +30,7 @@ export const loginFailure = (error, json) => {
   console.log(json);
   return {
     type: actionTypes.LOGIN_FAILURE,
-    payload: { error: json.message },
+    payload: { error: json ? json.message : error },
   };
 };
 

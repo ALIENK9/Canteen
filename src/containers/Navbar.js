@@ -8,6 +8,54 @@ import {
 import PropTypes from 'prop-types';
 import { logout } from '../redux/actions/authentication/authentication.actions';
 
+/**
+ *
+ * @param {String} linkName the name to be displayed in link
+ * @param {Number} eventKey key to be fired with onChange event
+ * @param {String} toPath href link path
+ * @param {String} currentLocation current active path
+ */
+function createLink(linkName, eventKey, toPath, currentLocation) {
+  console.debug('createLinkk', currentLocation, toPath);
+  if (currentLocation === toPath) {
+    return (
+      <li className="active">
+        <NavBar.Text>
+          {linkName}
+        </NavBar.Text>
+      </li>
+    );
+  }
+  return (
+    <LinkContainer to={toPath}>
+      <NavItem eventKey={eventKey}>
+        {linkName}
+      </NavItem>
+    </LinkContainer>
+  );
+}
+
+/**
+ * Create a link item for bootstrap brand element. Return a static text element if link is active
+ * @param {String} linkName link name to be displayed
+ * @param {String} toPath href link prop
+ * @param {String} currentLocation current location returned by router
+ */
+function brandLink(linkName, toPath, currentLocation) {
+  if (currentLocation === toPath) {
+    return (
+      <NavBar.Text className="active">
+        {linkName}
+      </NavBar.Text>
+    );
+  }
+  return (
+    <NavLink to="/home">
+      {linkName}
+    </NavLink>
+  );
+}
+
 class Navbar extends PureComponent {
   constructor(props) {
     super(props);
@@ -25,8 +73,9 @@ class Navbar extends PureComponent {
   }
 
   render() {
-    const { isAuthenticated, isAdmin } = this.props;
+    const { isAuthenticated, isAdmin, location } = this.props;
     const { redirectHome } = this.state;
+    const { pathname: currentLocation } = location; // path in cui si trova l'utente
 
     // const guestLinks = ();
 
@@ -34,21 +83,9 @@ class Navbar extends PureComponent {
 
     const adminLinks = (
       <React.Fragment>
-        <LinkContainer to="/menus">
-          <NavItem eventKey={1}>
-            Menu
-          </NavItem>
-        </LinkContainer>
-        <LinkContainer to="/reservations">
-          <NavItem eventKey={2}>
-            Prenotazioni
-          </NavItem>
-        </LinkContainer>
-        <LinkContainer to="/dishes">
-          <NavItem eventKey={3}>
-            Inserimenti piatti
-          </NavItem>
-        </LinkContainer>
+        {createLink('Gestione dei menù', 1, '/menus', currentLocation)}
+        {createLink('Gestione prenotazioni', 2, '/reservations', currentLocation)}
+        {createLink('Inserimento piatti', 3, '/dishes', currentLocation)}
       </React.Fragment>
     );
 
@@ -61,7 +98,7 @@ class Navbar extends PureComponent {
     const loginLink = (
       <LinkContainer to="/login">
         <NavItem eventKey={4}>
-            Login
+          Login
         </NavItem>
       </LinkContainer>
     );
@@ -70,9 +107,7 @@ class Navbar extends PureComponent {
       <NavBar inverse collapseOnSelect>
         <NavBar.Header>
           <NavBar.Brand>
-            <NavLink to="/home">
-              Home
-            </NavLink>
+            {brandLink('Home', '/home', currentLocation)}
           </NavBar.Brand>
           <NavBar.Toggle />
         </NavBar.Header>
@@ -91,6 +126,7 @@ class Navbar extends PureComponent {
 }
 
 Navbar.propTypes = {
+  location: PropTypes.string.isRequired,
   isAuthenticated: PropTypes.bool,
   isAdmin: PropTypes.bool,
   onLogout: PropTypes.func.isRequired,

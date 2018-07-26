@@ -84,34 +84,26 @@ main {
 
 /* LINK DELLA NAVBAR */
 
-/* nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333;
-}
-
-nav li {
-  float: left;
-}
-
-nav li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-li a:hover {
-  background-color: rgb(209, 193, 50);
-} */
-
-.active a {
+/* .active a {
   background-color: rgb(228, 205, 77) !important;
   background-image: none !important;
-  cursor: not-allowed !important;
+  /*pointer-events: none !important;
+} */
+
+nav li.active {
+  background-color: rgb(228, 205, 77) !important;
+  margin: 0;
+  height: 100%;
+}
+
+nav li.active p {
+  color: black !important;
+}
+
+nav p.active {
+  background-color: rgb(228, 205, 77) !important;
+  margin: 0 !important;
+  color: black !important;
 }
 
 .text-left {

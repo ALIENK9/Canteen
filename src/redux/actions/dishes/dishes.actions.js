@@ -59,7 +59,7 @@ export const hideErrorForm = () => ({
 
 export const getDishes = () => (dispatch) => {
   const URL = 'http://localhost:4000/dishes';
-  return Http.get(URL, dispatch, null, fetchDishesSuccess, requestFailure);
+  return Http.get(URL, null, dispatch, null, fetchDishesSuccess, requestFailure);
 };
 
 export const deleteDish = id => (dispatch) => {

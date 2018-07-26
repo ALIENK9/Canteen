@@ -37,8 +37,8 @@ class ResPage extends Component {
     } = this.props;
     if (view !== ov || moment !== om || error !== oe || loading !== ol) {
       console.log('I detected change');
-      if (view !== ov) this.handleViewChange(view);
-      if (moment !== om) this.handleMomentChange(moment);
+      if (view !== ov) this.handleViewChange(view === 'meals' ? 1 : 2);
+      if (moment !== om) this.handleMomentChange(moment === 'lunch' ? 1 : 2);
     }
   }
 

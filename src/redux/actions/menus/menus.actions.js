@@ -54,7 +54,7 @@ export const filterMeals = filter => ({
 
 export const getMenus = () => (dispatch) => {
   const URL = 'http://localhost:4000/meals';
-  return Http.get(URL, dispatch, fetchMenuStarted, fetchMenuSuccess,
+  return Http.get(URL, null, dispatch, fetchMenuStarted, fetchMenuSuccess,
     fetchMenuFailure);
 };
 

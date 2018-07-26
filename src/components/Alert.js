@@ -6,7 +6,7 @@ const Alert = ({ type, message, onDismiss }) => {
   let title;
   switch (type) {
     case 'danger':
-      title = 'Oh crap! Qualcosa di brutto è successo';
+      title = 'ERRORE';
       break;
     case 'success':
       title = 'Operazione completata correttamente';
