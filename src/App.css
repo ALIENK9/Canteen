@@ -12,7 +12,8 @@ html, body {
 }
 
 header {
-  padding: 1em auto;
+  background-color: rgb(190, 215, 236);
+  padding: 1em 0.5em;
 }
 
 body {
@@ -82,6 +83,10 @@ main {
   position: relative;
 }
 
+.jumbotron-main {
+  padding: 1em 0.5em;
+}
+
 /* LINK DELLA NAVBAR */
 
 /* .active a {
@@ -93,13 +98,15 @@ main {
 nav li.active {
   background-color: rgb(228, 205, 77) !important;
   margin: 0;
-  height: 100%;
 }
 
 nav li.active p {
   color: black !important;
+  margin: 0 !important;
+  padding: 15px 15px !important;
 }
 
+/* occorre per il Brand link che non è inserito in un <li> */
 nav p.active {
   background-color: rgb(228, 205, 77) !important;
   margin: 0 !important;
@@ -147,11 +154,6 @@ nav p.active {
 
 
 
-
-header {
-  background-color: #222;
-  color: white;
-}
 
 .App {
   height: 100%;

@@ -1,8 +1,9 @@
-# TODO eventuali
+# TODO
 
 ## !!!
 
-- [ ] Trovare un modo decente per disabilitare i link in modo accessibile
+- [ ] Creare dinamicamente header delle pagine apponendo il giusto titolo
+- [X] Trovare un modo decente per disabilitare i link in modo accessibile
 - [X] Aggiungere react-select component al Nome utente in addReservation
 - [ ] Inserire il pulsante di download del report sotto al calendario
 - [X] Inserire filtri su tutte le pagine con liste (admin)

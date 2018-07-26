@@ -104,7 +104,7 @@ class Navbar extends PureComponent {
     );
 
     return (
-      <NavBar inverse collapseOnSelect>
+      <NavBar collapseOnSelect>
         <NavBar.Header>
           <NavBar.Brand>
             {brandLink('Home', '/home', currentLocation)}

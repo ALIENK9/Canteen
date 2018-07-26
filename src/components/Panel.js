@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 const Panel = ({ title, children }) => (
   <div>
-    <h3>
+    <h2>
       {title}
-    </h3>
+    </h2>
     {children}
   </div>
 );

@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import DocumentTitle from 'react-document-title';
 import LoginForm from './LoginForm';
 import Alert from '../../components/Alert';
 import { clearMessages } from '../../redux/actions/authentication/authentication.actions';
@@ -18,13 +19,14 @@ class LoginPage extends PureComponent {
     // previene errori dovuti alla parziale idratazione del redux store
     return (
       <div className="row">
+        <DocumentTitle title="Login" />
         <div className="col-md-4 col-md-offset-4">
           <h1>
             Login
           </h1>
           { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
           {console.log('Login admin?', isAuthenticated, admin)}
-          { isAuthenticated && admin && <Redirect to="/home" /> /* redirige se l'admin è loggato */ }
+          { isAuthenticated && <Redirect to="/home" /> /* redirige se l'user è loggato */ }
           <LoginForm />
         </div>
       </div>

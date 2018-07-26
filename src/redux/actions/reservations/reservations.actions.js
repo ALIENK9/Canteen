@@ -126,12 +126,12 @@ export const deleteReservation = (moment, id) => (dispatch) => {
 
 export const getUserList = () => (dispatch) => {
   const URL = 'http://localhost:4000/users';
-  return Http.get(URL, dispatch, loadFormDataStarted, loadUsersSuccess, loadUsersFailure);
+  return Http.get(URL, null, dispatch, loadFormDataStarted, loadUsersSuccess, loadUsersFailure);
 };
 
 export const getDayMeals = (/* day, moment */) => (dispatch) => {
   const URL = 'http://localhost:4000/todayMeals';
-  return Http.get(URL, dispatch, loadFormDataStarted, loadDayMealsSuccess, loadDayMealsFailure);
+  return Http.get(URL, null, dispatch, loadFormDataStarted, loadDayMealsSuccess, loadDayMealsFailure);
 };
 
 export const postReservation = (data, moment) => (dispatch) => {

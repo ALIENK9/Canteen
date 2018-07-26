@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import React from 'react';
 import PropTypes from 'prop-types';
+import DocumentTitle from 'react-document-title';
 import DishToolbar from './DishToolbar';
 import AddModal from './AddModal';
 import DishesList from './DishesList';
@@ -16,6 +17,7 @@ const DishPage = ({
   success, error, closeAlert, loading,
 }) => (
   <Panel title="Piatti disponibili">
+    <DocumentTitle title="Gestione piatti" />
     <DishToolbar />
     <AddModal />
     <Loader loading={loading} />

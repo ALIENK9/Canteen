@@ -23,15 +23,19 @@ const Toolbar = ({
           </ToggleButton>
         ))}
       </ToggleButtonGroup>
+    </ButtonToolbar>
+    <ButtonToolbar>
       {add.presence && (
-      <Button onClick={add.func} className="pull-right" bsStyle="primary">
+      <Button onClick={add.func} className="" bsStyle="primary">
         <Glyphicon glyph="glyphicon glyphicon-plus" />
       </Button>
       )}
+    </ButtonToolbar>
+    <ButtonToolbar>
       {search.presence && (
-      <Button onClick={search.func} className="pull-right" bsStyle="primary">
+        <Button onClick={search.func} className="pull-right" bsStyle="primary">
         Here should be a search bar (to be implemented)
-      </Button>
+        </Button>
       )}
     </ButtonToolbar>
   </div>

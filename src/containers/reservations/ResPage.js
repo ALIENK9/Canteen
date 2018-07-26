@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import Panel from '../../components/Panel';
+import DocumentTitle from 'react-document-title';
+import { Panel } from 'react-bootstrap';
+import MyPanel from '../../components/Panel';
 import ReservationsList from './ReservationsList';
 import UserList from './UserList';
 import Alert from '../../components/Alert';
@@ -65,17 +67,24 @@ class ResPage extends Component {
     const moments = ['Pranzo', 'Cena'];
 
     return (
-      <Panel title={`Prenotazioni del giorno ${day}`}>
-        <Tabs tabs={views} activeKey={view === 'meals' ? 1 : 2} onSelect={this.handleViewChange} />
-        <Tabs tabs={moments} activeKey={moment === 'lunch' ? 1 : 2} onSelect={this.handleMomentChange} />
-        <ResToolbar view={view} />
-        <Loader loading={loading} />
-        <AddReservationModal />
-        {console.log('Res Page view ', view)}
-        { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
-        { view === 'users' && <UserList /> }
-        { view === 'meals' && <ReservationsList /> }
-      </Panel>
+      <MyPanel title={`Prenotazioni del giorno ${day}`}>
+        <Panel bsStyle="primary">
+          <Panel.Heading>
+            <DocumentTitle title="Prenotazione" />
+            <Tabs tabs={views} activeKey={view === 'meals' ? 1 : 2} onSelect={this.handleViewChange} />
+            <Tabs tabs={moments} activeKey={moment === 'lunch' ? 1 : 2} onSelect={this.handleMomentChange} />
+          </Panel.Heading>
+          <Panel.Body>
+            <ResToolbar view={view} />
+            <Loader loading={loading} />
+            <AddReservationModal />
+            {console.log('Res Page view ', view)}
+            { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
+            { view === 'users' && <UserList /> }
+            { view === 'meals' && <ReservationsList /> }
+          </Panel.Body>
+        </Panel>
+      </MyPanel>
     );
   }
 }

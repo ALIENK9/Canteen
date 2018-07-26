@@ -50,6 +50,7 @@ server.post('/login', (req, res) => {
 });
 
 // verifica token ad ogni richiesta tranne che nella route precedente
+/* eslint-disable consistent-return */
 server.all('*', async (req, res, next) => {
   console.log('path', req.path);
   if (req.path === '/admin/login') return next();

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'react-bootstrap';
+import { Button, Panel } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import Panel from '../../components/Panel';
+import DocumentTitle from 'react-document-title';
+import MyPanel from '../../components/Panel';
 import Tabs from '../../components/Tabs';
 import Alert from '../../components/Alert';
 import MenuList from './MenuList';
@@ -38,7 +39,31 @@ class MenuPage extends Component {
     const { day } = match.params;
     const moments = ['Pranzo', 'Cena'];
     return (
-      <Panel title={`Scelta menù del giorno ${day}`}>
+      <MyPanel title={`Gestione menù del giorno ${day}`}>
+        <Panel bsStyle="primary">
+          <Panel.Heading>
+            <DocumentTitle title={`Menù ${day}`} />
+            <Tabs
+              tabs={moments}
+              activeKey={moment === 'lunch' ? 1 : 2}
+              onSelect={this.handleMomentChange}
+            />
+          </Panel.Heading>
+          <Panel.Body>
+            <p>
+              Scegli il menù disponibile in questa giornata
+            </p>
+            { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
+            { success && <Alert type="success" message={success} onDismiss={closeAlert} /> }
+            <MenuToolbar />
+            <Loader loading={loading} />
+            <MenuList />
+            <Button bsStyle="primary" type="submit" onClick={e => this.handleSubmit(e)}>
+              Conferma e salva
+            </Button>
+          </Panel.Body>
+          {/* <Panel title={`Scelta menù del giorno ${day}`}>
+        <DocumentTitle title={`Menù ${day}`} />
         <Tabs
           tabs={moments}
           activeKey={moment === 'lunch' ? 1 : 2}
@@ -52,7 +77,9 @@ class MenuPage extends Component {
         <Button bsStyle="primary" type="submit" onClick={e => this.handleSubmit(e)}>
           Conferma e salva
         </Button>
-      </Panel>
+    </Panel> */}
+        </Panel>
+      </MyPanel>
     );
   }
 }
