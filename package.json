@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.1.1",
-    "fetch-defaults": "^1.0.0",
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.10",
     "prop-types": "^15.6.2",
@@ -18,13 +17,10 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
     "react-select": "^2.0.0",
-    "react-spinners": "^0.3.2",
     "redux": "^4.0.0",
     "redux-persist": "^5.10.0",
-    "redux-persist-transform-filter": "0.0.18",
     "redux-thunk": "^2.3.0",
-    "validator": "^10.4.0",
-    "whatwg-fetch": "^2.0.4"
+    "validator": "^10.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -32,7 +28,6 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "server": "nodemon src/server/server.js",
-    "strver": "json-server -p 4000 --watch src/server/db.json --middlewares src/server/server.js",
     "all": "react-scripts start & json-server -p 4000 --watch src/db.json"
   },
   "devDependencies": {
