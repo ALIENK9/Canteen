@@ -24,28 +24,6 @@
     },
     {
       "user": {
-        "id": 7,
-        "name": "Andrea Pinochiello"
-      },
-      "meals": [
-        {
-          "id": 1,
-          "name": "Pasta al pomodoro"
-        },
-        {
-          "id": 4,
-          "name": "Petto di pollo"
-        },
-        {
-          "id": 7,
-          "name": "Patate arroste"
-        }
-      ],
-      "hour": "12:34",
-      "id": 7
-    },
-    {
-      "user": {
         "id": 6,
         "name": "Pollo Arrosto"
       },
@@ -109,6 +87,20 @@
       ],
       "hour": "23:44",
       "id": 11
+    },
+    {
+      "user": {
+        "id": 3,
+        "name": "Fiordaliso Profumato"
+      },
+      "meals": [
+        {
+          "id": "sumitiFantasia",
+          "name": "Panino al sacco"
+        }
+      ],
+      "hour": null,
+      "id": 12
     }
   ],
   "userDinner": [

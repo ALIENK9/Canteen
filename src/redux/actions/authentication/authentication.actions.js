@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+// import crypto from 'crypto-js';
 import Http from '../../Http';
 import * as actionTypes from './authentication.actionTypes';
 
@@ -58,13 +59,16 @@ export const clearMessages = () => ({
 
 export const login = data1 => (dispatch) => {
   const URL = 'http://localhost:4000/login';
-  // const URL = 'https://api-gateway-spring.herokuapp.com/getToken';
-  // return Http.get(URL, null, dispatch, null, () => {}, () => {});
-  const data = new FormData();
-  data.append('grant_type', 'password');
-  data.append('client_id', 'springdev');
-  data.append('username', 'sam');
-  data.append('password', 'asd');
+  // const URL = 'http://192.168.30.102:8700/getToken';
+  // const URL = 'http://192.168.30.102:8700/protected-resource/hello';
+  // const URL = 'http://192.168.30.102:8700/test';
+  // return Http.get(URL, null, dispatch, null, setCurrentUser, loginFailure);
+  /* const ciphertext = crypto.AES.encrypt('Pinocchio', 'chiavechiavechiavechiavechiaveaa');
+  console.log('Critata', crypto.enc.Hex.parse(ciphertext));
+
+  const bytes = crypto.AES.decrypt('8HMBhhBakSHO7sJ1Q9YVqA==', 'chiavechiavechiavechiavechiaveaa');
+  const val = bytes.toString(crypto.enc.Utf16);
+  console.log('La parola decriptatat', val); */
   return Http.post(URL, dispatch, JSON.stringify(data1),
     loginRequest, setCurrentUser, loginFailure);
 }; // ora chiama setCurrentUser

@@ -58,8 +58,8 @@ export const hideErrorForm = () => ({
 // ASYNC ACTIONS
 
 export const getDishes = () => (dispatch) => {
-  // const URL = 'http://localhost:4000/dishes';
-  const URL = 'https://api-gateway-spring.herokuapp.com/test';
+  const URL = 'http://localhost:4000/dishes';
+  // const URL = 'https://api-gateway-spring.herokuapp.com/test';
   return Http.get(URL, null, dispatch, null, fetchDishesSuccess, requestFailure);
 };
 

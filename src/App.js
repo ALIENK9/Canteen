@@ -53,9 +53,7 @@ class App extends Component {
                 <Redirect from="/" to="/home" />
               </Switch>
             </Jumbotron>
-            <footer>
-              <Footer />
-            </footer>
+            <Footer />
           </div>
         </BrowserRouter>
       </DocumentTitle>

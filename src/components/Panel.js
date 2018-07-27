@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { PageHeader } from 'react-bootstrap';
 
 const Panel = ({ title, children }) => (
-  <div>
+  <div className="container">
     <PageHeader>
       {title}
     </PageHeader>

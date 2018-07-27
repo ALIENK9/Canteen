@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DocumentTitle from 'react-document-title';
+import { PageHeader } from 'react-bootstrap';
 import LoginForm from './LoginForm';
 import Alert from '../../components/Alert';
 import { clearMessages } from '../../redux/actions/authentication/authentication.actions';
@@ -21,9 +22,9 @@ class LoginPage extends PureComponent {
       <div className="row">
         <DocumentTitle title="Login" />
         <div className="col-md-4 col-md-offset-4">
-          <h1>
+          <PageHeader>
             Login
-          </h1>
+          </PageHeader>
           { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
           {console.log('Login admin?', isAuthenticated, admin)}
           { isAuthenticated && <Redirect to="/home" /> /* redirige se l'user è loggato */ }

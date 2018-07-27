@@ -13,6 +13,13 @@
       "identifier": "nilson@email.com",
       "password": "nilsonaaaaa",
       "admin": false
+    },
+    {
+      "id": 3,
+      "name": "sam",
+      "identifier": "sam",
+      "password": "asd",
+      "admin": true
     }
   ]
 }

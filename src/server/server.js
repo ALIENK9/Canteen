@@ -53,7 +53,7 @@ server.post('/login', (req, res) => {
 /* eslint-disable consistent-return */
 server.all('*', async (req, res, next) => {
   console.log('path', req.path);
-  if (req.path === '/admin/login') return next();
+  if (req.path === '/login') return next();
   if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer') {
     const status = 401;
     const message = 'Bad authorization header';

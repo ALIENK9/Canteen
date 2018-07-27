@@ -18,11 +18,11 @@ class DishesList extends Component {
 
   render() {
     const {
-      dishes, onDelete,
+      dishes, onDelete, loading,
     } = this.props;
     return (
       <List>
-        {dishes.map(dish => (
+        {!loading && dishes.map(dish => (
           <TextBox key={dish.id} id={dish.id} onDelete={onDelete}>
             {console.log('sdjkdsds', dish.id)}
             <DishItem
@@ -47,6 +47,7 @@ DishesList.propTypes = {
   })),
   onDelete: PropTypes.func.isRequired,
   getData: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
 };
 
 DishesList.defaultProps = {
@@ -57,6 +58,7 @@ DishesList.defaultProps = {
       description: 'Pasta con il sugo di pomodoro e basilico',
     },
   ],
+  loading: true,
 };
 
 const mapStateToProps = state => ({

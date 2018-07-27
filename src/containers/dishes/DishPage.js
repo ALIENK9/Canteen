@@ -3,11 +3,12 @@ import { withRouter } from 'react-router-dom';
 import React from 'react';
 import PropTypes from 'prop-types';
 import DocumentTitle from 'react-document-title';
+import { Panel } from 'react-bootstrap';
 import DishToolbar from './DishToolbar';
 import AddModal from './AddModal';
 import DishesList from './DishesList';
 import Alert from '../../components/Alert';
-import Panel from '../../components/Panel';
+import MyPanel from '../../components/Panel';
 import { clearMessages } from '../../redux/actions/dishes/dishes.actions';
 import Loader from '../../components/Loader/Loader';
 
@@ -16,15 +17,20 @@ import Loader from '../../components/Loader/Loader';
 const DishPage = ({
   success, error, closeAlert, loading,
 }) => (
-  <Panel title="Piatti disponibili">
-    <DocumentTitle title="Gestione piatti" />
-    <DishToolbar />
-    <AddModal />
-    <Loader loading={loading} />
-    { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
-    { success && <Alert type="success" message={success} onDismiss={closeAlert} /> }
-    <DishesList />
-  </Panel>
+  <MyPanel title="Piatti disponibili">
+    <Panel>
+      <Panel.Heading />
+      <DishToolbar />
+      <Panel.Body>
+        <DocumentTitle title="Gestione piatti" />
+        <AddModal />
+        <Loader loading={loading} />
+        { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
+        { success && <Alert type="success" message={success} onDismiss={closeAlert} /> }
+        <DishesList />
+      </Panel.Body>
+    </Panel>
+  </MyPanel>
 );
 
 DishPage.propTypes = {

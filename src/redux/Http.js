@@ -13,14 +13,14 @@ function getFetchHeaders() {
   const { user } = JSON.parse(authentication);
   console.log('user', user);
   const { token } = user;
-  const headers = token ? {
+  const headers = true ? {
     'Content-Type': 'application/json',
-    'Cache-Control': 'no-cache',
+    // 'Cache-Control': 'no-cache',
     Authorization: `Bearer ${token}`,
   } : {
     // Authorization: 'Basic c3ByaW5nZGV2OnRlc3Q=',
+    // 'Access-Control-Allow-Headers': 'Accept',
     'Content-Type': 'application/json',
-    'Cache-Control': 'no-cache',
   };
   console.log('header: ', headers);
   return headers;
@@ -57,7 +57,7 @@ const fetchGet = (URL, dispatch, onStart, onSuccess, onFail) => {
           : `Errore: la richiesta GET è fallita con il seguente codice ${response.status} ${response.statusText}`;
         dispatch(onFail(errorMessage));
       }
-    });
+    }).catch(err => alert(`ERRORE GROSSO${JSON.stringify(err)}`));
   // .catch(err => dispatch(onFail(`Eccezione: probabimente il server non risponde:\n ${err}`)));
 };
 
@@ -121,9 +121,9 @@ const fetchPost = (URL, dispatch, data, onStart, onSuccess, onFail) => {
     .then(([response, json]) => {
       if (response.status === 200 || response.status === 201) {
         dispatch(onSuccess(json));
-        // console.log(`Post response ${JSON.stringify(json)}`);
+        console.log(`Post response ${JSON.stringify(json)}`);
       } else {
-        // console.log('error posting data', json);
+        console.log('error posting data, response.json', json);
         console.log('Risposta', response.status, response.statusText);
         dispatch(onFail(`Problema con la richiesta POST: ${response.status} ${response.statusText}`));
       }

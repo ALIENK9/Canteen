@@ -126,7 +126,7 @@ class Navbar extends PureComponent {
 }
 
 Navbar.propTypes = {
-  location: PropTypes.string.isRequired,
+  location: PropTypes.object.isRequired,
   isAuthenticated: PropTypes.bool,
   isAdmin: PropTypes.bool,
   onLogout: PropTypes.func.isRequired,

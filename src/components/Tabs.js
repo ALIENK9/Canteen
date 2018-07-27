@@ -26,12 +26,40 @@ import PropTypes from 'prop-types';
 const Tabs = ({
   tabs, activeKey, onSelect,
 }) => (
-  <BTabs defaultActiveKey={activeKey} onSelect={onSelect} id="component-tabs">
+  <BTabs defaultActiveKey={activeKey} onSelect={key => onSelect(key)} id="component-tabs">
+    {tabs.map((title, index) => (
+      <Tab key={index} eventKey={index + 1} title={title}>
+        {console.log('tabs', index + 1, title)}
+      </Tab>
+    ))}
+    <Tab title="poiukjlj" bsClass="invisible" />
+    <Tab title="Ciaoa" />
+
+    {/* <Tab.Container activeKey={activeKey}>
+    <Nav bsStyle="tabs" onSelect={onSelect}>
+      {tabs.map((title, index) => (
+        <NavItem eventKey={index + 1} key={title} title={title}>
+          {title}
+        </NavItem>
+      ))}
+
+      <NavItem className="invisible">
+        Ciao
+      </NavItem>
+      <NavItem>
+        Ciao2
+      </NavItem>
+
+    </Nav>
+    </Tab.Container> */}
+  </BTabs>
+);
+
+/* <BTabs defaultActiveKey={activeKey} onSelect={onSelect} id="component-tabs">
     {tabs.map((title, index) => (
       <Tab eventKey={index + 1} key={title} title={title} />
     ))}
-  </BTabs>
-);
+  </BTabs> */
 
 Tabs.propTypes = {
   tabs: PropTypes.arrayOf(PropTypes.string).isRequired,
