@@ -131,11 +131,12 @@ export const getUserList = () => (dispatch) => {
 
 export const getDayMeals = (/* day, moment */) => (dispatch) => {
   const URL = 'http://localhost:4000/todayMeals';
-  return Http.get(URL, null, dispatch, loadFormDataStarted, loadDayMealsSuccess, loadDayMealsFailure);
+  return Http.get(URL, null, dispatch, loadFormDataStarted,
+    loadDayMealsSuccess, loadDayMealsFailure);
 };
 
 export const postReservation = (data, moment) => (dispatch) => {
   const baseURL = 'http://localhost:4000/';
   const URL = baseURL.concat(moment === 'lunch' ? 'userLunch/' : 'userDinner/');
-  return Http.post(URL, dispatch, data, null, addReservationSuccess, showErrorForm);
+  return Http.post(URL, dispatch, JSON.stringify(data), null, addReservationSuccess, showErrorForm);
 };

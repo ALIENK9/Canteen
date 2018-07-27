@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { PageHeader } from 'react-bootstrap';
 
 const Panel = ({ title, children }) => (
   <div>
-    <h2>
+    <PageHeader>
       {title}
-    </h2>
+    </PageHeader>
     {children}
   </div>
 );

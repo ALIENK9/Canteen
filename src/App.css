@@ -33,6 +33,10 @@ footer {
   left: 0;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 !important;
+}
+
 .flex-container {
   display: flex;
   flex-direction: row; /* dispone gli items in riga */
@@ -85,6 +89,10 @@ main {
 
 .jumbotron-main {
   padding: 1em 0.5em;
+}
+
+.gliph-text {
+  margin: auto 7px auto auto;
 }
 
 /* LINK DELLA NAVBAR */

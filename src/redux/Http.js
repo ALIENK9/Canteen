@@ -13,9 +13,14 @@ function getFetchHeaders() {
   const { user } = JSON.parse(authentication);
   console.log('user', user);
   const { token } = user;
-  const headers = {
+  const headers = token ? {
     'Content-Type': 'application/json',
+    'Cache-Control': 'no-cache',
     Authorization: `Bearer ${token}`,
+  } : {
+    // Authorization: 'Basic c3ByaW5nZGV2OnRlc3Q=',
+    'Content-Type': 'application/json',
+    'Cache-Control': 'no-cache',
   };
   console.log('header: ', headers);
   return headers;
@@ -46,7 +51,7 @@ const fetchGet = (URL, dispatch, onStart, onSuccess, onFail) => {
         console.log('Dati ', json);
         dispatch(onSuccess(json));
       } else {
-        console.log('Errore GET in corso');
+        console.error('Errore GET in corso', response);
         const errorMessage = isEmpty(response)
           ? 'Errore: la richiesta GET al server non ha ricevuto risposta'
           : `Errore: la richiesta GET è fallita con il seguente codice ${response.status} ${response.statusText}`;
@@ -64,7 +69,7 @@ const fetchPut = (URL, dispatch, data, onStart, onSuccess, onFail) => {
   const config = {
     method: 'PUT',
     headers,
-    body: JSON.stringify(data),
+    body: data,
   };
   return fetch(URL, config)
     .then(response => Promise.all([response]))
@@ -105,7 +110,8 @@ const fetchPost = (URL, dispatch, data, onStart, onSuccess, onFail) => {
   const config = {
     method: 'POST',
     headers,
-    body: JSON.stringify(data),
+    body: data,
+    // mode: 'no-cors',
   };
   console.log('Posted body', config.body);
 
@@ -115,11 +121,11 @@ const fetchPost = (URL, dispatch, data, onStart, onSuccess, onFail) => {
     .then(([response, json]) => {
       if (response.status === 200 || response.status === 201) {
         dispatch(onSuccess(json));
-        console.log(`posted ${JSON.stringify(json)}`);
+        // console.log(`Post response ${JSON.stringify(json)}`);
       } else {
-        console.log('error posting data', json);
-        dispatch(onFail(`Problema con la richiesta POST: ${response.status} ${response.statusText}`,
-          json));
+        // console.log('error posting data', json);
+        console.log('Risposta', response.status, response.statusText);
+        dispatch(onFail(`Problema con la richiesta POST: ${response.status} ${response.statusText}`));
       }
     });
 };

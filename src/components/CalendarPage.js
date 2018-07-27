@@ -3,28 +3,32 @@ import Calendar from 'react-calendar';
 import PropTypes from 'prop-types';
 // import { Redirect } from 'react-router-dom';
 
-import { Button, Glyphicon } from 'react-bootstrap';
+import { Button, Glyphicon, Panel } from 'react-bootstrap';
 
 
 class CalendarPage extends React.Component {
   constructor(props) {
     super(props);
     this.redirect = this.redirect.bind(this);
+    this.setCurrentMonth = this.setCurrentMonth.bind(this);
     this.state = {
-      currentMonth: new Date().getMonth(),
+      currentMonth: new Date().getMonth() + 1,
+      currentYear: new Date().getFullYear(),
     };
     this.calendarConfig = {
       onClickDay: this.redirect,
       calendarType: 'ISO 8601',
       className: 'calendar',
-      activeStartDate: new Date(),
+      // activeStartDate: new Date(),
       onActiveDateChange: this.setCurrentMonth,
     };
   }
 
-  setCurrentMonth({ activeStartDate, view }) {
-    alert(`Cambiato${activeStartDate} ${view}`);
-    this.setState({ currentMonth: view });
+  setCurrentMonth({ activeStartDate }) {
+    this.setState({
+      currentMonth: activeStartDate.getMonth() + 1,
+      currentYear: activeStartDate.getFullYear(),
+    });
   }
 
 
@@ -37,13 +41,30 @@ class CalendarPage extends React.Component {
   }
 
   render() {
+    const { currentMonth, currentYear } = this.state;
     return (
       <div className="container">
-        <Calendar {...this.calendarConfig} />
-        <Button onChange>
-          <Glyphicon gliph="glyphicon download-alt" />
-          Scarica report
-        </Button>
+        <Panel>
+          <Panel.Heading componentClass="h1">
+            Calendario
+          </Panel.Heading>
+          <Panel.Body>
+          Scegli il giorno di cui effettuare la prenotazione
+            <Calendar {...this.calendarConfig} />
+          </Panel.Body>
+          <Panel.Footer className="center">
+            <Button bsStyle="primary">
+              <span className="gliph-text">
+                Scarica report
+                {' '}
+                {currentMonth}
+/
+                {currentYear}
+              </span>
+              <Glyphicon glyph="glyphicon glyphicon-download-alt" />
+            </Button>
+          </Panel.Footer>
+        </Panel>
       </div>
     );
   }

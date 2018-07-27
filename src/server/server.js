@@ -28,23 +28,23 @@ async function verifyToken(token) {
 }
 
 // Check if the user exists in database
-function isAuthenticated({ identifier, password }) {
+function isAuthenticated({ username, password }) {
   console.log(userdb);
-  return userdb.users.findIndex(user => user.identifier === identifier
+  return userdb.users.findIndex(user => user.identifier === username
      && user.password === password) !== -1;
 }
 
 // verifica credenziali e invia token todo: fornire Nome Cognome e admin
 server.post('/login', (req, res) => {
-  const { identifier, password } = req.body;
-  if (!isAuthenticated({ identifier, password })) {
+  const { username, password } = req.body;
+  if (!isAuthenticated({ username, password })) {
     const status = 401;
     console.log('dasasasad');
     const message = 'Incorrect email or password';
     res.status(status).json({ status, message });
     return;
   }
-  const accessToken = createToken({ identifier, admin: true });
+  const accessToken = createToken({ name: username, admin: true });
   console.log('accesstoken cre', accessToken);
   res.status(200).json({ token: accessToken });
 });

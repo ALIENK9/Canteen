@@ -56,9 +56,17 @@ export const clearMessages = () => ({
 });
 
 
-export const login = data => (dispatch) => {
+export const login = data1 => (dispatch) => {
   const URL = 'http://localhost:4000/login';
-  return Http.post(URL, dispatch, data, loginRequest, setCurrentUser, loginFailure);
+  // const URL = 'https://api-gateway-spring.herokuapp.com/getToken';
+  // return Http.get(URL, null, dispatch, null, () => {}, () => {});
+  const data = new FormData();
+  data.append('grant_type', 'password');
+  data.append('client_id', 'springdev');
+  data.append('username', 'sam');
+  data.append('password', 'asd');
+  return Http.post(URL, dispatch, JSON.stringify(data1),
+    loginRequest, setCurrentUser, loginFailure);
 }; // ora chiama setCurrentUser
 
 export const logout = () => (dispatch) => { // dovrà fare il redirect

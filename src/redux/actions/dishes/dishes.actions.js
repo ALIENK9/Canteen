@@ -58,7 +58,8 @@ export const hideErrorForm = () => ({
 // ASYNC ACTIONS
 
 export const getDishes = () => (dispatch) => {
-  const URL = 'http://localhost:4000/dishes';
+  // const URL = 'http://localhost:4000/dishes';
+  const URL = 'https://api-gateway-spring.herokuapp.com/test';
   return Http.get(URL, null, dispatch, null, fetchDishesSuccess, requestFailure);
 };
 
@@ -71,5 +72,5 @@ export const deleteDish = id => (dispatch) => {
 
 export const postDish = dish => (dispatch) => {
   const URL = 'http://localhost:4000/dishes'; // todo: dovrei inserire nell'oggetto in memori anche l'ID
-  return Http.post(URL, dispatch, dish, null, addDishSuccess, showErrorForm);
+  return Http.post(URL, dispatch, JSON.stringify(dish), null, addDishSuccess, showErrorForm);
 };

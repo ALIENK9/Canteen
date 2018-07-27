@@ -23,7 +23,7 @@ class LoginForm extends Component {
   isValid() {
     const { errors, isValid } = validateLogin(this.state);
     if (!isValid) this.setState({ errors });
-    return isValid;
+    return true;
   }
 
   handleSubmit(e) {
@@ -32,7 +32,7 @@ class LoginForm extends Component {
     if (this.isValid()) {
       this.setState({ errors: {}, loading: true });
       const { identifier, password } = this.state;
-      onLogin({ identifier, password });
+      onLogin({ username: identifier, password });
     }
   }
 
@@ -59,7 +59,7 @@ class LoginForm extends Component {
           </ControlLabel>
           <FormControl
             name="identifier"
-            type="email"
+            type="text"
             value={identifier}
             placeholder="holas@email.com"
             onChange={this.handleChange}

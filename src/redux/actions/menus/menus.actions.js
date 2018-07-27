@@ -61,5 +61,6 @@ export const getMenus = () => (dispatch) => {
 export const putMenus = meals => (dispatch) => {
   console.log('acction call data: ', meals);
   const URL = 'http://localhost:4000/meals';
-  return Http.put(URL, dispatch, meals, postMenuStarted, postMenuSuccess, postMenuFailure);
+  return Http.put(URL, dispatch, JSON.stringify(meals),
+    postMenuStarted, postMenuSuccess, postMenuFailure);
 };

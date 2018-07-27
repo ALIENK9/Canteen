@@ -1,5 +1,5 @@
 import {
-  Button, Glyphicon, ToggleButton, ToggleButtonGroup, ButtonToolbar,
+  Button, Glyphicon, ToggleButton, ToggleButtonGroup, ButtonToolbar, Panel,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -15,29 +15,35 @@ const Toolbar = ({
   buttons, search, add, // showAll, showMain, showSecond, showSide, openAddModal,
 }) => (
   <div id="listbar">
-    <ButtonToolbar className="button-toolbar">
-      <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
-        {buttons.map((button, index) => (
-          <ToggleButton onClick={button.func} value={index + 1} key={index}>
-            {button.title}
-          </ToggleButton>
-        ))}
-      </ToggleButtonGroup>
-    </ButtonToolbar>
-    <ButtonToolbar>
-      {add.presence && (
-      <Button onClick={add.func} className="" bsStyle="primary">
-        <Glyphicon glyph="glyphicon glyphicon-plus" />
-      </Button>
-      )}
-    </ButtonToolbar>
-    <ButtonToolbar>
-      {search.presence && (
-        <Button onClick={search.func} className="pull-right" bsStyle="primary">
+    <Panel>
+      <Panel.Body>
+        <ButtonToolbar className="">
+          <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
+            {buttons.map((button, index) => (
+              <ToggleButton onClick={button.func} value={index + 1} key={index}>
+                {button.title}
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+        </ButtonToolbar>
+
+        {add.presence && (
+        <ButtonToolbar>
+          <Button onClick={add.func} className="" bsStyle="primary">
+            <Glyphicon glyph="glyphicon glyphicon-plus" />
+          </Button>
+        </ButtonToolbar>
+        )}
+
+        {search.presence && (
+        <ButtonToolbar>
+          <Button onClick={search.func} className="pull-right" bsStyle="primary">
         Here should be a search bar (to be implemented)
-        </Button>
-      )}
-    </ButtonToolbar>
+          </Button>
+        </ButtonToolbar>
+        )}
+      </Panel.Body>
+    </Panel>
   </div>
 );
 

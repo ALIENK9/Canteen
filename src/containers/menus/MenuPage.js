@@ -58,10 +58,13 @@ class MenuPage extends Component {
             <MenuToolbar />
             <Loader loading={loading} />
             <MenuList />
+
+          </Panel.Body>
+          <Panel.Footer className="center">
             <Button bsStyle="primary" type="submit" onClick={e => this.handleSubmit(e)}>
               Conferma e salva
             </Button>
-          </Panel.Body>
+          </Panel.Footer>
           {/* <Panel title={`Scelta menù del giorno ${day}`}>
         <DocumentTitle title={`Menù ${day}`} />
         <Tabs
