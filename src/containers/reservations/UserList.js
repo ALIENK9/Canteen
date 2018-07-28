@@ -15,16 +15,16 @@ class UserList extends Component {
   }
 
   componentDidMount() {
-    const { getData, view, moment } = this.props;
-    console.log('didMount userlist', view, moment);
-    getData(view, moment);
+    const { getData, moment } = this.props;
+    console.log('didMount userlist', moment);
+    getData(moment);
   }
 
   componentDidUpdate(prevProps) {
-    const { getData, view, moment } = this.props;
-    if (view !== prevProps.view || moment !== prevProps.moment) {
+    const { getData, moment } = this.props;
+    if (moment !== prevProps.moment) {
       console.log('updated');
-      getData(view, moment);
+      getData(moment);
     }
   }
 
@@ -45,7 +45,7 @@ class UserList extends Component {
         { list.map(reserv => (
           <TextBox key={reserv.id} id={reserv.id} onDelete={this.handleDelete}>
             <UserReservationItem
-              name={reserv.user ? reserv.user.name : 'Help'}
+              name={reserv.user ? reserv.user.name : 'No-name'}
               hour={reserv.hour}
               meals={reserv.meals}
             />
@@ -81,7 +81,7 @@ UserList.propTypes = {
     }),
     hour: PropTypes.string,
   })),
-  view: PropTypes.oneOf(['users', 'meals']),
+  // view: PropTypes.oneOf(['users', 'meals']),
   moment: PropTypes.oneOf(['lunch', 'dinner']),
   onDelete: PropTypes.func,
   getData: PropTypes.func,
@@ -96,7 +96,7 @@ UserList.defaultProps = {
       hour: '00:00',
     },
   ],
-  view: 'users',
+  // view: 'users',
   moment: 'lunch',
   getData: () => {},
   onDelete: () => {},
@@ -104,13 +104,13 @@ UserList.defaultProps = {
 
 const mapStateToProps = state => ({
   list: state.reservations.data.list,
-  view: state.reservations.ui.view,
+  // view: state.reservations.ui.view,
   moment: state.reservations.ui.moment,
 });
 
 const mapDispatchToProps = dispatch => ({
   onDelete: (moment, id) => dispatch(deleteReservation(moment, id)),
-  getData: (view, moment) => dispatch(getReservations(view, moment)),
+  getData: moment => dispatch(getReservations('users', moment)),
 });
 
 

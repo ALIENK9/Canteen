@@ -18,15 +18,14 @@ class ReservationsList extends Component {
   }
 
   componentDidMount() {
-    const { getData, view, moment } = this.props;
-    getData(view, moment);
+    const { getData, moment } = this.props;
+    getData(moment);
   }
 
   componentDidUpdate(prevProps) {
-    const { getData, view, moment } = this.props;
-    if (view !== prevProps.view || moment !== prevProps.moment) {
-      console.log('updated', view, moment);
-      getData(view, moment);
+    const { getData, moment } = this.props;
+    if (moment !== prevProps.moment) {
+      getData(moment);
     }
   }
 
@@ -66,7 +65,7 @@ ReservationsList.propTypes = {
     name: PropTypes.string,
     hour: PropTypes.string,
   })),
-  view: PropTypes.oneOf(['users', 'meals']),
+  // view: PropTypes.oneOf(['users', 'meals']),
   moment: PropTypes.oneOf(['lunch', 'dinner']),
   getData: PropTypes.func,
 };
@@ -76,7 +75,7 @@ ReservationsList.defaultProps = {
     name: '',
     hour: '00:00',
   }],
-  view: 'meals',
+  // view: 'meals',
   moment: 'lunch',
   getData: () => [],
 };
@@ -86,13 +85,13 @@ const mapStateToProps = (state) => {
   const { filter } = state.reservations.ui;
   return {
     list: getVisibleDishes(list, filter),
-    view: state.reservations.ui.view,
+    // view: state.reservations.ui.view,
     moment: state.reservations.ui.moment,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  getData: (view, moment) => dispatch(getReservations(view, moment)),
+  getData: moment => dispatch(getReservations('meals', moment)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReservationsList));

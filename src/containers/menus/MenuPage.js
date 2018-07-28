@@ -5,26 +5,25 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import DocumentTitle from 'react-document-title';
 import MyPanel from '../../components/Panel';
-import Tabs from '../../components/Tabs';
 import Alert from '../../components/Alert';
 import MenuList from './MenuList';
 import { putMenus, changeSelectedMoment, clearMessages } from '../../redux/actions/menus/menus.actions';
 import Loader from '../../components/Loader/Loader';
 import MenuToolbar from './MenuToolbar';
-import { MOMENTS } from '../costants';
+import MomentTabs from './MomentTabs';
 
 class MenuPage extends Component {
   constructor(props) {
     super(props);
-    this.handleMomentChange = this.handleMomentChange.bind(this);
+    // this.handleMomentChange = this.handleMomentChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleMomentChange(key) {
+  /* handleMomentChange(key) {
     const { onMomentChange } = this.props;
     console.log(key);
     onMomentChange(key);
-  }
+  } */
 
   handleSubmit(event) {
     event.preventDefault();
@@ -35,7 +34,7 @@ class MenuPage extends Component {
 
   render() {
     const {
-      match, moment, error, success, closeAlert, loading,
+      match, error, success, closeAlert, loading,
     } = this.props;
     const { day } = match.params;
     return (
@@ -43,11 +42,7 @@ class MenuPage extends Component {
         <Panel bsStyle="primary">
           <Panel.Heading>
             <DocumentTitle title={`Menù ${day}`} />
-            <Tabs
-              tabs={MOMENTS}
-              activeKey={moment}
-              onSelect={this.handleMomentChange}
-            />
+            <MomentTabs />
           </Panel.Heading>
           <Panel.Body>
             <p>
@@ -65,22 +60,6 @@ class MenuPage extends Component {
               Conferma e salva
             </Button>
           </Panel.Footer>
-          {/* <Panel title={`Scelta menù del giorno ${day}`}>
-        <DocumentTitle title={`Menù ${day}`} />
-        <Tabs
-          tabs={moments}
-          activeKey={moment === 'lunch' ? 1 : 2}
-          onSelect={this.handleMomentChange}
-        />
-        { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
-        { success && <Alert type="success" message={success} onDismiss={closeAlert} /> }
-        <MenuToolbar />
-        <Loader loading={loading} />
-        <MenuList />
-        <Button bsStyle="primary" type="submit" onClick={e => this.handleSubmit(e)}>
-          Conferma e salva
-        </Button>
-    </Panel> */}
         </Panel>
       </MyPanel>
     );
@@ -89,12 +68,12 @@ class MenuPage extends Component {
 
 MenuPage.propTypes = {
   match: PropTypes.object.isRequired,
-  loading: PropTypes.array,
-  moment: PropTypes.oneOf(['lunch', 'dinner']),
+  loading: PropTypes.bool,
+  // moment: PropTypes.oneOf(['lunch', 'dinner']),
   error: PropTypes.string,
   success: PropTypes.string,
   closeAlert: PropTypes.func,
-  onMomentChange: PropTypes.func,
+  // onMomentChange: PropTypes.func,
   onSubmit: PropTypes.func,
   meals: PropTypes.shape({
     lunch: PropTypes.arrayOf(PropTypes.shape({
@@ -111,12 +90,12 @@ MenuPage.propTypes = {
 };
 
 MenuPage.defaultProps = {
-  moment: 'lunch',
+  // moment: 'lunch',
   loading: true,
   success: '',
   error: '',
   closeAlert: () => {},
-  onMomentChange: () => {},
+  // onMomentChange: () => {},
   onSubmit: () => {},
   meals: {
     lunch: [],

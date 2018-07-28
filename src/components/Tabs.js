@@ -30,7 +30,11 @@ Tabs.propTypes = {
   })).isRequired,
   activeKey: PropTypes.any.isRequired,
   onSelect: PropTypes.func.isRequired,
-  classes: PropTypes.string.isRequired,
+  classes: PropTypes.string,
+};
+
+Tabs.defaultProps = {
+  classes: '',
 };
 
 

@@ -372,12 +372,12 @@
       {
         "name": "Pasta pomodoro",
         "id": 1,
-        "checked": true
+        "checked": false
       },
       {
         "name": "Pasta verdure",
         "id": 2,
-        "checked": false
+        "checked": true
       },
       {
         "name": "Pasta jkjsks 11",
@@ -434,6 +434,12 @@
       "type": 2,
       "description": "qqqq",
       "id": 15
+    },
+    {
+      "name": "Pasta alla cotta",
+      "type": 1,
+      "description": "Pane, Polenta, Spinaci",
+      "id": 16
     }
   ]
 }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -8,16 +8,44 @@ import MyPanel from '../../components/Panel';
 import ReservationsList from './ReservationsList';
 import UserList from './UserList';
 import Alert from '../../components/Alert';
-import { clearMessages, changeSelectedMoment, changeSelectedView } from '../../redux/actions/reservations/reservations.actions';
+import { clearMessages } from '../../redux/actions/reservations/reservations.actions';
 import AddReservationModal from './AddReservationModal';
-import Tabs from '../../components/Tabs';
 import ResToolbar from './ResToolbar';
 import Loader from '../../components/Loader/Loader';
-import { VIEWS, MOMENTS } from '../costants';
+import ViewTabs from './ViewTabs';
+import MomentTabs from './MomentTabs';
+// import Tabs from '../../components/Tabs';
+// import { VIEWS, MOMENTS } from '../costants';
 
-// REVIEW: togliere logs
 
-class ResPage extends Component {
+const ResPage = ({
+  match, error, closeAlert, view, loading,
+}) => {
+  const { day } = match.params;
+  return (
+    <MyPanel title={`Prenotazioni del giorno ${day}`}>
+      <Panel bsStyle="primary">
+        <Panel.Heading>
+          <DocumentTitle title="Prenotazione" />
+          <ViewTabs />
+          <MomentTabs />
+        </Panel.Heading>
+        <Panel.Body>
+          <ResToolbar view={view} />
+          <Loader loading={loading} />
+          <AddReservationModal />
+          {console.log('Res Page view ', view)}
+          { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
+          { view === 'users' && <UserList /> }
+          { view === 'meals' && <ReservationsList /> }
+        </Panel.Body>
+      </Panel>
+    </MyPanel>
+  );
+};
+
+
+/* class ResPage extends Component {
   constructor(props) {
     super(props);
     this.handleMomentChange = this.handleMomentChange.bind(this);
@@ -40,8 +68,8 @@ class ResPage extends Component {
     } = this.props;
     if (view !== ov || moment !== om || error !== oe || loading !== ol) {
       console.log('I detected change', om, moment);
-      if (view !== ov) this.handleViewChange(view);
-      if (moment !== om) this.handleMomentChange(moment);
+      // if (view !== ov) this.handleViewChange(view);
+      // if (moment !== om) this.handleMomentChange(moment);
     }
   }
 
@@ -70,7 +98,8 @@ class ResPage extends Component {
           <Panel.Heading>
             <DocumentTitle title="Prenotazione" />
             <Tabs tabs={VIEWS} activeKey={view} onSelect={this.handleViewChange} />
-            <Tabs tabs={MOMENTS} activeKey={moment} onSelect={this.handleMomentChange} classes="pull-right" />
+            <Tabs tabs={MOMENTS} activeKey={moment} onSelect={this.handleMomentChange}
+             classes="pull-right" />
           </Panel.Heading>
           <Panel.Body>
             <ResToolbar view={view} />
@@ -85,7 +114,7 @@ class ResPage extends Component {
       </MyPanel>
     );
   }
-}
+} */
 
 
 ResPage.propTypes = {
@@ -93,16 +122,16 @@ ResPage.propTypes = {
   closeAlert: PropTypes.func.isRequired,
   error: PropTypes.string,
   view: PropTypes.oneOf(['users', 'meals']),
-  moment: PropTypes.oneOf(['lunch', 'dinner']),
-  onViewChange: PropTypes.func.isRequired,
-  onMomentChange: PropTypes.func.isRequired,
+  // moment: PropTypes.oneOf(['lunch', 'dinner']),
+  // onViewChange: PropTypes.func.isRequired,
+  // onMomentChange: PropTypes.func.isRequired,
   loading: PropTypes.bool,
 };
 
 ResPage.defaultProps = {
   error: '',
   view: 'meals',
-  moment: 'lunch',
+  // moment: 'lunch',
   loading: true,
   // success: '',
 };
@@ -117,11 +146,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  // getData: (mode, moment) => dispatch(getReservations(mode, moment)),
-  // onDelete: (moment, id) => dispatch(deleteReservation(moment, id)),
   closeAlert: () => dispatch(clearMessages()),
-  onMomentChange: moment => dispatch(changeSelectedMoment(moment)),
-  onViewChange: view => dispatch(changeSelectedView(view)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ResPage));

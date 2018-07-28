@@ -9,6 +9,8 @@
 - [X] Inserire filtri su tutte le pagine con liste (admin)
 - [ ] Criptare dati sessionStorage/tenere token
 - [ ] Test sui reducer
+- [ ] Definire il tipo dell'ID (String|Number)
+- [ ] Problema con containers connessi a redux (condividono lo stato ma non dovrebbero)
 
 ## !!
 - [ ] `Reselect` per selectors che rendono più efficienti i metodi di filter
