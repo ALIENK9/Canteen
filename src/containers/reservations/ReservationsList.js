@@ -25,7 +25,7 @@ class ReservationsList extends Component {
   componentDidUpdate(prevProps) {
     const { getData, view, moment } = this.props;
     if (view !== prevProps.view || moment !== prevProps.moment) {
-      console.log('updated');
+      console.log('updated', view, moment);
       getData(view, moment);
     }
   }

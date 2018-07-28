@@ -24,17 +24,15 @@ body {
 
 footer {
   background-color: rgb(190, 215, 236);
-  padding: 1em;
-  text-align: center;
   color: black;
-}
-
-/*
+  left: 0;
+  max-height: 10%;
+  padding: 1em;
   position: absolute;
   right: 0;
-  bottom: 0;
-  left: 0;
-*/
+  text-align: center;
+}
+
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0 !important;
@@ -73,7 +71,7 @@ h1, h2, h3, h4, h5, h6 {
   color: blueviolet;
 }
 
-#root {
+#root, #app {
   height: 100%;
 }
 
@@ -88,6 +86,7 @@ h1, h2, h3, h4, h5, h6 {
 /* così lo spinner è al centro del Jumbotron */
 main {
   position: relative;
+  height: 80%;
 }
 
 .jumbotron-main {
@@ -95,11 +94,35 @@ main {
 }
 
 .gliph-text {
-  margin: auto 7px auto auto;
+  margin: auto 0.5em auto auto;
 }
 
-.invisible {
+/* .invisible {
   visibility: hidden;
+} */
+
+.tabsbar {
+  border-bottom: 1px solid white;
+}
+
+.tab-inline-block {
+  display: inline-block;
+  border: none;
+}
+
+@media screen and (max-width: 600px) {
+  .tab-inline-block {
+    display: block !important;
+  }
+
+  .tab-inline-block.pull-right {
+    float: none !important;
+  }
+
+  main, footer {
+    height: auto;
+    max-height: unset;
+  }
 }
 
 /* LINK DELLA NAVBAR */
@@ -170,11 +193,8 @@ nav p.active {
 
 
 
-.App {
-  height: 100%;
-}
 
-.App-logo {
+/* .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
 }
@@ -190,4 +210,4 @@ nav p.active {
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
-}
+} */

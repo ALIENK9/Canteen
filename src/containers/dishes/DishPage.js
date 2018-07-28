@@ -12,8 +12,7 @@ import MyPanel from '../../components/Panel';
 import { clearMessages } from '../../redux/actions/dishes/dishes.actions';
 import Loader from '../../components/Loader/Loader';
 
-// REVIEW: uniformare con lo schema di Reservations nel quale solo ma
-// Page è connessa e gli altri sono dumb components
+
 const DishPage = ({
   success, error, closeAlert, loading,
 }) => (

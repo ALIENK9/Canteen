@@ -33,7 +33,7 @@ class App extends Component {
     return (
       <DocumentTitle title="Servizio mensa">
         <BrowserRouter>
-          <div className="App">
+          <div id="app">
             <header className="App-header">
               {/* <Route path="/reservations" component={ReservationsH} />
               <Route path="/menus" component={MenuH} />

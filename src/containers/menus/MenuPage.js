@@ -11,6 +11,7 @@ import MenuList from './MenuList';
 import { putMenus, changeSelectedMoment, clearMessages } from '../../redux/actions/menus/menus.actions';
 import Loader from '../../components/Loader/Loader';
 import MenuToolbar from './MenuToolbar';
+import { MOMENTS } from '../costants';
 
 class MenuPage extends Component {
   constructor(props) {
@@ -21,8 +22,8 @@ class MenuPage extends Component {
 
   handleMomentChange(key) {
     const { onMomentChange } = this.props;
-    const newMom = key === 1 ? 'lunch' : 'dinner';
-    onMomentChange(newMom);
+    console.log(key);
+    onMomentChange(key);
   }
 
   handleSubmit(event) {
@@ -37,15 +38,14 @@ class MenuPage extends Component {
       match, moment, error, success, closeAlert, loading,
     } = this.props;
     const { day } = match.params;
-    const moments = ['Pranzo', 'Cena'];
     return (
       <MyPanel title={`Gestione menù del giorno ${day}`}>
         <Panel bsStyle="primary">
           <Panel.Heading>
             <DocumentTitle title={`Menù ${day}`} />
             <Tabs
-              tabs={moments}
-              activeKey={moment === 'lunch' ? 1 : 2}
+              tabs={MOMENTS}
+              activeKey={moment}
               onSelect={this.handleMomentChange}
             />
           </Panel.Heading>

@@ -8,6 +8,8 @@ import {
 import PropTypes from 'prop-types';
 import { logout } from '../redux/actions/authentication/authentication.actions';
 
+// HACK: probabilmente ora è inutile react-router-bootstrap (non serve più la classe active)
+
 /**
  *
  * @param {String} linkName the name to be displayed in link
@@ -16,7 +18,6 @@ import { logout } from '../redux/actions/authentication/authentication.actions';
  * @param {String} currentLocation current active path
  */
 function createLink(linkName, eventKey, toPath, currentLocation) {
-  console.debug('createLinkk', currentLocation, toPath);
   if (currentLocation === toPath) {
     return (
       <li className="active">
@@ -90,18 +91,12 @@ class Navbar extends PureComponent {
     );
 
     const logoutLink = (
-      <NavItem eventKey={4} href="#" onClick={this.onLogout}>
+      <NavItem eventKey={4} role="button" onClick={this.onLogout}>
         Logout
       </NavItem>
     );
 
-    const loginLink = (
-      <LinkContainer to="/login">
-        <NavItem eventKey={4}>
-          Login
-        </NavItem>
-      </LinkContainer>
-    );
+    const loginLink = createLink('Login', 4, '/login', currentLocation);
 
     return (
       <NavBar collapseOnSelect>

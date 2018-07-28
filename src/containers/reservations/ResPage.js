@@ -13,6 +13,7 @@ import AddReservationModal from './AddReservationModal';
 import Tabs from '../../components/Tabs';
 import ResToolbar from './ResToolbar';
 import Loader from '../../components/Loader/Loader';
+import { VIEWS, MOMENTS } from '../costants';
 
 // REVIEW: togliere logs
 
@@ -25,8 +26,8 @@ class ResPage extends Component {
 
   componentDidMount() { // due tab sono inizialmente cliccati
     console.log('I mounted respage');
-    this.handleMomentChange(1);
-    this.handleViewChange(1);
+    this.handleMomentChange('lunch');
+    this.handleViewChange('meals');
   }
 
   componentDidUpdate(prevProps) {
@@ -38,23 +39,22 @@ class ResPage extends Component {
       view, moment, error, loading,
     } = this.props;
     if (view !== ov || moment !== om || error !== oe || loading !== ol) {
-      console.log('I detected change');
-      if (view !== ov) this.handleViewChange(view === 'meals' ? 1 : 2);
-      if (moment !== om) this.handleMomentChange(moment === 'lunch' ? 1 : 2);
+      console.log('I detected change', om, moment);
+      if (view !== ov) this.handleViewChange(view);
+      if (moment !== om) this.handleMomentChange(moment);
     }
   }
 
   // NOTE: Funzioni per controllare i Tabs. Lasciarli componenti controllati
   handleViewChange(key) {
     const { onViewChange } = this.props;
-    const newView = key === 1 ? 'meals' : 'users';
-    onViewChange(newView);
+    onViewChange(key);
   }
 
   handleMomentChange(key) {
     const { onMomentChange } = this.props;
-    const newMom = key === 1 ? 'lunch' : 'dinner';
-    onMomentChange(newMom);
+    console.log('momentChange', key);
+    onMomentChange(key);
   }
 
 
@@ -63,16 +63,14 @@ class ResPage extends Component {
       match, error, closeAlert, view, moment, loading,
     } = this.props;
     const { day } = match.params;
-    const views = ['Vista pasti', 'Vista utenti'];
-    const moments = ['Pranzo', 'Cena'];
 
     return (
       <MyPanel title={`Prenotazioni del giorno ${day}`}>
         <Panel bsStyle="primary">
           <Panel.Heading>
             <DocumentTitle title="Prenotazione" />
-            <Tabs tabs={views} activeKey={view === 'meals' ? 1 : 2} onSelect={this.handleViewChange} />
-            <Tabs tabs={moments} activeKey={moment === 'lunch' ? 1 : 2} onSelect={this.handleMomentChange} />
+            <Tabs tabs={VIEWS} activeKey={view} onSelect={this.handleViewChange} />
+            <Tabs tabs={MOMENTS} activeKey={moment} onSelect={this.handleMomentChange} classes="pull-right" />
           </Panel.Heading>
           <Panel.Body>
             <ResToolbar view={view} />
@@ -90,26 +88,6 @@ class ResPage extends Component {
 }
 
 
-/* const ResPage = ({
-  match, error, closeAlert, view, list,
-}) => {
-  const { day } = match.params;
-  const views = ['Vista pasti', 'Vista utenti'];
-  const moments = ['Pranzo', 'Cena'];
-  return (
-    <Panel title={`Prenotazioni del giorno ${day}`}>
-      <SwitcherView tabs={views} />
-      <SwitcherMoment tabs={moments} />
-      <AddReservationModal />
-      {console.log('Res Page view ', view)}
-      { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
-      { view === 'users' && <UserList list={list} /> }
-      { view === 'meals' && <ReservationsList list={list} /> }
-    </Panel>
-  );
-}; */
-
-
 ResPage.propTypes = {
   match: PropTypes.object.isRequired,
   closeAlert: PropTypes.func.isRequired,
@@ -124,9 +102,9 @@ ResPage.propTypes = {
 ResPage.defaultProps = {
   error: '',
   view: 'meals',
-  // success: '',
   moment: 'lunch',
   loading: true,
+  // success: '',
 };
 
 const mapStateToProps = state => ({
@@ -134,6 +112,7 @@ const mapStateToProps = state => ({
   error: state.reservations.messages.error,
   view: state.reservations.ui.view,
   loading: state.reservations.ui.loading,
+  moment: state.reservations.ui.moment,
   // success: state.reservations.success,
 });
 

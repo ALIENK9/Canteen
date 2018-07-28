@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Footer = () => (
-  <footer className="navbar-fixed-bottom">
+  <footer className="footer">
     <div className="container">
       <div className="row">
         <p>
