@@ -4,54 +4,52 @@ import {
 import PropTypes from 'prop-types';
 import React from 'react';
 
-/* eslint-disable react/no-array-index-key */
-
 // REVIEW: POTREBBE ESSERE PIÙ ESTENSIBILE
 /**
  *
  * @param {Object} props to know what buttons, searchbar and add button
  */
 const Toolbar = ({
-  buttons, search, add, // showAll, showMain, showSecond, showSide, openAddModal,
+  buttons, defaultButtonKey, search, add,
 }) => (
-  <div id="listbar">
-    <Panel>
-      <Panel.Body>
-        <ButtonToolbar className="NObutton-toolbar">
-          <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
-            {buttons.map((button, index) => (
-              <ToggleButton onClick={button.func} value={index + 1} key={index}>
-                {button.title}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
+  <Panel>
+    <Panel.Body>
+      <ButtonToolbar className="NObutton-toolbar">
+        <ToggleButtonGroup type="radio" name="options" defaultValue={defaultButtonKey}>
+          {buttons.map(button => (
+            <ToggleButton onClick={button.func} value={button.key} key={button.key}>
+              {button.title}
+            </ToggleButton>
+          ))}
+        </ToggleButtonGroup>
 
-          {add.presence && (
+        {add.presence && (
           <ButtonGroup>
             <Button onClick={add.func} className="" bsStyle="primary">
               <Glyphicon glyph="glyphicon glyphicon-plus" />
             </Button>
           </ButtonGroup>
-          )}
+        )}
 
-          {search.presence && (
+        {search.presence && (
           <ButtonGroup>
             <Button onClick={search.func} className="pull-right" bsStyle="primary">
                 Here should be a search bar (to be implemented)
             </Button>
           </ButtonGroup>
-          )}
-        </ButtonToolbar>
-      </Panel.Body>
-    </Panel>
-  </div>
+        )}
+      </ButtonToolbar>
+    </Panel.Body>
+  </Panel>
 );
 
 Toolbar.propTypes = {
   buttons: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
+    key: PropTypes.any.isRequired,
     func: PropTypes.func.isRequired,
   })).isRequired,
+  defaultButtonKey: PropTypes.any.isRequired,
   search: PropTypes.shape({
     presence: PropTypes.bool.isRequired,
     func: PropTypes.func,

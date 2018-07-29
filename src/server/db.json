@@ -372,21 +372,25 @@
       {
         "name": "Pasta pomodoro",
         "id": 1,
-        "checked": false
+        "type": 2,
+        "checked": true
       },
       {
         "name": "Pasta verdure",
         "id": 2,
-        "checked": true
+        "type": 1,
+        "checked": false
       },
       {
         "name": "Pasta jkjsks 11",
         "id": 3,
-        "checked": false
+        "type": 3,
+        "checked": true
       },
       {
         "name": "Pasta psadsadasda",
         "id": 4,
+        "type": 1,
         "checked": false
       }
     ],
@@ -394,33 +398,10 @@
       {
         "name": "Pasta pesto lunch",
         "id": 0,
-        "checked": false
+        "type": 1,
+        "checked": true
       }
     ]
-  },
-  "mealsManfrediVecchiaIdea": {
-    "date": "gg-mm-aa",
-    "dinner": {
-      "id": "asfd",
-      "primi": [
-        {
-          "id": "as",
-          "name": "sd<sdsda"
-        }
-      ],
-      "secondi": [
-        {}
-      ]
-    },
-    "lunch": {
-      "id": "asfd",
-      "primi": [
-        {}
-      ],
-      "secondi": [
-        {}
-      ]
-    }
   },
   "dishes": [
     {

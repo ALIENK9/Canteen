@@ -1,9 +1,9 @@
 import Http from '../../Http';
 import * as actionTypes from './menus.actionTypes';
 
-export const toggleMeal = (index, value, moment) => ({
+export const toggleMeal = (id, value, moment) => ({
   type: actionTypes.TOGGLE_MEAL,
-  payload: { index, value, moment },
+  payload: { id, value, moment },
 });
 
 export const fetchMenuStarted = () => ({

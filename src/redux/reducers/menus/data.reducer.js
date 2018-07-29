@@ -23,7 +23,8 @@ const data = (state = init, action = {}) => {
         meals: {
           ...state.meals,
           [action.payload.moment]: immutableUpdate(state.meals[action.payload.moment],
-            action.payload.index, { checked: action.payload.value }),
+            state.meals[action.payload.moment].findIndex(meal => meal.id === action.payload.id),
+            { checked: action.payload.value }),
         },
       };
     default:

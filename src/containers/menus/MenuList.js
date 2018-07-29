@@ -22,10 +22,10 @@ class MenuList extends Component {
     } = this.props;
     return (
       <List>
-        {meals[moment].map((meal, index) => (
+        {meals[moment].map(meal => (
           <CheckBox
             key={meal.id}
-            index={index}
+            id={meal.id}
             onClick={onItemClick}
             checked={meal.checked}
             param={moment}

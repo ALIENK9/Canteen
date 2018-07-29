@@ -1,25 +1,35 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+// import { withRouter } from 'react-router-dom';
 import Toolbar from '../../components/Toolbar';
 import { filterMeals } from '../../redux/actions/menus/menus.actions';
+import { FILTER_KEYS } from '../costants';
+
+const mapStateToProps = state => ({
+  defaultButtonKey: state.menus.ui.filter,
+});
+
 
 const mapDispatchToProps = dispatch => ({
   buttons: [
     {
       title: 'Tutti',
-      func: () => dispatch(filterMeals('ALL')),
+      key: FILTER_KEYS.ALL,
+      func: () => dispatch(filterMeals(FILTER_KEYS.ALL)),
     },
     {
       title: 'Primi',
-      func: () => dispatch(filterMeals('MAIN')),
+      key: FILTER_KEYS.MAIN,
+      func: () => dispatch(filterMeals(FILTER_KEYS.MAIN)),
     },
     {
       title: 'Secondi',
-      func: () => dispatch(filterMeals('SECOND')),
+      key: FILTER_KEYS.SECOND,
+      func: () => dispatch(filterMeals(FILTER_KEYS.SECOND)),
     },
     {
       title: 'Contorni',
-      func: () => dispatch(filterMeals('SIDE')),
+      key: FILTER_KEYS.SIDE,
+      func: () => dispatch(filterMeals(FILTER_KEYS.SIDE)),
     },
   ],
   search: {
@@ -30,4 +40,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default withRouter(connect(null, mapDispatchToProps)(Toolbar));
+export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);

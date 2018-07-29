@@ -1,29 +1,38 @@
-import { withRouter } from 'react-router-dom';
+// import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Toolbar from '../../components/Toolbar';
 import { addModalShow, filterMeals } from '../../redux/actions/reservations/reservations.actions';
+import { FILTER_KEYS } from '../costants';
+
+const mapStateToProps = state => ({
+  defaultButtonKey: state.reservations.ui.filter,
+});
 
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   buttons: ownProps.view === 'meals' ? [
     {
       title: 'Tutti',
-      func: () => dispatch(filterMeals('ALL')),
+      key: FILTER_KEYS.ALL,
+      func: () => dispatch(filterMeals(FILTER_KEYS.ALL)),
     },
     {
       title: 'Primi',
-      func: () => dispatch(filterMeals('MAIN')),
+      key: FILTER_KEYS.MAIN,
+      func: () => dispatch(filterMeals(FILTER_KEYS.MAIN)),
     },
     {
       title: 'Secondi',
-      func: () => dispatch(filterMeals('SECOND')),
+      key: FILTER_KEYS.SECOND,
+      func: () => dispatch(filterMeals(FILTER_KEYS.SECOND)),
     },
     {
       title: 'Contorni',
-      func: () => dispatch(filterMeals('SIDE')),
+      key: FILTER_KEYS.SIDE,
+      func: () => dispatch(filterMeals(FILTER_KEYS.SIDE)),
     },
   ] : [],
-  search: { presence: false, func: () => {} },
+  search: { presence: false },
   add: {
     // REVIEW: trick un po' sporco per avere acesso alla prop 'view' e nascondere la barra
     presence: ownProps.view === 'users',
@@ -31,4 +40,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
 });
 
-export default withRouter(connect(null, mapDispatchToProps)(Toolbar));
+export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
