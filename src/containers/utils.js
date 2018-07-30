@@ -29,3 +29,9 @@ export const mapTypeToString = (type) => {
       return 'Unknown';
   }
 };
+
+export const mapMomentToString = (moment) => {
+  if (moment === 'lunch') return 'pranzo';
+  if (moment === 'dinner') return 'cena';
+  return 'No-moment';
+};

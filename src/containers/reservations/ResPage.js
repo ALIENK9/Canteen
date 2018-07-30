@@ -38,7 +38,7 @@ const ResPage = ({
           </p>
           <ResToolbar view={view} />
           <Loader loading={loading} />
-          <AddReservationModal />
+          <AddReservationModal day={day} />
           {console.log('Res Page view ', view)}
           { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
           { view === 'users' && <UserList /> }

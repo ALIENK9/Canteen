@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {
-  FormGroup, ControlLabel, FormControl, HelpBlock, Button, Radio,
+  FormGroup, ControlLabel, FormControl, HelpBlock, Button, Radio, Modal,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postDish, hideErrorForm } from '../../redux/actions/dishes/dishes.actions';
+import { postDish, hideErrorForm, hideAddForm } from '../../redux/actions/dishes/dishes.actions';
 import Alert from '../../components/Alert';
 
 /*
@@ -40,77 +40,84 @@ class DishForm extends Component {
 
   render() {
     const { name, type, description } = this.state;
-    const { error, closeAlert } = this.props;
+    const { error, closeAlert, onHide } = this.props;
     return (
       <form onSubmit={e => this.handleSubmit(e)}>
-        { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
-        <FormGroup controlId="name">
-          <ControlLabel>
+        <Modal.Body>
+          { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
+          <FormGroup controlId="name">
+            <ControlLabel>
             Nome del piatto
-          </ControlLabel>
-          <FormControl
-            type="text"
-            name="name"
-            value={name}
-            placeholder="Pasta al pomodoro"
-            onChange={e => this.handleChange(e)}
-          />
-          {!name && (
-          <HelpBlock bsClass="help-block-error">
+            </ControlLabel>
+            <FormControl
+              type="text"
+              name="name"
+              value={name}
+              placeholder="Pasta al pomodoro"
+              onChange={e => this.handleChange(e)}
+            />
+            {!name && (
+            <HelpBlock bsClass="help-block-error">
             Il nome del piatto è richiesto
-          </HelpBlock>
-          )}
-        </FormGroup>
-        <FormGroup>
-          {/* Radio buttons for type */}
-          <p>
+            </HelpBlock>
+            )}
+          </FormGroup>
+          <FormGroup>
+            {/* Radio buttons for type */}
+            <p>
             Inserisci il tipo di piatto
-          </p>
-          <Radio
-            name="type"
-            checked={type === '1' ? 'checked' : false}
-            value="1"
-            onChange={e => this.handleChange(e)}
-            inline
-          >
+            </p>
+            <Radio
+              name="type"
+              checked={type === '1' ? 'checked' : false}
+              value="1"
+              onChange={e => this.handleChange(e)}
+              inline
+            >
             Primo
-          </Radio>
-          <Radio
-            name="type"
-            checked={type === '2' ? 'checked' : false}
-            value="2"
-            onChange={e => this.handleChange(e)}
-            inline
-          >
+            </Radio>
+            <Radio
+              name="type"
+              checked={type === '2' ? 'checked' : false}
+              value="2"
+              onChange={e => this.handleChange(e)}
+              inline
+            >
             Secondo
-          </Radio>
-          <Radio
-            name="type"
-            checked={type === '3' ? 'checked' : false}
-            value="3"
-            onChange={e => this.handleChange(e)}
-            inline
-          >
+            </Radio>
+            <Radio
+              name="type"
+              checked={type === '3' ? 'checked' : false}
+              value="3"
+              onChange={e => this.handleChange(e)}
+              inline
+            >
             Contorno
-          </Radio>
-        </FormGroup>
+            </Radio>
+          </FormGroup>
 
-        <FormGroup controlId="description">
-          <ControlLabel>
+          <FormGroup controlId="description">
+            <ControlLabel>
             Descrizione
-          </ControlLabel>
-          <FormControl
-            componentClass="textarea"
-            name="description"
-            type="text"
-            value={description}
-            placeholder="Descrivere gli ingredienti"
-            onChange={e => this.handleChange(e)}
-          />
-        </FormGroup>
-        <Button bsStyle="success" type="submit">
-          Aggiungi
-        </Button>
+            </ControlLabel>
+            <FormControl
+              componentClass="textarea"
+              name="description"
+              type="text"
+              value={description}
+              placeholder="Descrivere gli ingredienti"
+              onChange={e => this.handleChange(e)}
+            />
+          </FormGroup>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button bsStyle="success" type="submit">
+            Aggiungi
+          </Button>
+          <Button bsStyle="danger" onClick={onHide} className="pull-left">
+            Annulla
+          </Button>
+        </Modal.Footer>
       </form>
     );
   }
@@ -120,6 +127,7 @@ DishForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   error: PropTypes.string,
   closeAlert: PropTypes.func,
+  onHide: PropTypes.func.isRequired,
 };
 
 DishForm.defaultProps = {
@@ -134,6 +142,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onSubmit: state => dispatch(postDish(state)),
+  onHide: () => dispatch(hideAddForm()),
   closeAlert: () => dispatch(hideErrorForm()),
 });
 

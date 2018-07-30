@@ -46,17 +46,25 @@
     },
     {
       "user": {
-        "id": 3,
-        "name": "Fiordaliso Profumato"
+        "id": 2,
+        "name": "Pippo Baudo"
       },
       "meals": [
         {
-          "id": "sumitiFantasia",
-          "name": "Panino al sacco"
+          "id": 1,
+          "name": "Pasta al pomodoro"
+        },
+        {
+          "id": 4,
+          "name": "Petto di pollo"
+        },
+        {
+          "id": 7,
+          "name": "Patate arroste"
         }
       ],
-      "hour": null,
-      "id": 12
+      "hour": "03:34",
+      "id": 13
     }
   ],
   "userDinner": [
@@ -377,6 +385,18 @@
       "type": 1,
       "description": "Pane, Polenta, Spinaci",
       "id": 16
+    },
+    {
+      "name": "Minestra di verdure",
+      "type": 2,
+      "description": "Verdure e cose buone",
+      "id": 17
+    },
+    {
+      "name": "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+      "type": 2,
+      "description": "",
+      "id": 18
     }
   ]
 }

@@ -2,23 +2,22 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import Modal from '../../components/modals/Modal';
-import ModalBody from '../../components/modals/ModalBody';
-import ModalFooter from '../../components/modals/ModalFooter';
-import ModalHeader from '../../components/modals/ModalHeader';
+import { Modal } from 'react-bootstrap';
 import { hideAddForm } from '../../redux/actions/dishes/dishes.actions';
 import DishForm from './DishForm';
 
 const AddModal = ({ close, show }) => (
   <Modal
-    onCancel={close}
+    onHide={close}
     show={show}
   >
-    <ModalHeader title="Aggiungi un piatto" />
-    <ModalBody>
-      <DishForm />
-    </ModalBody>
-    <ModalFooter onCancel={close} />
+    <Modal.Header>
+      <Modal.Title>
+        Aggiungi un piatto
+      </Modal.Title>
+    </Modal.Header>
+    {/* Per gestire i due pulsanti nel footer DishForm si occupa di entrambi */}
+    <DishForm />
   </Modal>
 );
 

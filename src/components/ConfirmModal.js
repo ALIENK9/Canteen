@@ -6,10 +6,12 @@ import PropTypes from 'prop-types';
 const ConfirmModal = ({
   message, confirm, reject, show,
 }) => (
-  <Modal show={show} backdrop>
-    <Modal.Body>
-      {message}
-    </Modal.Body>
+  <Modal show={show} onHide={reject}>
+    <Modal.Header>
+      <Modal.Title>
+        {message}
+      </Modal.Title>
+    </Modal.Header>
     <Modal.Footer>
       <Button bsStyle="success" className="pull-left" onClick={confirm}>
         Conferma

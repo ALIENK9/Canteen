@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  FormGroup, ControlLabel, FormControl, HelpBlock, Button, Radio, Checkbox,
+  FormGroup, ControlLabel, FormControl, HelpBlock, Button, Radio, Checkbox, Modal,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -9,7 +9,7 @@ import Select from 'react-select';
 import Alert from '../../components/Alert';
 import { mapTypeToString } from '../utils';
 import {
-  getDayMeals, postReservation, hideErrorForm, getUserList,
+  getDayMeals, postReservation, hideErrorForm, getUserList, addModalHide,
 } from '../../redux/actions/reservations/reservations.actions';
 
 class AddReservationForm extends Component {
@@ -124,7 +124,7 @@ class AddReservationForm extends Component {
     const { state } = this;
     const { user, hour, lunchbag } = state;
     const {
-      error, closeAlert, dayMeals, users,
+      error, closeAlert, dayMeals, users, onHide,
     } = this.props;
     const typesArray = [
       { type: 1, inputname: 'maindish' },
@@ -137,75 +137,82 @@ class AddReservationForm extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
+        <Modal.Body>
 
-        <FormGroup>
-          <label htmlFor={unsernameInput}>
+          <FormGroup>
+            <label htmlFor={unsernameInput}>
             Nome utente
-          </label>
-          <Select
-            options={users}
-            inputId={unsernameInput}
-            onChange={opt => this.handleSelectChange(opt)}
-            placeholder="Mario Bianchi"
-          />
+            </label>
+            <Select
+              options={users}
+              inputId={unsernameInput}
+              onChange={opt => this.handleSelectChange(opt)}
+              placeholder="Mario Bianchi"
+            />
 
-          {!user.value && (
-          <HelpBlock bsClass="help-block-error">
+            {!user.value && (
+            <HelpBlock bsClass="help-block-error">
             L&apos;intestatario della prenotazione &egrave; richiesto
-          </HelpBlock>
-          )}
-        </FormGroup>
-
-        <FormGroup controlId="lunchbag">
-          <Checkbox
-            checked={state.lunchbag}
-            title="Pranzo al sacco (panino)"
-            onChange={e => this.handleCheckboxChange(e)}
-          >
-          Pranzo al sacco
-          </Checkbox>
-        </FormGroup>
-
-        {typesArray.map(obj => (
-          <FormGroup key={obj.type}>
-            <p>
-              Scegli il
-              {' '}
-              {mapTypeToString(obj.type).toLowerCase()}
-            </p>
-            { dayMeals.filter(meal => meal.type === obj.type).map(meal => (
-              <Radio
-                key={meal.id}
-                id={meal.id}
-                name={obj.inputname}
-                checked={state[obj.inputname] === meal.id.toString()}
-                value={meal.id}
-                onChange={e => this.handleChange(e)}
-                disabled={!!lunchbag}
-                inline
-              >
-                {meal.name}
-              </Radio>
-            )) }
+            </HelpBlock>
+            )}
           </FormGroup>
-        ))}
 
-        <FormGroup controlId="hour">
-          <ControlLabel>
+          <FormGroup controlId="lunchbag">
+            <Checkbox
+              checked={state.lunchbag}
+              title="Pranzo al sacco (panino)"
+              onChange={e => this.handleCheckboxChange(e)}
+            >
+          Pranzo al sacco
+            </Checkbox>
+          </FormGroup>
+
+          {typesArray.map(obj => (
+            <FormGroup key={obj.type}>
+              <p>
+              Scegli il
+                {' '}
+                {mapTypeToString(obj.type).toLowerCase()}
+              </p>
+              { dayMeals.filter(meal => meal.type === obj.type).map(meal => (
+                <Radio
+                  key={meal.id}
+                  id={meal.id}
+                  name={obj.inputname}
+                  checked={state[obj.inputname] === meal.id.toString()}
+                  value={meal.id}
+                  onChange={e => this.handleChange(e)}
+                  disabled={!!lunchbag}
+                  inline
+                >
+                  {meal.name}
+                </Radio>
+              )) }
+            </FormGroup>
+          ))}
+
+          <FormGroup controlId="hour">
+            <ControlLabel>
             Orario pasto
-          </ControlLabel>
-          <FormControl
-            disabled={!!lunchbag}
-            name="hour"
-            type="time"
-            value={hour}
-            placeholder="12:15"
-            onChange={e => this.handleChange(e)}
-          />
-        </FormGroup>
-        <Button bsStyle="success" type="submit">
+            </ControlLabel>
+            <FormControl
+              disabled={!!lunchbag}
+              name="hour"
+              type="time"
+              value={hour}
+              placeholder="12:15"
+              onChange={e => this.handleChange(e)}
+            />
+          </FormGroup>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button bsStyle="success" type="submit" className="pull-left">
           Aggiungi
-        </Button>
+          </Button>
+          <Button bsStyle="danger" onClick={onHide}>
+          Annulla
+          </Button>
+        </Modal.Footer>
       </form>
     );
   }
@@ -214,6 +221,7 @@ class AddReservationForm extends Component {
 AddReservationForm.propTypes = {
   error: PropTypes.string,
   closeAlert: PropTypes.func.isRequired,
+  onHide: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   dayMeals: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
@@ -253,6 +261,7 @@ const mapDispatchToProps = dispatch => ({
   getMeals: (day, moment) => dispatch(getDayMeals(day, moment)),
   closeAlert: () => dispatch(hideErrorForm()),
   onSubmit: (state, moment) => dispatch(postReservation(state, moment)),
+  onHide: () => dispatch(addModalHide()),
 });
 
 
