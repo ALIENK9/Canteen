@@ -52,7 +52,7 @@ const renderView = (viewList, reslist) => {
 const ReservationItem = ({
   name, type, reslist, viewList,
 }) => (
-  <div className="w3-container w3-center">
+  <div className="card-container center">
     <strong>
       {name}
     </strong>

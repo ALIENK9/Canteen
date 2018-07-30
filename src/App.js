@@ -26,6 +26,7 @@ import DishPage from './containers/dishes/DishPage';
 // import AdminPage from './containers/AdminPage';
 import { RequireRole } from './containers/Auth';
 import Welcome from './containers/Welcome';
+import ForbiddenPage from './components/ForbiddenPage';
 
 /* eslint-disable react/prefer-stateless-function */
 class App extends Component {
@@ -50,6 +51,7 @@ class App extends Component {
                 <Route path="/dishes" component={RequireRole(DishPage, { requiredRole: 'admin' })} />
                 <Route path="/login" component={LoginPage} />
                 <Route path="/home" component={Welcome} />
+                <Route path="/forbidden" component={ForbiddenPage} />
                 <Redirect from="/" to="/home" />
               </Switch>
             </Jumbotron>

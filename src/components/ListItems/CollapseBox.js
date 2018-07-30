@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const CollapseBox = ({
   onClick, index, children,
 }) => {
-  const styles = 'flex-item w3-card w3-hover-shadow';
+  const styles = 'flex-item card';
   return (
     <div className={styles} role="button" tabIndex={0} onClick={() => onClick(index)} onKeyPress={() => onClick(index)}>
       {children}

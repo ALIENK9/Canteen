@@ -32,9 +32,18 @@ footer {
   text-align: center;
 }
 
+a {
+  color: inherit;
+}
+
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0 !important;
+}
+
+button, html [type=button] {
+  -webkit-appearance: button;
+  -moz-appearance: button;
 }
 
 .flex-container {
@@ -55,14 +64,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card {
-  position: relative;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
   -webkit-transition: -webkit-box-shadow .25s;
   transition: -webkit-box-shadow .25s;
   transition: box-shadow .25s;
   transition: box-shadow .25s, -webkit-box-shadow .25s;
-  background-color: #36ec6d !important;
+  background-color: #93ebf3 !important;
   border-radius: 0.5em;
-  color: white;
+  color: black;
+}
+
+.card-container {
+  padding: 0.01em 1em;
+}
+
+.card:hover {
+  box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
 }
 
 .card-subtitle {
@@ -159,9 +176,7 @@ nav p.active {
 
 /* CLASSI GENERICHE */
 .center {
-  padding: 1em 20%; 
-  text-align: center;
-  height: 100%;
+  text-align: center !important;
 }
 
 

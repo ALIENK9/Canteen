@@ -51,7 +51,7 @@ function brandLink(linkName, toPath, currentLocation) {
     );
   }
   return (
-    <NavLink to="/home">
+    <NavLink to={toPath}>
       {linkName}
     </NavLink>
   );

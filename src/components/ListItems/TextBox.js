@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Glyphicon } from 'react-bootstrap';
 
 const TextBox = ({ children, onDelete, id }) => {
-  const styles = 'flex-item w3-card w3-hover-shadow';
+  const styles = 'flex-item card';
   return (
     <div className={styles}>
       <div role="textbox">

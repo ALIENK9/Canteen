@@ -8,8 +8,10 @@ import BackButton from './BackButton';
  * history router prop is provided.
  * @param {Object} props {title: String, children: node, history: any}
  */
-const Panel = ({ title, children, history }) => (
-  <div className="container">
+const Panel = ({
+  title, children, className, history,
+}) => (
+  <div className={`container ${className}`}>
     {history && <BackButton history={history} />}
     <PageHeader>
       {title}
@@ -20,11 +22,13 @@ const Panel = ({ title, children, history }) => (
 
 Panel.propTypes = {
   title: PropTypes.string.isRequired,
+  className: PropTypes.string,
   children: PropTypes.node.isRequired,
   history: PropTypes.object,
 };
 
 Panel.defaultProps = {
+  className: '',
   history: null,
 };
 

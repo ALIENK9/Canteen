@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const DishItem = ({ name, type, description }) => (
-  <div className="w3-container w3-center">
+  <div className="card-container center">
     <div className="card-title">
       <strong>
         {name}

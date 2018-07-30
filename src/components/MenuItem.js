@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const MenuItem = ({ name, type }) => (
-  <div className="w3-container w3-center">
+  <div className="card-container center">
     <strong>
       {name}
     </strong>
@@ -14,6 +14,7 @@ const MenuItem = ({ name, type }) => (
 
 MenuItem.propTypes = {
   name: PropTypes.string.isRequired,
+  type: PropTypes.number.isRequired,
 };
 
 export default MenuItem;

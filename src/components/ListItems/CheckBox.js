@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const CheckBox = ({
   onClick, id, children, checked, param,
 }) => {
-  const styles = `flex-item w3-card w3-hover-shadow ${checked ? 'checked' : ''}`;
+  const styles = `flex-item card ${checked ? 'checked' : ''}`;
   return (
     <div
       className={styles}
