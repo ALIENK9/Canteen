@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import List from '../../components/List';
 import TextBox from '../../components/ListItems/TextBox';
@@ -56,18 +55,6 @@ class UserList extends Component {
   }
 }
 
-/* const UserList = ({ list, onDelete }) => (
-  <List>
-    {console.log(list)}
-    { list.map(user => (
-      <TextBox key={user.id} id={user.id} onDelete={onDelete}>
-        <UserReservationItem name={user.name} hour={user.hour} meals={user.meals} />
-      </TextBox>
-    ))
-        }
-  </List>
-); */
-
 UserList.propTypes = {
   list: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
@@ -81,7 +68,6 @@ UserList.propTypes = {
     }),
     hour: PropTypes.string,
   })),
-  // view: PropTypes.oneOf(['users', 'meals']),
   moment: PropTypes.oneOf(['lunch', 'dinner']),
   onDelete: PropTypes.func,
   getData: PropTypes.func,
@@ -96,7 +82,6 @@ UserList.defaultProps = {
       hour: '00:00',
     },
   ],
-  // view: 'users',
   moment: 'lunch',
   getData: () => {},
   onDelete: () => {},
@@ -104,7 +89,6 @@ UserList.defaultProps = {
 
 const mapStateToProps = state => ({
   list: state.reservations.data.list,
-  // view: state.reservations.ui.view,
   moment: state.reservations.ui.moment,
 });
 
@@ -114,4 +98,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserList));
+export default connect(mapStateToProps, mapDispatchToProps)(UserList);

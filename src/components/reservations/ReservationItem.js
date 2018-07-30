@@ -50,7 +50,7 @@ const renderView = (viewList, reslist) => {
  * @param {Object} props
  */
 const ReservationItem = ({
-  name, type, reslist, viewList,
+  name, type, reslist, clicked,
 }) => (
   <div className="card-container center">
     <strong>
@@ -59,7 +59,7 @@ const ReservationItem = ({
     <div className="card-subtitle">
       {type}
     </div>
-    { renderView(viewList, reslist) /* mostra la cosa giusta a seconda del parametro 'viewList' */ }
+    { renderView(clicked, reslist) /* mostra la cosa giusta a seconda del parametro 'viewList' */ }
   </div>
 );
 
@@ -70,12 +70,12 @@ ReservationItem.propTypes = {
     name: PropTypes.string,
     hour: PropTypes.string,
   })),
-  viewList: PropTypes.bool,
+  clicked: PropTypes.bool,
 };
 
 ReservationItem.defaultProps = {
   reslist: [],
-  viewList: false,
+  clicked: false,
 };
 
 export default ReservationItem;

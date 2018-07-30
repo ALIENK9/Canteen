@@ -27,7 +27,8 @@ footer {
   color: black;
   left: 0;
   padding: 1em;
-  max-height: 5em;
+  height: 4em;
+    bottom: 0;
   right: 0;
   text-align: center;
 }
@@ -88,7 +89,7 @@ button, html [type=button] {
 }
 
 #root, #app {
-  height: 100%;
+  min-height: 100%;
 }
 
 .navbar {
@@ -101,6 +102,7 @@ button, html [type=button] {
 
 /* così lo spinner è al centro del Jumbotron */
 main {
+  min-height: 100%;
   position: relative;
 }
 
@@ -135,7 +137,7 @@ main {
   }
 
   main, footer {
-    height: auto;
+
     max-height: unset;
   }
 }
