@@ -23,7 +23,13 @@ class DishesList extends Component {
     return (
       <List>
         {!loading && dishes.map(dish => (
-          <TextBox key={dish.id} id={dish.id} onDelete={onDelete}>
+          <TextBox
+            key={dish.id}
+            id={dish.id}
+            onDelete={onDelete}
+            deleteLabel={`Elimina il piatto ${dish.name}`}
+            confirmation
+          >
             {console.log('sdjkdsds', dish.id)}
             <DishItem
                 // id={dish.id}

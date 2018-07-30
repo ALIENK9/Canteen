@@ -20,6 +20,10 @@ const DishPage = ({
     <Panel>
       <Panel.Body>
         <DocumentTitle title="Gestione piatti" />
+        <p>
+          Qui sono listati tutti i piatti disponibili nel sistema. &Egrave; possibile
+          aggiungerli e toglierli.
+        </p>
         <DishToolbar />
         <AddModal />
         <Loader loading={loading} />

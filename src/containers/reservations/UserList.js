@@ -42,11 +42,18 @@ class UserList extends Component {
       <List>
         {console.log('ddddddddddddddddddddaaaaaaaaaaaaaaaati', list)}
         { list.map(reserv => (
-          <TextBox key={reserv.id} id={reserv.id} onDelete={this.handleDelete}>
+          <TextBox
+            key={reserv.id}
+            id={reserv.id}
+            onDelete={this.handleDelete}
+            deleteLabel={reserv.user
+              ? `Rimuovi la prenotazione dell'utente ${reserv.user.name} ${reserv.hour
+                ? `delle ore ${reserv.hour}` : ''}` : ''}
+            confirmation
+          >
             <UserReservationItem
               name={reserv.user ? reserv.user.name : 'No-name'}
-              hour={reserv.hour}
-              meals={reserv.meals}
+              hour={reserv.hour} // ho tolto l'elenco dei pasti perchè non è utile
             />
           </TextBox>
         )) }

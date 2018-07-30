@@ -31,6 +31,11 @@ const ResPage = ({
           <MomentTabs />
         </Panel.Heading>
         <Panel.Body>
+          <p>
+            Queste sono le prenotazioni effettuate per la giornata
+            {' '}
+            {day}
+          </p>
           <ResToolbar view={view} />
           <Loader loading={loading} />
           <AddReservationModal />
