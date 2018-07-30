@@ -15,7 +15,7 @@ const Toolbar = ({
   <Panel>
     <Panel.Body>
       <ButtonToolbar className="NObutton-toolbar">
-        <ToggleButtonGroup type="radio" name="options" defaultValue={defaultButtonKey}>
+        <ToggleButtonGroup role="group" type="radio" name="options" defaultValue={defaultButtonKey}>
           {buttons.map(button => (
             <ToggleButton onClick={button.func} value={button.key} key={button.key}>
               {button.title}
@@ -24,7 +24,7 @@ const Toolbar = ({
         </ToggleButtonGroup>
 
         {add.presence && (
-          <ButtonGroup>
+          <ButtonGroup role="group">
             <Button onClick={add.func} className="" bsStyle="primary">
               <Glyphicon glyph="glyphicon glyphicon-plus" />
             </Button>
@@ -32,7 +32,7 @@ const Toolbar = ({
         )}
 
         {search.presence && (
-          <ButtonGroup>
+          <ButtonGroup role="group">
             <Button onClick={search.func} className="pull-right" bsStyle="primary">
                 Here should be a search bar (to be implemented)
             </Button>

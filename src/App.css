@@ -137,7 +137,6 @@ main {
   }
 
   main, footer {
-
     max-height: unset;
   }
 }

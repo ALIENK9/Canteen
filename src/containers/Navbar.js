@@ -18,7 +18,7 @@ import { logout } from '../redux/actions/authentication/authentication.actions';
  * @param {String} currentLocation current active path
  */
 function createLink(linkName, eventKey, toPath, currentLocation) {
-  if (currentLocation === toPath) {
+  if (currentLocation.includes(toPath)) {
     return (
       <li className="active">
         <NavBar.Text>
@@ -43,7 +43,7 @@ function createLink(linkName, eventKey, toPath, currentLocation) {
  * @param {String} currentLocation current location returned by router
  */
 function brandLink(linkName, toPath, currentLocation) {
-  if (currentLocation === toPath) {
+  if (currentLocation.includes(toPath)) {
     return (
       <NavBar.Text className="active">
         {linkName}
