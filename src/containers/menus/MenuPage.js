@@ -34,11 +34,11 @@ class MenuPage extends Component {
 
   render() {
     const {
-      match, error, success, closeAlert, loading,
+      match, error, success, closeAlert, loading, history,
     } = this.props;
     const { day } = match.params;
     return (
-      <MyPanel title={`Gestione menù del giorno ${day}`}>
+      <MyPanel title={`Gestione menù del giorno ${day}`} history={history}>
         <Panel bsStyle="primary">
           <Panel.Heading>
             <DocumentTitle title={`Menù ${day}`} />
@@ -68,6 +68,7 @@ class MenuPage extends Component {
 
 MenuPage.propTypes = {
   match: PropTypes.object.isRequired,
+  history: PropTypes.object,
   loading: PropTypes.bool,
   // moment: PropTypes.oneOf(['lunch', 'dinner']),
   error: PropTypes.string,
@@ -91,6 +92,7 @@ MenuPage.propTypes = {
 
 MenuPage.defaultProps = {
   // moment: 'lunch',
+  history: null,
   loading: true,
   success: '',
   error: '',

@@ -18,10 +18,9 @@ const DishPage = ({
 }) => (
   <MyPanel title="Piatti disponibili">
     <Panel>
-      <Panel.Heading />
-      <DishToolbar />
       <Panel.Body>
         <DocumentTitle title="Gestione piatti" />
+        <DishToolbar />
         <AddModal />
         <Loader loading={loading} />
         { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }

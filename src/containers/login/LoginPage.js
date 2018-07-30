@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect, withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DocumentTitle from 'react-document-title';
 import { PageHeader } from 'react-bootstrap';
@@ -64,4 +64,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginPage));
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

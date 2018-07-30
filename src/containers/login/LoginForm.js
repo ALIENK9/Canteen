@@ -4,7 +4,6 @@ import {
   FormControl, FormGroup, ControlLabel, HelpBlock, Button,
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import validateLogin from '../../validation/login.validator';
 import { login } from '../../redux/actions/authentication/authentication.actions';
 
@@ -112,4 +111,4 @@ const mapDispatchToProps = dispatch => ({
   onLogin: state => dispatch(login(state)),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginForm));
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

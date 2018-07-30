@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Loader from '../components/Loader/Loader';
 
@@ -119,7 +119,7 @@ const mapStateToProps = (state) => {
     currentUserRole: role,
   };
 };
-const RequireRoleConnected = withRouter(connect(mapStateToProps)(RequireRoleBase));
+const RequireRoleConnected = connect(mapStateToProps)(RequireRoleBase);
 
 /**
  * Render provided Component if logged user role match requiredRole(s).

@@ -26,9 +26,8 @@ footer {
   background-color: rgb(190, 215, 236);
   color: black;
   left: 0;
-  max-height: 10%;
   padding: 1em;
-  /* position: relative; */
+  max-height: 5em;
   right: 0;
   text-align: center;
 }
@@ -86,7 +85,6 @@ h1, h2, h3, h4, h5, h6 {
 /* così lo spinner è al centro del Jumbotron */
 main {
   position: relative;
-  height: 80%;
 }
 
 .jumbotron-main {

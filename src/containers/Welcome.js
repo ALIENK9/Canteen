@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import WelcomePage from '../components/WelcomePage';
 
 const mapStateToProps = (state) => {
@@ -14,4 +13,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps)(WelcomePage));
+export default connect(mapStateToProps)(WelcomePage);

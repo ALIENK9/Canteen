@@ -19,11 +19,11 @@ import MomentTabs from './MomentTabs';
 
 
 const ResPage = ({
-  match, error, closeAlert, view, loading,
+  match, error, closeAlert, view, loading, history,
 }) => {
   const { day } = match.params;
   return (
-    <MyPanel title={`Prenotazioni del giorno ${day}`}>
+    <MyPanel title={`Prenotazioni del giorno ${day}`} history={history}>
       <Panel bsStyle="primary">
         <Panel.Heading>
           <DocumentTitle title="Prenotazione" />
@@ -122,6 +122,7 @@ ResPage.propTypes = {
   closeAlert: PropTypes.func.isRequired,
   error: PropTypes.string,
   view: PropTypes.oneOf(['users', 'meals']),
+  history: PropTypes.object,
   // moment: PropTypes.oneOf(['lunch', 'dinner']),
   // onViewChange: PropTypes.func.isRequired,
   // onMomentChange: PropTypes.func.isRequired,
@@ -131,6 +132,7 @@ ResPage.propTypes = {
 ResPage.defaultProps = {
   error: '',
   view: 'meals',
+  history: null,
   // moment: 'lunch',
   loading: true,
   // success: '',
