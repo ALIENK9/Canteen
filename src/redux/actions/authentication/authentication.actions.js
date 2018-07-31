@@ -7,37 +7,21 @@ export const loginRequest = () => ({
   type: actionTypes.LOGIN_REQUEST,
 });
 
-/* TODO:
-- usare solo setCurrentUser in modo da fare una cosa più pulita (QUASI FATTO)
-- salvare anche il token in user (con setCurrentUser in modo da salvarlo
-  automaticamente su sessionStorage ) (FATTO +o-: il server per ora manda tanta junk)
-- far pescare il token alla fetch da sessionStorage (DA FARE. ATTENZIONE ALL'ANNIDAMENTO
-  fatto da redux-persist)
-- far reindirizzare alla home quando si fa il logout
-*/
-// @deprecated
-/* export const loginSuccess = ({ token }) => {
-  localStorage.setItem('authToken', token);
-  console.log('Token in action', token);
-  const auth = jwt.decode(token);
-  console.log('Decoded token', auth);
-  return ({
-    type: actionTypes.LOGIN_SUCCESS,
-    payload: { auth },
-  });
-}; */
-
 export const loginFailure = (error, json) => {
   console.log(json);
   return {
     type: actionTypes.LOGIN_FAILURE,
-    payload: { error: json ? json.message : error },
+    payload: {
+      error: json ? json.message : error,
+    },
   };
 };
 
 // HACK: magheggio bruttino per avere un'oggetto vuoto (però meno if)
 const setCurrentUser = (userObject) => {
-  const { token } = userObject;
+  const {
+    token,
+  } = userObject;
   console.log('Token in action', token);
   const decoded = jwt.decode(token) || {};
   const user = {
@@ -47,7 +31,9 @@ const setCurrentUser = (userObject) => {
   console.log('Decoded token', user);
   return {
     type: actionTypes.SET_CURRENT_USER,
-    payload: { user },
+    payload: {
+      user,
+    },
   };
 };
 
@@ -57,20 +43,28 @@ export const clearMessages = () => ({
 });
 
 
-export const login = data1 => (dispatch) => {
+export const login = data => (dispatch) => {
   const URL = 'http://localhost:4000/login';
-  // const URL = 'http://192.168.30.102:8700/getToken';
+  const URL1 = 'http://192.168.30.102:9000/public/users/login';
+  const URL3 = 'http://192.168.30.102:9000/protected/current';
+  const URL2 = 'http://192.168.30.102:9000/public/users/test';
   // const URL = 'http://192.168.30.102:8700/protected-resource/hello';
   // const URL = 'http://192.168.30.102:8700/test';
-  // return Http.get(URL, null, dispatch, null, setCurrentUser, loginFailure);
+  const { username, password } = data;
+  console.log(`Dati: ${username}:${password}`);
+  const headers = new Map().set('Authorization', `Basic ${btoa(`${username}:${password}`)}`)
+    .set('Content-Type', 'application/json');
+  const headers3 = new Map().set('Authorization',
+    'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYW0iLCJleHAiOjYxNdLDN5Ydwp1eNzjYQ0xkJ-WXkgGdZKYGoa1K5DFHZc-yvJc-jg');
+  return Http.get(URL, headers, null, dispatch, loginRequest, setCurrentUser, loginFailure);
   /* const ciphertext = crypto.AES.encrypt('Pinocchio', 'chiavechiavechiavechiavechiaveaa');
   console.log('Critata', crypto.enc.Hex.parse(ciphertext));
 
   const bytes = crypto.AES.decrypt('8HMBhhBakSHO7sJ1Q9YVqA==', 'chiavechiavechiavechiavechiaveaa');
   const val = bytes.toString(crypto.enc.Utf16);
   console.log('La parola decriptatat', val); */
-  return Http.post(URL, dispatch, JSON.stringify(data1),
-    loginRequest, setCurrentUser, loginFailure);
+  // return Http.post(URL, dispatch, JSON.stringify(data1),
+  // loginRequest, setCurrentUser, loginFailure);
 }; // ora chiama setCurrentUser
 
 export const logout = () => (dispatch) => { // dovrà fare il redirect

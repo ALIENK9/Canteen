@@ -136,8 +136,8 @@ class AddReservationForm extends Component {
     /* eslint-disable jsx-a11y/label-has-for */
     return (
       <form onSubmit={this.handleSubmit}>
-        { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
         <Modal.Body>
+          { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
 
           <FormGroup>
             <label htmlFor={unsernameInput}>

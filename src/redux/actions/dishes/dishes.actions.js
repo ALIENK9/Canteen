@@ -1,5 +1,6 @@
 import * as actionTypes from './dishes.actionsTypes';
 import Http from '../../Http';
+import { getAuthFieldsFromStorage } from '../../utils';
 
 export const addDishSuccess = dish => ({
   type: actionTypes.ADD_DISH_SUCCESS,
@@ -57,20 +58,24 @@ export const hideErrorForm = () => ({
 
 // ASYNC ACTIONS
 
+const headers = getAuthFieldsFromStorage(); // Map
+
 export const getDishes = () => (dispatch) => {
   const URL = 'http://localhost:4000/dishes';
   // const URL = 'https://api-gateway-spring.herokuapp.com/test';
-  return Http.get(URL, null, dispatch, null, fetchDishesSuccess, requestFailure);
+  return Http.get(URL, headers, null, dispatch, null, fetchDishesSuccess, requestFailure);
 };
 
 export const deleteDish = id => (dispatch) => {
   const URL = `http://localhost:4000/dishes/${id}`;
   console.debug('URL DELTEE: ', URL);
-  return Http.delete(URL, dispatch, null, removeDishSuccess.bind(this, id), requestFailure);
+  return Http
+    .delete(URL, headers, dispatch, null, removeDishSuccess.bind(this, id), requestFailure);
 };
 
 
 export const postDish = dish => (dispatch) => {
   const URL = 'http://localhost:4000/dishes'; // todo: dovrei inserire nell'oggetto in memori anche l'ID
-  return Http.post(URL, dispatch, JSON.stringify(dish), null, addDishSuccess, showErrorForm);
+  return Http
+    .post(URL, headers, dispatch, JSON.stringify(dish), null, addDishSuccess, showErrorForm);
 };

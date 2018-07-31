@@ -37,6 +37,7 @@ const ui = (state = init, action) => {
         ...state,
         loading: true,
       };
+    case actionTypes.RESERVATION_REQUEST_FAILURE:
     case actionTypes.FETCH_RESERVATIONS_SUCCESS:
       return {
         ...state,

@@ -17,10 +17,24 @@ const messages = (state = init, action) => {
         ...state,
         addFormError: action.payload.error,
       };
+    case actionTypes.LOAD_USERS_SUCCESS:
+    case actionTypes.HIDE_RESERVATION_ERROR_FORM:
+    case actionTypes.LOAD_DAYMEALS_SUCCESS:
+      return {
+        ...state,
+        addFormError: '',
+      };
     case actionTypes.RESERVATION_REQUEST_FAILURE:
       return {
         ...state,
         error: action.payload.error,
+      };
+    case actionTypes.REMOVE_RESERVATION_SUCCESS:
+    case actionTypes.ADD_RESERVATION_SUCCESS:
+    case actionTypes.FETCH_RESERVATIONS_SUCCESS:
+      return {
+        ...state,
+        error: '',
       };
     default:
       return state;

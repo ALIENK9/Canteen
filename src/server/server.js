@@ -24,7 +24,8 @@ function createToken(payload) {
 
 // Verify the token
 async function verifyToken(token) {
-  return jwt.verify(token, SECRET_KEY, (err, decode) => (decode !== undefined ? decode : err));
+  const t = jwt.verify(token, SECRET_KEY, (err, decode) => (decode !== undefined ? decode : err));
+  console.log(t);
 }
 
 // Check if the user exists in database
@@ -35,8 +36,11 @@ function isAuthenticated({ username, password }) {
 }
 
 // verifica credenziali e invia token todo: fornire Nome Cognome e admin
-server.post('/login', (req, res) => {
-  const { username, password } = req.body;
+server.get('/login', (req, res) => {
+  const { authorization } = req.headers;
+  const [/* bearer */, base64Auth] = authorization.split(' '); // token
+  const string = Buffer.from(base64Auth, 'base64').toString(); // decode Base64 string
+  const [username, password] = string.split(':'); // split username:password
   if (!isAuthenticated({ username, password })) {
     const status = 401;
     console.log('dasasasad');

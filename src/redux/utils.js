@@ -46,3 +46,20 @@ export function immutableUpdate(array, index, value) {
   console.debug(a);
   return a;
 }
+
+/**
+ * Retrieves token from sessionStorage and set Authorixzation headers.
+ * If token is null return empty object, otherwise an object with Authorization key.
+ * @returns {Map} With auth header (bearer)
+ */
+export function getAuthFieldsFromStorage() {
+  const root = JSON.parse(sessionStorage.getItem('persist:root')) || { authentication: { user: { token: null } } };
+  console.log('root', root, typeof root);
+  const { authentication } = root;
+  const { user } = JSON.parse(authentication);
+  console.log('user', user);
+  const { token } = user;
+  const headers = token ? new Map().set('Authorization', `Bearer ${token}`) : new Map();
+  console.log('getHeadersFromStorage: ', headers);
+  return headers;
+}

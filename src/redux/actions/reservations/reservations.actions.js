@@ -1,5 +1,6 @@
 import * as actionTypes from './reservations.actionTypes';
 import Http from '../../Http';
+import { getAuthFieldsFromStorage } from '../../utils';
 
 
 export const fetchReservationsStarted = () => ({
@@ -108,35 +109,41 @@ export const showErrorForm = error => ({
   return Http.get(URL, dispatch, null, changeSelectedView, requestFailure);
 }; */
 
+const headers = getAuthFieldsFromStorage(); // Map
+
 export const getReservations = (mode, moment) => (dispatch) => {
   let URL = 'http://localhost:4000/';
   if (mode === 'users') URL = URL.concat(moment === 'lunch' ? 'userLunch' : 'userDinner');
   else if (mode === 'meals') URL = URL.concat(moment === 'lunch' ? 'mealsLunch' : 'mealsDinner');
   else URL = null;
   console.log(URL, moment, mode);
-  return Http.get(URL, null, dispatch, fetchReservationsStarted, fetchReservationsSuccess,
-    requestFailure);
+  return Http
+    .get(URL, headers, null, dispatch, fetchReservationsStarted, fetchReservationsSuccess,
+      requestFailure);
 };
 
 export const deleteReservation = (moment, id) => (dispatch) => {
   const baseURL = 'http://localhost:4000/';
   const URL = baseURL.concat(moment === 'lunch' ? 'userLunch/' : 'userDinner/').concat(`${id}`);
-  return Http.delete(URL, dispatch, null, removeReservationSuccess.bind(this, id), requestFailure);
+  return Http
+    .delete(URL, headers, dispatch, null, removeReservationSuccess.bind(this, id), requestFailure);
 };
 
 export const getUserList = () => (dispatch) => {
   const URL = 'http://localhost:4000/users';
-  return Http.get(URL, null, dispatch, loadFormDataStarted, loadUsersSuccess, loadUsersFailure);
+  return Http
+    .get(URL, headers, null, dispatch, loadFormDataStarted, loadUsersSuccess, loadUsersFailure);
 };
 
 export const getDayMeals = (/* day, moment */) => (dispatch) => {
   const URL = 'http://localhost:4000/todayMeals';
-  return Http.get(URL, null, dispatch, loadFormDataStarted,
+  return Http.get(URL, headers, null, dispatch, loadFormDataStarted,
     loadDayMealsSuccess, loadDayMealsFailure);
 };
 
 export const postReservation = (data, moment) => (dispatch) => {
   const baseURL = 'http://localhost:4000/';
   const URL = baseURL.concat(moment === 'lunch' ? 'userLunch/' : 'userDinner/');
-  return Http.post(URL, dispatch, JSON.stringify(data), null, addReservationSuccess, showErrorForm);
+  return Http
+    .post(URL, headers, dispatch, JSON.stringify(data), null, addReservationSuccess, showErrorForm);
 };

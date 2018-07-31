@@ -1,5 +1,6 @@
 import Http from '../../Http';
 import * as actionTypes from './menus.actionTypes';
+import { getAuthFieldsFromStorage } from '../../utils';
 
 export const toggleMeal = (id, value, moment) => ({
   type: actionTypes.TOGGLE_MEAL,
@@ -52,15 +53,17 @@ export const filterMeals = filter => ({
 
 // ASYNC
 
+const headers = getAuthFieldsFromStorage(); // Map
+
 export const getMenus = () => (dispatch) => {
   const URL = 'http://localhost:4000/meals';
-  return Http.get(URL, null, dispatch, fetchMenuStarted, fetchMenuSuccess,
+  return Http.get(URL, headers, null, dispatch, fetchMenuStarted, fetchMenuSuccess,
     fetchMenuFailure);
 };
 
 export const putMenus = meals => (dispatch) => {
   console.log('acction call data: ', meals);
   const URL = 'http://localhost:4000/meals';
-  return Http.put(URL, dispatch, JSON.stringify(meals),
+  return Http.put(URL, headers, dispatch, JSON.stringify(meals),
     postMenuStarted, postMenuSuccess, postMenuFailure);
 };
