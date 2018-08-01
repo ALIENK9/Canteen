@@ -23,18 +23,25 @@ const setCurrentUser = (userObject) => {
     token,
   } = userObject;
   console.log('Token in action', token);
-  const decoded = jwt.decode(token) || {};
-  const user = {
-    ...decoded,
-    ...userObject, // dovrebbe contenere solo token
-  };
-  console.log('Decoded token', user);
-  return {
-    type: actionTypes.SET_CURRENT_USER,
-    payload: {
-      user,
-    },
-  };
+  try {
+    const decoded = jwt.verify(token, 'secret');
+    const user = {
+      ...decoded, // in realtà basta name, admin
+      ...userObject, // dovrebbe contenere solo token
+    };
+    console.log('Decoded token', user);
+    return {
+      type: actionTypes.SET_CURRENT_USER,
+      payload: {
+        user,
+      },
+    };
+  } catch (err) {
+    return {
+      type: actionTypes.LOGIN_FAILURE,
+      payload: { error: `Login fallito: token non valido ${err}` },
+    };
+  }
 };
 
 

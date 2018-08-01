@@ -109,9 +109,9 @@ export const showErrorForm = error => ({
   return Http.get(URL, dispatch, null, changeSelectedView, requestFailure);
 }; */
 
-const headers = getAuthFieldsFromStorage(); // Map
-
 export const getReservations = (mode, moment) => (dispatch) => {
+  const headers = getAuthFieldsFromStorage(); // Map
+
   let URL = 'http://localhost:4000/';
   if (mode === 'users') URL = URL.concat(moment === 'lunch' ? 'userLunch' : 'userDinner');
   else if (mode === 'meals') URL = URL.concat(moment === 'lunch' ? 'mealsLunch' : 'mealsDinner');
@@ -123,6 +123,7 @@ export const getReservations = (mode, moment) => (dispatch) => {
 };
 
 export const deleteReservation = (moment, id) => (dispatch) => {
+  const headers = getAuthFieldsFromStorage(); // Map
   const baseURL = 'http://localhost:4000/';
   const URL = baseURL.concat(moment === 'lunch' ? 'userLunch/' : 'userDinner/').concat(`${id}`);
   return Http
@@ -130,18 +131,21 @@ export const deleteReservation = (moment, id) => (dispatch) => {
 };
 
 export const getUserList = () => (dispatch) => {
+  const headers = getAuthFieldsFromStorage(); // Map
   const URL = 'http://localhost:4000/users';
   return Http
     .get(URL, headers, null, dispatch, loadFormDataStarted, loadUsersSuccess, loadUsersFailure);
 };
 
 export const getDayMeals = (/* day, moment */) => (dispatch) => {
+  const headers = getAuthFieldsFromStorage(); // Map
   const URL = 'http://localhost:4000/todayMeals';
   return Http.get(URL, headers, null, dispatch, loadFormDataStarted,
     loadDayMealsSuccess, loadDayMealsFailure);
 };
 
 export const postReservation = (data, moment) => (dispatch) => {
+  const headers = getAuthFieldsFromStorage(); // Map
   const baseURL = 'http://localhost:4000/';
   const URL = baseURL.concat(moment === 'lunch' ? 'userLunch/' : 'userDinner/');
   return Http

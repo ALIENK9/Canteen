@@ -1,19 +1,18 @@
 import { combineReducers } from 'redux';
-// import { createFilter } from 'redux-persist-transform-filter';
 import autoMergeLevel1 from 'redux-persist/es/stateReconciler/autoMergeLevel1';
 import storage from 'redux-persist/lib/storage/session';
 import { persistReducer, createTransform } from 'redux-persist';
-import reservationsReducer from './reservations/reservations.reducer';
-import menusReducer from './menus/menus.reducer';
-import dishesReducer from './dishes/dishes.reducer';
-import authReducer from './authentication/authentication.reducer';
+import reservations from './reservations/reservations.reducer'; // REDUCERS
+import menus from './menus/menus.reducer';
+import dishes from './dishes/dishes.reducer';
+import authentication from './authentication/authentication.reducer';
 
 
 const rootReducer = combineReducers({
-  reservations: reservationsReducer,
-  menus: menusReducer,
-  dishes: dishesReducer,
-  authentication: authReducer,
+  reservations,
+  menus,
+  dishes,
+  authentication,
   _persist: { rehydrated: false }, // sembra necessario come valore di default per 'rehydrated'
 });
 
@@ -34,13 +33,10 @@ const transformAuth = createTransform(
   }),
   { whitelist: ['authentication'] },
 );
-/* createFilter(
-  'authentication',
-  ['user', 'isAuthenticated'],
-); */
+
 
 const persistConfig = {
-  key: 'root',
+  key: 'auth',
   storage,
   blacklist: ['reservations', 'dishes', 'menus'],
   stateReconciler: autoMergeLevel1,
@@ -51,24 +47,54 @@ const persistConfig = {
 
 export default persistReducer(persistConfig, rootReducer);
 
-/* state => ({
-    authentication: {
-      user: state.user,
-      isAuthenticated: state.isAuthenticated,
-    },
-  }),
-  (state) => {
-    console.log('rehydrating', state);
+/* TRANSFORM BUONA MA CHE NON FUNZIONA
+
+  const transformAuth = createTransform(
+  (stateToBePersisted) => {
+    console.log('Persisting', stateToBePersisted);
     return {
-      ...state,
-      messages: {
-        error: '',
-        success: '',
-      },
-      ui: {
-        loading: false,
-      },
+      token: stateToBePersisted.user.token,
     };
   },
-  { whitelist: 'authReducer' },
+  (stateToBeRehydrated) => {
+    // console.debug('Reh');
+    // console.log('Rehydrating', stateToBeRehydrated, typeof stateToBeRehydrated);
+    const { token } = stateToBeRehydrated.user;
+    // console.debug('Reh1', token);
+    // console.debug('Reh2');
+    // console.debug(token);
+    try {
+      console.debug('Reh2');
+      // const decoded = 0;
+      const decoded = jwt.verify(token, 'secret');
+      const { name, admin } = decoded;
+      return {
+        user: {
+          ...stateToBeRehydrated,
+          name,
+          admin,
+        },
+        messages: {
+          error: '',
+          success: '',
+        },
+        ui: { loading: false },
+        isAuthenticated: name && token,
+      };
+    } catch (err) {
+      console.debug('CATCH transform:', err.name, err.message);
+      return {
+        user: {
+          name: '', admin: false, token: '',
+        },
+        messages: {
+          error: '',
+          success: '',
+        },
+        ui: { loading: false },
+        isAuthenticated: false,
+      };
+    }
+  },
+  { whitelist: ['authentication'] },
 ); */

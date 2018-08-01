@@ -11,6 +11,7 @@ import { mapTypeToString } from '../utils';
 import {
   getDayMeals, postReservation, hideErrorForm, getUserList, addModalHide,
 } from '../../redux/actions/reservations/reservations.actions';
+import validateReservation from '../../validation/addReservation.validator';
 
 class AddReservationForm extends Component {
   constructor(props) {
@@ -21,12 +22,14 @@ class AddReservationForm extends Component {
       seconddish: '5',
       sidedish: '7',
       lunchbag: false,
-      hour: '',
+      hour: '12:00',
+      validationErrors: {},
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
   }
+
 
   componentDidMount() {
     const {
@@ -35,6 +38,13 @@ class AddReservationForm extends Component {
     const { day } = match.params;
     getMeals(day, moment);
     getUsers();
+  }
+
+  isValid() {
+    const { errors, isValid } = validateReservation(this.state);
+    if (!isValid) this.setState({ validationErrors: errors });
+    else this.setState({ validationErrors: {} });
+    return isValid;
   }
 
   /**
@@ -63,6 +73,9 @@ class AddReservationForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+
+    if (!this.isValid) return;
+
     const {
       onSubmit, moment, view, dayMeals,
     } = this.props;
@@ -105,7 +118,7 @@ class AddReservationForm extends Component {
           name: dayMeals[mealsIndex[2]].name,
         },
       ],
-      hour,
+      hour: hour.trim(),
     } : {
       user: userSubmit,
       meals: [
@@ -122,7 +135,9 @@ class AddReservationForm extends Component {
 
   render() {
     const { state } = this;
-    const { user, hour, lunchbag } = state;
+    const {
+      user, hour, lunchbag, validationErrors,
+    } = state;
     const {
       error, closeAlert, dayMeals, users, onHide,
     } = this.props;
@@ -203,6 +218,11 @@ class AddReservationForm extends Component {
               placeholder="12:15"
               onChange={e => this.handleChange(e)}
             />
+            {validationErrors.hour && (
+            <HelpBlock bsClass="help-block-error">
+              {validationErrors.hour}
+            </HelpBlock>
+            )}
           </FormGroup>
         </Modal.Body>
         <Modal.Footer>

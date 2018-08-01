@@ -17,11 +17,6 @@ const authMessages = (state = init, action = {}) => {
         success: '',
         error: action.payload.error,
       };
-    case actionTypes.LOGIN_SUCCESS:
-      return {
-        ...state,
-        error: '',
-      };
     default:
       return state;
   }

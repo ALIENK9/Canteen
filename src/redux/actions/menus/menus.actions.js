@@ -53,16 +53,16 @@ export const filterMeals = filter => ({
 
 // ASYNC
 
-const headers = getAuthFieldsFromStorage(); // Map
-
 export const getMenus = () => (dispatch) => {
+  const headers = getAuthFieldsFromStorage(); // Map
   const URL = 'http://localhost:4000/meals';
   return Http.get(URL, headers, null, dispatch, fetchMenuStarted, fetchMenuSuccess,
     fetchMenuFailure);
 };
 
 export const putMenus = meals => (dispatch) => {
-  console.log('acction call data: ', meals);
+  const headers = getAuthFieldsFromStorage(); // Map
+  console.log('acction call data: ', meals, headers);
   const URL = 'http://localhost:4000/meals';
   return Http.put(URL, headers, dispatch, JSON.stringify(meals),
     postMenuStarted, postMenuSuccess, postMenuFailure);

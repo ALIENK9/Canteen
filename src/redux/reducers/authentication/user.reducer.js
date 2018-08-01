@@ -9,9 +9,9 @@ const init = {
 
 const authUser = (state = init, action = {}) => {
   switch (action.type) {
-    case actionTypes.LOGIN_FAILURE:
+    case actionTypes.LOGIN_FAILURE: // shows a login error
       return init;
-    case actionTypes.SET_CURRENT_USER:
+    case actionTypes.SET_CURRENT_USER: // doesn't show errors, siply set user (empty on logout)
       return action.payload.user;
     default:
       return state;

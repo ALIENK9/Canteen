@@ -7,7 +7,7 @@ import Loader from '../components/Loader/Loader';
 
 export class RequireRoleBase extends Component {
   /**
-   * Check if user role corresponds to required role
+   * Utility to check if user role corresponds to required role
    * @param {String|Array<String>} requiredRole Required role or array with 'admin' | 'user'
    * @param {String} currentUserRole The current user role
    */
@@ -45,7 +45,11 @@ export class RequireRoleBase extends Component {
     }
   }
 
-
+  /**
+   * Check if props allow user to access the wrapped component. If not sets
+   * state.redirect to redirect location.
+   * @param {Object} props { isAuthenticated, isRehydrated, requiredRole, currentUserRole }
+   */
   ensureAuth(props) {
     const {
       isAuthenticated, isRehydrated, requiredRole, currentUserRole,

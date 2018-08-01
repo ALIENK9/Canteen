@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { postDish, hideErrorForm, hideAddForm } from '../../redux/actions/dishes/dishes.actions';
 import Alert from '../../components/Alert';
+import validateDish from '../../validation/dishes.validator';
 
 /*
   Nome: string
@@ -22,7 +23,15 @@ class DishForm extends Component {
       name: '',
       type: '2',
       description: '',
+      validationErrors: {},
     };
+  }
+
+  isValid() {
+    const { errors, isValid } = validateDish(this.state);
+    if (!isValid) this.setState({ validationErrors: errors });
+    else this.setState({ validationErrors: {} });
+    return isValid;
   }
 
   handleChange(event) {
@@ -33,13 +42,17 @@ class DishForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { onSubmit } = this.props;
-    const { type, name } = this.state;
-    if (type && name) onSubmit({ ...this.state, type: Number.parseInt(type, 10) });
+    if (this.isValid()) {
+      const { onSubmit } = this.props;
+      const { type, name, description } = this.state;
+      onSubmit({ name, description, type: Number.parseInt(type, 10) });
+    }
   }
 
   render() {
-    const { name, type, description } = this.state;
+    const {
+      name, type, description, validationErrors,
+    } = this.state;
     const { error, closeAlert, onHide } = this.props;
     return (
       <form onSubmit={e => this.handleSubmit(e)}>
@@ -56,9 +69,9 @@ class DishForm extends Component {
               placeholder="Pasta al pomodoro"
               onChange={e => this.handleChange(e)}
             />
-            {!name && (
+            {validationErrors.name && (
             <HelpBlock bsClass="help-block-error">
-            Il nome del piatto è richiesto
+              {validationErrors.name}
             </HelpBlock>
             )}
           </FormGroup>
@@ -94,6 +107,11 @@ class DishForm extends Component {
             >
             Contorno
             </Radio>
+            {validationErrors.type && (
+            <HelpBlock bsClass="help-block-error">
+              {validationErrors.type}
+            </HelpBlock>
+            )}
           </FormGroup>
 
           <FormGroup controlId="description">
@@ -108,6 +126,11 @@ class DishForm extends Component {
               placeholder="Descrivere gli ingredienti"
               onChange={e => this.handleChange(e)}
             />
+            {validationErrors.description && (
+            <HelpBlock bsClass="help-block-error">
+              {validationErrors.description}
+            </HelpBlock>
+            )}
           </FormGroup>
         </Modal.Body>
         <Modal.Footer>

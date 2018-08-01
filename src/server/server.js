@@ -13,7 +13,7 @@ server.use(bodyParser.json());
 
 const userdb = JSON.parse(fs.readFileSync('./src/server/users.json', 'UTF-8'));
 
-const SECRET_KEY = '123456789';
+const SECRET_KEY = 'secret';
 const expiresIn = '1h';
 
 
@@ -24,7 +24,7 @@ function createToken(payload) {
 
 // Verify the token
 async function verifyToken(token) {
-  const t = jwt.verify(token, SECRET_KEY, (err, decode) => (decode !== undefined ? decode : err));
+  const t = jwt.verify(token, SECRET_KEY);
   console.log(t);
 }
 
@@ -38,6 +38,7 @@ function isAuthenticated({ username, password }) {
 // verifica credenziali e invia token todo: fornire Nome Cognome e admin
 server.get('/login', (req, res) => {
   const { authorization } = req.headers;
+  console.debug(authorization);
   const [/* bearer */, base64Auth] = authorization.split(' '); // token
   const string = Buffer.from(base64Auth, 'base64').toString(); // decode Base64 string
   const [username, password] = string.split(':'); // split username:password
@@ -60,6 +61,7 @@ server.all('*', async (req, res, next) => {
   if (req.path === '/login') return next();
   if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer') {
     const status = 401;
+    console.log(req.headers.authorization);
     const message = 'Bad authorization header';
     res.status(status).json({ status, message });
     return req;

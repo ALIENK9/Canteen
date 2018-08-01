@@ -7,20 +7,22 @@ skinparam titleBackgroundColor Aqua-CadetBlue
 title Interazione react-redux 
 
 
-node Component {
+
+node "Redux Store" as Store
+
+node Reducer
+node "Dispatched Action" as Dispatch
+
+node ReactComponent as Component {
 	node "State" as Browser
   node "Redux props" as Rprops
 }
 node HTMLView
 
-node "Redux Store" as Store
-
-node Reducer
-node Dispatch
-
-Store ---> Component : state
+Dispatch --> Reducer : action 
+Reducer --> Store
+Store --> Component : state
 Component --> Dispatch
 Component <--> HTMLView
-Dispatch --> Reducer : action 
 
 @enduml

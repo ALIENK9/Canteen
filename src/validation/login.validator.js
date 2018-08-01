@@ -6,7 +6,7 @@ export default function validateLogin(data) {
   if (!Validator.isEmail(data.identifier)) {
     errors.identifier = 'The field must be an email';
   }
-  if (!Validator.isLength(data.password, { min: 8, max: undefined })) {
+  if (!Validator.isLength(data.password, { min: 3, max: undefined })) {
     errors.password = 'Password must have at least 8 chars';
   }
 

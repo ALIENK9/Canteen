@@ -22,14 +22,14 @@ class LoginForm extends Component {
   isValid() {
     const { errors, isValid } = validateLogin(this.state);
     if (!isValid) this.setState({ errors });
-    return true;
+    else this.setState({ errors: {} });
+    return isValid;
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    const { onLogin } = this.props;
     if (this.isValid()) {
-      this.setState({ errors: {}, loading: true });
+      const { onLogin } = this.props;
       const { identifier, password } = this.state;
       onLogin({ username: identifier, password });
     }
