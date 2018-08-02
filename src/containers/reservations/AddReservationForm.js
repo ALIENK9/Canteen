@@ -22,7 +22,7 @@ class AddReservationForm extends Component {
       seconddish: '5',
       sidedish: '7',
       lunchbag: false,
-      hour: '12:00',
+      hour: '',
       validationErrors: {},
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,12 +36,15 @@ class AddReservationForm extends Component {
       getUsers, getMeals, match, moment,
     } = this.props;
     const { day } = match.params;
+    const defaultTime = moment === 'lunch' ? '12:30' : '19:45';
+    this.setState({ hour: defaultTime });
     getMeals(day, moment);
     getUsers();
   }
 
   isValid() {
-    const { errors, isValid } = validateReservation(this.state);
+    const { moment } = this.props;
+    const { errors, isValid } = validateReservation(this.state, moment);
     if (!isValid) this.setState({ validationErrors: errors });
     else this.setState({ validationErrors: {} });
     return isValid;
@@ -68,13 +71,13 @@ class AddReservationForm extends Component {
   handleCheckboxChange(e) {
     const { checked } = e.target;
     console.log(checked);
-    this.setState({ lunchbag: checked });
+    this.setState({ lunchbag: checked, hour: '' });
   }
 
   handleSubmit(event) {
     event.preventDefault();
 
-    if (!this.isValid) return;
+    if (!this.isValid()) return;
 
     const {
       onSubmit, moment, view, dayMeals,
@@ -136,10 +139,10 @@ class AddReservationForm extends Component {
   render() {
     const { state } = this;
     const {
-      user, hour, lunchbag, validationErrors,
+      hour, lunchbag, validationErrors,
     } = state;
     const {
-      error, closeAlert, dayMeals, users, onHide,
+      error, closeAlert, dayMeals, users, onHide, moment,
     } = this.props;
     const typesArray = [
       { type: 1, inputname: 'maindish' },
@@ -156,7 +159,11 @@ class AddReservationForm extends Component {
 
           <FormGroup>
             <label htmlFor={unsernameInput}>
-            Nome utente
+              Nome utente
+              {' '}
+              <abbr title="campo richiesto">
+                *
+              </abbr>
             </label>
             <Select
               options={users}
@@ -165,12 +172,20 @@ class AddReservationForm extends Component {
               placeholder="Mario Bianchi"
             />
 
-            {!user.value && (
+            {validationErrors.user && (
             <HelpBlock bsClass="help-block-error">
-            L&apos;intestatario della prenotazione &egrave; richiesto
+              { validationErrors.user}
             </HelpBlock>
             )}
           </FormGroup>
+
+          <p className="radio-label">
+            Scegli il menù
+            {' '}
+            <abbr title="campo richiesto">
+                *
+            </abbr>
+          </p>
 
           <FormGroup controlId="lunchbag">
             <Checkbox
@@ -178,7 +193,7 @@ class AddReservationForm extends Component {
               title="Pranzo al sacco (panino)"
               onChange={e => this.handleCheckboxChange(e)}
             >
-          Pranzo al sacco
+            Pranzo al sacco
             </Checkbox>
           </FormGroup>
 
@@ -208,7 +223,14 @@ class AddReservationForm extends Component {
 
           <FormGroup controlId="hour">
             <ControlLabel>
-            Orario pasto
+              Orario pasto
+              {' '}
+              {moment === 'lunch'
+                ? '11:00-14:00 a scatti di 15 minuti' : '19:00-21:30 a scatti di 15 minuti' }
+              {' '}
+              <abbr title="campo richiesto">
+                *
+              </abbr>
             </ControlLabel>
             <FormControl
               disabled={!!lunchbag}

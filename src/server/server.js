@@ -14,7 +14,7 @@ server.use(bodyParser.json());
 const userdb = JSON.parse(fs.readFileSync('./src/server/users.json', 'UTF-8'));
 
 const SECRET_KEY = 'secret';
-const expiresIn = '1h';
+const expiresIn = '2h';
 
 
 // Create a token from a payload
@@ -67,10 +67,12 @@ server.all('*', async (req, res, next) => {
     return req;
   }
   try {
+    console.log(req.headers.authorization.split(' ')[1], typeof req.headers.authorization.split(' ')[1]);
     await verifyToken(req.headers.authorization.split(' ')[1]);
     next();
   } catch (err) {
     const status = 401;
+    console.log('Catch verify not vaid', err);
     const message = 'Error: accessToken is not valid';
     res.status(status).json({ status, message });
   }

@@ -60,10 +60,15 @@ class DishForm extends Component {
           { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
           <FormGroup controlId="name">
             <ControlLabel>
-            Nome del piatto
+              Nome del piatto
+              {' '}
+              <abbr title="campo richiesto">
+                *
+              </abbr>
             </ControlLabel>
             <FormControl
               type="text"
+              required
               name="name"
               value={name}
               placeholder="Pasta al pomodoro"
@@ -75,10 +80,14 @@ class DishForm extends Component {
             </HelpBlock>
             )}
           </FormGroup>
-          <FormGroup>
+          <FormGroup required>
             {/* Radio buttons for type */}
-            <p>
-            Inserisci il tipo di piatto
+            <p className="radio-label">
+              Inserisci il tipo di piatto
+              {' '}
+              <abbr title="campo richiesto">
+                *
+              </abbr>
             </p>
             <Radio
               name="type"
@@ -116,7 +125,7 @@ class DishForm extends Component {
 
           <FormGroup controlId="description">
             <ControlLabel>
-            Descrizione
+              Descrizione
             </ControlLabel>
             <FormControl
               componentClass="textarea"

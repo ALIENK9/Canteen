@@ -2,28 +2,6 @@
   "userLunch": [
     {
       "user": {
-        "id": 6,
-        "name": "Pollo Arrosto"
-      },
-      "meals": [
-        {
-          "id": 1,
-          "name": "Pasta al pomodoro"
-        },
-        {
-          "id": 5,
-          "name": "Polpettone"
-        },
-        {
-          "id": 8,
-          "name": "Insalata mista"
-        }
-      ],
-      "hour": "",
-      "id": 9
-    },
-    {
-      "user": {
         "id": 2,
         "name": "Pippo Baudo"
       },
@@ -235,6 +213,28 @@
       ],
       "hour": "12:00",
       "id": 9
+    },
+    {
+      "user": {
+        "id": 3,
+        "name": "Fiordaliso Profumato"
+      },
+      "meals": [
+        {
+          "id": 1,
+          "name": "Pasta al pomodoro"
+        },
+        {
+          "id": 5,
+          "name": "Polpettone"
+        },
+        {
+          "id": 7,
+          "name": "Patate arroste"
+        }
+      ],
+      "hour": "21:30",
+      "id": 10
     }
   ],
   "users": [
@@ -472,12 +472,6 @@
       "type": 2,
       "description": "Verdure e cose buone",
       "id": 17
-    },
-    {
-      "name": "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
-      "type": 2,
-      "description": "",
-      "id": 18
     },
     {
       "name": "Pasta al ragù",

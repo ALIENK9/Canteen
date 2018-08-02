@@ -144,6 +144,12 @@ main {
   }
 }
 
+/* Accessibility rules AAA*/
+
+button.btn {
+  font-weight: 500 !important;
+}
+
 /* LINK DELLA NAVBAR */
 
 /* .active a {
@@ -188,17 +194,17 @@ nav p.active {
   width: 100% !important;
 }
 
-.login-form {
-  padding: 2em 35%;
-  text-align: left;
-}
-
 .login-submit {
   margin: 0.5em auto;
 }
 
 .help-block-error {
   color: red;
+}
+
+/* Bold paragraph for radio button group */
+.radio-label {
+  font-weight: bold;
 }
 
 

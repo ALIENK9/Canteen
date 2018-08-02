@@ -107,9 +107,11 @@ class Navbar extends PureComponent {
           <NavBar.Toggle />
         </NavBar.Header>
         <NavBar.Collapse>
+          {isAuthenticated && (
           <Nav>
             {isAdmin ? adminLinks : userLinks}
           </Nav>
+          )}
           <Nav pullRight>
             {isAuthenticated ? logoutLink : loginLink}
             {redirectHome && <Redirect to="/home" />}

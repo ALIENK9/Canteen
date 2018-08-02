@@ -14,12 +14,13 @@ import ResToolbar from './ResToolbar';
 import Loader from '../../components/Loader/Loader';
 import ViewTabs from './ViewTabs';
 import MomentTabs from './MomentTabs';
+import { mapMomentToString } from '../utils';
 // import Tabs from '../../components/Tabs';
 // import { VIEWS, MOMENTS } from '../costants';
 
 
 const ResPage = ({
-  match, error, closeAlert, view, loading, history,
+  match, error, closeAlert, view, loading, history, moment,
 }) => {
   const { day } = match.params;
   return (
@@ -35,6 +36,10 @@ const ResPage = ({
             Queste sono le prenotazioni effettuate per la giornata
             {' '}
             {day}
+            {' '}
+            a
+            {' '}
+            {mapMomentToString(moment)}
           </p>
           <ResToolbar view={view} />
           <Loader loading={loading} />
@@ -128,7 +133,7 @@ ResPage.propTypes = {
   error: PropTypes.string,
   view: PropTypes.oneOf(['users', 'meals']),
   history: PropTypes.object,
-  // moment: PropTypes.oneOf(['lunch', 'dinner']),
+  moment: PropTypes.oneOf(['lunch', 'dinner']),
   // onViewChange: PropTypes.func.isRequired,
   // onMomentChange: PropTypes.func.isRequired,
   loading: PropTypes.bool,
@@ -138,7 +143,7 @@ ResPage.defaultProps = {
   error: '',
   view: 'meals',
   history: null,
-  // moment: 'lunch',
+  moment: 'lunch',
   loading: true,
   // success: '',
 };

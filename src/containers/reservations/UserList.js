@@ -53,7 +53,7 @@ class UserList extends Component {
           >
             <UserReservationItem
               name={reserv.user ? reserv.user.name : 'No-name'}
-              hour={reserv.hour} // ho tolto l'elenco dei pasti perchè non è utile
+              hour={reserv.hour || '--:--'} // ho tolto l'elenco dei pasti perchè non è utile
             />
           </TextBox>
         )) }

@@ -37,9 +37,9 @@ const fetchGet = (URL, headers, dispatch, onStart, onSuccess, onFail) => {
         dispatch(onSuccess(json));
       } else {
         console.error('Errore GET in corso', response);
-        const errorMessage = isEmpty(response)
+        const errorMessage = isEmpty(json)
           ? 'Errore: la richiesta GET al server non ha ricevuto risposta'
-          : `Errore: la richiesta GET è fallita con il seguente codice ${response.status} ${response.statusText}`;
+          : json.message;
         dispatch(onFail(errorMessage));
       }
     }) // HACK: metodo di callback anche qui?
@@ -80,15 +80,18 @@ const fetchDelete = (URL, headers, dispatch, onStart, onSuccess, onFail) => {
     headers,
   };
   return fetch(URL, config)
-    .then(response => Promise.all([response]))
-    .then(([response]) => {
-      if (response.status === 200) {
+    .then(response => Promise.all([response, response.json()]))
+    .then(([response, json]) => {
+      if (response.ok === true) {
         console.log('deleting');
         dispatch(onSuccess());
         console.log('deleted');
       } else {
         console.log('error deleting');
-        dispatch(onFail(`Problema con la richiesta DELETE: ${response.status} ${response.statusText}`));
+        const errorMessage = isEmpty(json)
+          ? `Problema con la richiesta di cancellazione. Il server ha risposto con ${response.status} ${response.statusText}`
+          : json.message;
+        dispatch(onFail(errorMessage));
       }
     })
     .catch(() => dispatch(onFail('Qualcosa è andato storto. Per favore riprova')));
