@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 // import crypto from 'crypto-js';
 import Http from '../../Http';
 import * as actionTypes from './authentication.actionTypes';
+import baseURLs from '../baseURLs';
 
 export const loginRequest = () => ({
   type: actionTypes.LOGIN_REQUEST,
@@ -24,7 +25,7 @@ const setCurrentUser = (userObject) => {
   } = userObject;
   console.log('Token in action', token);
   try {
-    const decoded = jwt.verify(token, 'secret');
+    const decoded = jwt.decode(token); // HACK: RIMUOVERE TRY SE NON USO VERIFY
     const user = {
       ...decoded, // in realtà basta name, admin
       ...userObject, // dovrebbe contenere solo token
@@ -51,19 +52,21 @@ export const clearMessages = () => ({
 
 
 export const login = data => (dispatch) => {
-  const URL = 'http://localhost:4000/login';
-  const URL1 = 'http://192.168.30.102:9000/public/users/login';
-  const URL3 = 'http://192.168.30.102:9000/protected/current';
-  const URL2 = 'http://192.168.30.102:9000/public/users/test';
+  // const URL = 'http://localhost:4000/login';
+  // const URL1 = 'http://192.168.30.102:9000/public/users/login';
+  // const URL3 = 'http://192.168.30.102:9000/protected/current';
+  // const URL2 = 'http://192.168.30.102:9000/public/users/test';
   // const URL = 'http://192.168.30.102:8700/protected-resource/hello';
   // const URL = 'http://192.168.30.102:8700/test';
   const { username, password } = data;
   console.log(`Dati: ${username}:${password}`);
   const headers = new Map().set('Authorization', `Basic ${btoa(`${username}:${password}`)}`)
     .set('Content-Type', 'application/json');
-  const headers3 = new Map().set('Authorization',
-    'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYW0iLCJleHAiOjYxNdLDN5Ydwp1eNzjYQ0xkJ-WXkgGdZKYGoa1K5DFHZc-yvJc-jg');
-  return Http.get(URL, headers, null, dispatch, loginRequest, setCurrentUser, loginFailure);
+  /* const headers3 = new Map().set('Authorization',
+    'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYW0iLCJleHAiOjYxNdLDN5Ydwp1eNzjYQ0xkJ
+    -WXkgGdZKYGoa1K5DFHZc-yvJc-jg'); */
+  return Http.get(baseURLs.auth, headers, null, dispatch, loginRequest, setCurrentUser,
+    loginFailure);
   /* const ciphertext = crypto.AES.encrypt('Pinocchio', 'chiavechiavechiavechiavechiaveaa');
   console.log('Critata', crypto.enc.Hex.parse(ciphertext));
 

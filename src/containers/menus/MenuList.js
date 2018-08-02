@@ -12,8 +12,8 @@ import { mapTypeToString, getVisibleDishes } from '../utils';
 // (che vanno uniformati)
 class MenuList extends Component {
   componentDidMount() {
-    const { getData } = this.props;
-    getData();
+    const { getData, day } = this.props;
+    getData(day);
   }
 
   render() {
@@ -53,6 +53,7 @@ MenuList.propTypes = {
   }),
   onItemClick: PropTypes.func.isRequired,
   getData: PropTypes.func.isRequired,
+  day: PropTypes.string.isRequired,
   // match: PropTypes.any.isRequired,
   moment: PropTypes.string.isRequired,
   // error: PropTypes.string,
@@ -85,9 +86,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  getData: () => dispatch(getMenus()),
+  getData: day => dispatch(getMenus(day)),
   onItemClick: (id, newVal, moment) => dispatch(toggleMeal(id, newVal, moment)),
   closeMessage: () => dispatch(clearMessages()),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MenuList));
+export default connect(mapStateToProps, mapDispatchToProps)(MenuList);

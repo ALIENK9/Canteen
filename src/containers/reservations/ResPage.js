@@ -46,8 +46,8 @@ const ResPage = ({
           <AddReservationModal day={day} />
           {console.log('Res Page view ', view)}
           { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
-          { view === 'users' && <UserList /> }
-          { view === 'meals' && <ReservationsList /> }
+          { view === 'users' && <UserList day={day} /> }
+          { view === 'meals' && <ReservationsList day={day} /> }
         </Panel.Body>
       </Panel>
     </MyPanel>

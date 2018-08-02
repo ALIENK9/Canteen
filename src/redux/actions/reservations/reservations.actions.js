@@ -1,6 +1,7 @@
 import * as actionTypes from './reservations.actionTypes';
 import Http from '../../Http';
 import { getAuthFieldsFromStorage } from '../../utils';
+import baseURLs from '../baseURLs';
 
 
 export const fetchReservationsStarted = () => ({
@@ -109,45 +110,47 @@ export const showErrorForm = error => ({
   return Http.get(URL, dispatch, null, changeSelectedView, requestFailure);
 }; */
 
-export const getReservations = (mode, moment) => (dispatch) => {
+export const getReservations = (mode, date, moment) => (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
-
-  let URL = 'http://localhost:4000/';
-  if (mode === 'users') URL = URL.concat(moment === 'lunch' ? 'userLunch' : 'userDinner');
-  else if (mode === 'meals') URL = URL.concat(moment === 'lunch' ? 'mealsLunch' : 'mealsDinner');
-  else URL = null;
+  const URL = `${baseURLs.reservations}/${mode}`;
+  const params = { date, moment };
+  // const URL = 'http://localhost:4000/';
+  // if (mode === 'users') URL = URL.concat(moment === 'lunch' ? 'userLunch' : 'userDinner');
+  // else if (mode === 'meals') URL = URL.concat(moment === 'lunch' ? 'mealsLunch' : 'mealsDinner');
+  // else URL = null;
   console.log(URL, moment, mode);
   return Http
-    .get(URL, headers, null, dispatch, fetchReservationsStarted, fetchReservationsSuccess,
+    .get(URL, headers, params, dispatch, fetchReservationsStarted, fetchReservationsSuccess,
       requestFailure);
 };
 
-export const deleteReservation = (moment, id) => (dispatch) => {
+export const deleteReservation = id => (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
-  const baseURL = 'http://localhost:4000/';
-  const URL = baseURL.concat(moment === 'lunch' ? 'userLunch/' : 'userDinner/').concat(`${id}`);
+  const URL = `${baseURLs.reservations}/${id}`;
+  // const URL = baseURL.concat(moment === 'lunch' ? 'userLunch/' : 'userDinner/').concat(`${id}`);
   return Http
     .delete(URL, headers, dispatch, null, removeReservationSuccess.bind(this, id), requestFailure);
 };
 
 export const getUserList = () => (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
-  const URL = 'http://localhost:4000/users';
+  const URL = baseURLs.users;
   return Http
     .get(URL, headers, null, dispatch, loadFormDataStarted, loadUsersSuccess, loadUsersFailure);
 };
 
-export const getDayMeals = (/* day, moment */) => (dispatch) => {
+export const getDayMenu = (date, moment) => (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
-  const URL = 'http://localhost:4000/todayMeals';
-  return Http.get(URL, headers, null, dispatch, loadFormDataStarted,
+  const URL = baseURLs.daymenu;
+  const params = { date, moment };
+  return Http.get(URL, headers, params, dispatch, loadFormDataStarted,
     loadDayMealsSuccess, loadDayMealsFailure);
 };
 
-export const postReservation = (data, moment) => (dispatch) => {
+export const postReservation = data => (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
-  const baseURL = 'http://localhost:4000/';
-  const URL = baseURL.concat(moment === 'lunch' ? 'userLunch/' : 'userDinner/');
-  return Http
-    .post(URL, headers, dispatch, JSON.stringify(data), null, addReservationSuccess, showErrorForm);
+  const baseURL = baseURLs.reservations;
+  // const URL = baseURL.concat(moment === 'lunch' ? 'userLunch/' : 'userDinner/');
+  return Http.post(baseURL, headers, dispatch, JSON.stringify(data), null, addReservationSuccess,
+    showErrorForm);
 };

@@ -3,11 +3,13 @@ import { isEmpty } from 'lodash';
 
 export default function validateLogin(data) {
   const errors = {};
-  if (!Validator.isEmail(data.identifier)) {
-    errors.identifier = 'The field must be an email';
+  console.log('Valida login', data.identifier);
+  if (!Validator.isEmail(data.identifier, { require_tld: false })) { // fixme: è idiota
+    // errors.identifier = 'Il campo deve contenere una email valida';
   }
-  if (!Validator.isLength(data.password, { min: 3, max: undefined })) {
-    errors.password = 'Password must have at least 8 chars';
+  const config = { min: 3, max: undefined };
+  if (!Validator.isLength(data.password, config)) {
+    errors.password = `Password deve avere almeno ${config.min} caratteri`;
   }
 
   return {

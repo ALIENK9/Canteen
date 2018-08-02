@@ -9,7 +9,7 @@ import Select from 'react-select';
 import Alert from '../../components/Alert';
 import { mapTypeToString } from '../utils';
 import {
-  getDayMeals, postReservation, hideErrorForm, getUserList, addModalHide,
+  getDayMenu, postReservation, hideErrorForm, getUserList, addModalHide,
 } from '../../redux/actions/reservations/reservations.actions';
 import validateReservation from '../../validation/addReservation.validator';
 
@@ -80,11 +80,13 @@ class AddReservationForm extends Component {
     if (!this.isValid()) return;
 
     const {
-      onSubmit, moment, view, dayMeals,
+      onSubmit, moment, view, dayMeals, match,
     } = this.props;
     const {
       user, maindish, seconddish, sidedish, hour, lunchbag,
     } = this.state;
+
+    const { day } = match.params;
 
     // campi obbbligatori
     if (!user.value || !maindish || !seconddish || !sidedish) return;
@@ -109,27 +111,35 @@ class AddReservationForm extends Component {
       user: userSubmit,
       meals: [
         {
-          id: mealsid[0],
+          id: mealsid[0], // primo
           name: dayMeals[mealsIndex[0]].name,
+          type: 1,
         },
         {
-          id: mealsid[1],
+          id: mealsid[1], // secondo
           name: dayMeals[mealsIndex[1]].name,
+          type: 2,
         },
         {
-          id: mealsid[2],
+          id: mealsid[2], // contorno
           name: dayMeals[mealsIndex[2]].name,
+          type: 3,
         },
       ],
+      date: day,
+      moment,
       hour: hour.trim(),
     } : {
       user: userSubmit,
       meals: [
         {
-          id: 'sumitiFantasia',
+          id: 'panino',
           name: 'Panino al sacco',
+          type: 9,
         },
       ],
+      date: day,
+      moment,
       hour: null,
     };
     console.log('Dato pronto per submit: ', dato);
@@ -226,7 +236,7 @@ class AddReservationForm extends Component {
               Orario pasto
               {' '}
               {moment === 'lunch'
-                ? '11:00-14:00 a scatti di 15 minuti' : '19:00-21:30 a scatti di 15 minuti' }
+                ? '(11:00-14:00 a scatti di 15 minuti)' : '(19:00-21:30 a scatti di 15 minuti)' }
               {' '}
               <abbr title="campo richiesto">
                 *
@@ -300,7 +310,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getUsers: () => dispatch(getUserList()),
-  getMeals: (day, moment) => dispatch(getDayMeals(day, moment)),
+  getMeals: (day, moment) => dispatch(getDayMenu(day, moment)),
   closeAlert: () => dispatch(hideErrorForm()),
   onSubmit: (state, moment) => dispatch(postReservation(state, moment)),
   onHide: () => dispatch(addModalHide()),

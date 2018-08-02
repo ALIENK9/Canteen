@@ -29,10 +29,10 @@ const fetchGet = (URL, headers, dispatch, onStart, onSuccess, onFail) => {
   dispatch(onStart());
   // const headers = getFetchHeaders();
   return fetch(URL, { method: 'GET', headers })
-    .then(response => Promise.all([response, response.json()]))
+    .then(response => Promise.all([response, response.json()]), err => console.log(err))
   // error => handleRejectionError(dispatch, onFail, error)) // gestisce il reject della fetch
     .then(([response, json]) => {
-      if (response.ok) {
+      if (response.status === 200) {
         console.log('Dati ', json);
         dispatch(onSuccess(json));
       } else {
@@ -43,7 +43,7 @@ const fetchGet = (URL, headers, dispatch, onStart, onSuccess, onFail) => {
         dispatch(onFail(errorMessage));
       }
     }) // HACK: metodo di callback anche qui?
-    .catch(() => dispatch(onFail('Qualcosa è andato storto. Per favore riprova')));
+    .catch(err => dispatch(onFail(`Qualcosa è andato storto. Per favore riprova ${err}`)));
 };
 
 
@@ -152,10 +152,11 @@ export default class Http {
       console.log('Chiave ', k, v, typeof k);
       headers[k] = v;
     });
-    console.log('Header della GET', headers);
+    console.log('Header della GET', headers, stringURL);
     const urlParams = new URLSearchParams(searchParams || {});
     const url = new URL(stringURL);
     url.search = urlParams;
+    console.log('URL', url);
     const startFunction = onStart || noType;
     return fetchGet(url, headers, dispatch, startFunction, onSuccess, onFail);
   }

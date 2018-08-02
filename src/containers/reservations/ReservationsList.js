@@ -9,14 +9,14 @@ import { getReservations } from '../../redux/actions/reservations/reservations.a
 
 class ReservationsList extends Component {
   componentDidMount() {
-    const { getData, moment } = this.props;
-    getData(moment);
+    const { getData, day, moment } = this.props;
+    getData(day, moment);
   }
 
   componentDidUpdate(prevProps) {
-    const { getData, moment } = this.props;
+    const { getData, day, moment } = this.props;
     if (moment !== prevProps.moment) {
-      getData(moment);
+      getData(day, moment);
     }
   }
 
@@ -45,6 +45,7 @@ ReservationsList.propTypes = {
   })),
   moment: PropTypes.oneOf(['lunch', 'dinner']),
   getData: PropTypes.func,
+  day: PropTypes.string.isRequired,
 };
 
 ReservationsList.defaultProps = {
@@ -66,7 +67,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  getData: moment => dispatch(getReservations('meals', moment)),
+  getData: (day, moment) => dispatch(getReservations('meals', day, moment)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReservationsList);

@@ -27,9 +27,16 @@ class MenuPage extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { onSubmit, meals } = this.props;
-    console.log('before submit', meals);
-    onSubmit(meals);
+    const { onSubmit, meals, match } = this.props;
+    const { dinner, lunch } = meals;
+    const { day } = match.params;
+    const processedData = {
+      date: day,
+      lunch: lunch.filter(meal => meal.checked === true),
+      dinner: dinner.filter(meal => meal.checked === true),
+    };
+    console.log('before submit', processedData);
+    onSubmit(processedData);
   }
 
   render() {
@@ -52,7 +59,7 @@ class MenuPage extends Component {
             { success && <Alert type="success" message={success} onDismiss={closeAlert} /> }
             <MenuToolbar />
             <Loader loading={loading} />
-            <MenuList />
+            <MenuList day={day} />
 
           </Panel.Body>
           <Panel.Footer className="center">
@@ -78,12 +85,12 @@ MenuPage.propTypes = {
   onSubmit: PropTypes.func,
   meals: PropTypes.shape({
     lunch: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.string,
       checked: PropTypes.bool,
       name: PropTypes.string,
     })),
     dinner: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.string,
       checked: PropTypes.bool,
       name: PropTypes.string,
     })),

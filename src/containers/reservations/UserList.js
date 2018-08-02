@@ -14,22 +14,22 @@ class UserList extends Component {
   }
 
   componentDidMount() {
-    const { getData, moment } = this.props;
+    const { getData, day, moment } = this.props;
     console.log('didMount userlist', moment);
-    getData(moment);
+    getData(day, moment);
   }
 
   componentDidUpdate(prevProps) {
-    const { getData, moment } = this.props;
+    const { getData, day, moment } = this.props;
     if (moment !== prevProps.moment) {
       console.log('updated');
-      getData(moment);
+      getData(day, moment);
     }
   }
 
   handleDelete(id) {
-    const { onDelete, moment } = this.props;
-    onDelete(moment, id);
+    const { onDelete } = this.props;
+    onDelete(id);
   }
 
   render() {
@@ -78,6 +78,7 @@ UserList.propTypes = {
   moment: PropTypes.oneOf(['lunch', 'dinner']),
   onDelete: PropTypes.func,
   getData: PropTypes.func,
+  day: PropTypes.string.isRequired,
 };
 
 UserList.defaultProps = {
@@ -100,8 +101,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onDelete: (moment, id) => dispatch(deleteReservation(moment, id)),
-  getData: moment => dispatch(getReservations('users', moment)),
+  onDelete: id => dispatch(deleteReservation(id)),
+  getData: (day, moment) => dispatch(getReservations('users', day, moment)),
 });
 
 

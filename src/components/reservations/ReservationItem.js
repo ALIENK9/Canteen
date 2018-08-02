@@ -23,7 +23,7 @@ const renderView = (viewList, reslist) => {
         </thead>
         <tbody>
           {reslist.map(item => (
-            <tr key={item.name}>
+            <tr key={item.id}>
               <td>
                 {item.name}
               </td>
@@ -67,6 +67,7 @@ ReservationItem.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   reslist: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
     name: PropTypes.string,
     hour: PropTypes.string,
   })),
