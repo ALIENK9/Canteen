@@ -67,14 +67,6 @@ export const login = data => (dispatch) => {
     -WXkgGdZKYGoa1K5DFHZc-yvJc-jg'); */
   return Http.get(baseURLs.auth, headers, null, dispatch, loginRequest, setCurrentUser,
     loginFailure);
-  /* const ciphertext = crypto.AES.encrypt('Pinocchio', 'chiavechiavechiavechiavechiaveaa');
-  console.log('Critata', crypto.enc.Hex.parse(ciphertext));
-
-  const bytes = crypto.AES.decrypt('8HMBhhBakSHO7sJ1Q9YVqA==', 'chiavechiavechiavechiavechiaveaa');
-  const val = bytes.toString(crypto.enc.Utf16);
-  console.log('La parola decriptatat', val); */
-  // return Http.post(URL, dispatch, JSON.stringify(data1),
-  // loginRequest, setCurrentUser, loginFailure);
 }; // ora chiama setCurrentUser
 
 export const logout = () => (dispatch) => { // dovrà fare il redirect

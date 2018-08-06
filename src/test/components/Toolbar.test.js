@@ -7,10 +7,12 @@ describe('Toolbar', () => {
     const buttons = [
       {
         title: 'Bottone1',
+        key: 2,
         func: () => {},
       },
       {
         title: 'Button2',
+        key: 3,
         func: () => {},
       },
     ];
@@ -23,10 +25,17 @@ describe('Toolbar', () => {
     const search = {
       presence: false,
       func: () => {},
+      options: [
+        {
+          value: 1,
+          label: 'jsjsjsj',
+        },
+      ],
     };
 
     const props = {
       buttons,
+      defaultButtonKey: 3,
       add,
       search,
     };
@@ -41,10 +50,12 @@ describe('Toolbar', () => {
     const buttons = [
       {
         title: 'Bottone1',
+        key: 1,
         func: mockFn,
       },
       {
         title: 'Button2',
+        key: 2,
         func: () => {},
       },
     ];
@@ -57,10 +68,12 @@ describe('Toolbar', () => {
     const search = {
       presence: false,
       func: () => {},
+      options: [],
     };
 
     const props = {
       buttons,
+      defaultButtonKey: 1,
       add,
       search,
     };

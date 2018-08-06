@@ -71,10 +71,10 @@ Toolbar.propTypes = {
   add: PropTypes.shape({
     presence: PropTypes.bool.isRequired,
     func: PropTypes.func,
-    options: PropTypes.shape({
+    options: PropTypes.arrayOf(PropTypes.shape({
       value: PropTypes.any,
       label: PropTypes.string,
-    }),
+    })),
   }).isRequired,
 };
 
