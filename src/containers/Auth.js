@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Loader from '../components/Loader/Loader';
+import Loader from '../components/Loader';
 
 
 export class RequireRoleBase extends Component {

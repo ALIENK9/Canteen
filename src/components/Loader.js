@@ -1,7 +1,7 @@
 import React from 'react';
 // import { PacmanLoader } from 'react-spinners';
 import PropTypes from 'prop-types';
-import './Loader.css';
+import '../css/components/Loader.css';
 
 // TODO: add this to every component
 const Loader = ({ loading }) => (

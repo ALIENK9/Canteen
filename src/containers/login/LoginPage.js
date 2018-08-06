@@ -7,7 +7,7 @@ import { PageHeader } from 'react-bootstrap';
 import LoginForm from './LoginForm';
 import Alert from '../../components/Alert';
 import { clearMessages } from '../../redux/actions/authentication/authentication.actions';
-import Loader from '../../components/Loader/Loader';
+import Loader from '../../components/Loader';
 
 
 class LoginPage extends PureComponent {

@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import { Jumbotron } from 'react-bootstrap';
 import './css/bootstrap/css/bootstrap.min.css';
-import './App.css';
+import './css/App.css';
 import DocumentTitle from 'react-document-title';
 import Navbar from './containers/Navbar';
 import Footer from './components/Footer';

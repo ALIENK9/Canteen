@@ -11,16 +11,26 @@ class CalendarPage extends React.Component {
     super(props);
     this.redirect = this.redirect.bind(this);
     this.setCurrentMonth = this.setCurrentMonth.bind(this);
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
     this.state = {
-      currentMonth: new Date().getMonth() + 1,
-      currentYear: new Date().getFullYear(),
+      currentMonth,
+      currentYear,
     };
+    const minDate = new Date(currentYear, currentMonth, 1);
+    const lastDayOfMonth = new Date(minDate - 1).getDate();
+    const maxDate = new Date(currentYear, currentMonth, lastDayOfMonth);
+    // HACK: eventuale contrllo per capire se è admin. Poi setta config
     this.calendarConfig = {
       onClickDay: this.redirect,
       calendarType: 'ISO 8601',
       className: 'calendar',
       // activeStartDate: new Date(),
       onActiveDateChange: this.setCurrentMonth,
+      value: new Date(),
+      maxDetail: 'month',
+      maxDate,
+      minDate,
     };
   }
 
@@ -58,7 +68,7 @@ class CalendarPage extends React.Component {
                 Scarica report
                 {' '}
                 {currentMonth}
-/
+                /
                 {currentYear}
               </span>
               <Glyphicon glyph="glyphicon glyphicon-download-alt" />

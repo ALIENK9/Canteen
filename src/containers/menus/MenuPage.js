@@ -8,7 +8,7 @@ import MyPanel from '../../components/Panel';
 import Alert from '../../components/Alert';
 import MenuList from './MenuList';
 import { putMenus, changeSelectedMoment, clearMessages } from '../../redux/actions/menus/menus.actions';
-import Loader from '../../components/Loader/Loader';
+import Loader from '../../components/Loader';
 import MenuToolbar from './MenuToolbar';
 import MomentTabs from './MomentTabs';
 

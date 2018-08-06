@@ -11,7 +11,7 @@ import Alert from '../../components/Alert';
 import { clearMessages } from '../../redux/actions/reservations/reservations.actions';
 import AddReservationModal from './AddReservationModal';
 import ResToolbar from './ResToolbar';
-import Loader from '../../components/Loader/Loader';
+import Loader from '../../components/Loader';
 import ViewTabs from './ViewTabs';
 import MomentTabs from './MomentTabs';
 import { mapMomentToString } from '../utils';

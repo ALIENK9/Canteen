@@ -10,7 +10,7 @@ import DishesList from './DishesList';
 import Alert from '../../components/Alert';
 import MyPanel from '../../components/Panel';
 import { clearMessages } from '../../redux/actions/dishes/dishes.actions';
-import Loader from '../../components/Loader/Loader';
+import Loader from '../../components/Loader';
 
 
 const DishPage = ({
