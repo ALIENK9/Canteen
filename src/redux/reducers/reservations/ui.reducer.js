@@ -9,7 +9,7 @@ const init = {
 };
 
 
-const ui = (state = init, action) => {
+const ui = (state = init, action = {}) => {
   switch (action.type) {
     case actionTypes.CHANGE_SELECTED_VIEW:
       return {

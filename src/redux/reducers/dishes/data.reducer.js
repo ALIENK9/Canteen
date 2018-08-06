@@ -6,7 +6,7 @@ const init = {
   list: [],
 };
 
-const data = (state = init, action) => {
+const data = (state = init, action = {}) => {
   switch (action.type) {
     case actionTypes.FETCH_DISHES_SUCCESS:
       return {

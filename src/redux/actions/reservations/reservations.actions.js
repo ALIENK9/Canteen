@@ -28,6 +28,11 @@ export const addReservationSuccess = json => ({
   payload: { json },
 });
 
+export const removeReservationFailure = error => ({
+  type: actionTypes.RESERVATION_ADD_REMOVE_FAILURE,
+  payload: { error },
+});
+
 /* export const errorShow = error => ({
   type: actionTypes.ERROR_SHOW,
   payload: { error },
@@ -129,7 +134,8 @@ export const deleteReservation = id => (dispatch) => {
   const URL = `${baseURLs.reservations}/${id}`;
   // const URL = baseURL.concat(moment === 'lunch' ? 'userLunch/' : 'userDinner/').concat(`${id}`);
   return Http
-    .delete(URL, headers, dispatch, null, removeReservationSuccess.bind(this, id), requestFailure);
+    .delete(URL, headers, dispatch, null, removeReservationSuccess.bind(this, id),
+      removeReservationFailure);
 };
 
 export const getUserList = () => (dispatch) => {

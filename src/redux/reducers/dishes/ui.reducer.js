@@ -6,7 +6,7 @@ const init = {
   filter: 'ALL',
 };
 
-const ui = (state = init, action) => {
+const ui = (state = init, action = {}) => {
   switch (action.type) {
     case actionTypes.SHOW_ADD_DISH_FORM:
       return {

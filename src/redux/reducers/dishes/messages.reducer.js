@@ -6,13 +6,14 @@ const init = {
   addFormError: '',
 };
 
-const messages = (state = init, action) => {
+const messages = (state = init, action = {}) => {
   switch (action.type) {
     case actionTypes.FETCH_DISHES_SUCCESS:
       return {
         ...state,
         error: '',
       };
+    case actionTypes.DISH_ADD_REMOVE_FAILURE:
     case actionTypes.DISH_REQUEST_FAILURE:
       return {
         ...state,

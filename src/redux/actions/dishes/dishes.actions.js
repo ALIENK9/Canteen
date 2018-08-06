@@ -14,6 +14,11 @@ export const removeDishSuccess = id => ({
   payload: { id },
 });
 
+export const removeDishFailure = error => ({
+  type: actionTypes.DISH_ADD_REMOVE_FAILURE,
+  payload: { error },
+});
+
 export const fetchDishesSuccess = json => ({
   type: actionTypes.FETCH_DISHES_SUCCESS,
   payload: { json },
@@ -71,7 +76,7 @@ export const deleteDish = id => (dispatch) => {
   const URL = `${baseURLs}/${id}`;
   console.debug('URL DELTEE: ', URL);
   return Http
-    .delete(URL, headers, dispatch, null, removeDishSuccess.bind(this, id), requestFailure);
+    .delete(URL, headers, dispatch, null, removeDishSuccess.bind(this, id), removeDishFailure);
 };
 
 

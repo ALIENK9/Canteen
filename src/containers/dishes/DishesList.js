@@ -8,7 +8,8 @@ import DishItem from '../../components/dishes/DishItem';
 import {
   getDishes, deleteDish,
 } from '../../redux/actions/dishes/dishes.actions';
-import { getVisibleDishes, mapTypeToString } from '../utils';
+import { /* getVis..., */ mapTypeToString } from '../utils';
+import getVisibleDishes from '../selectors/dishfilter.selector';
 
 class DishesList extends Component {
   componentDidMount() {
@@ -68,7 +69,8 @@ DishesList.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  dishes: getVisibleDishes(state.dishes.data.list, state.dishes.ui.filter),
+  dishes: getVisibleDishes(state.dishes),
+  // getVisibleDishes(state.dishes.data.list, state.dishes.ui.filter),
   loading: state.dishes.ui.loading,
 });
 

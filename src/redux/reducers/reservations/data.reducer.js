@@ -8,7 +8,7 @@ const init = {
 };
 
 
-const data = (state = init, action) => {
+const data = (state = init, action = {}) => {
   switch (action.type) {
     case actionTypes.FETCH_RESERVATIONS_SUCCESS:
       return {

@@ -6,7 +6,7 @@ const init = {
   addFormError: '',
 };
 
-const messages = (state = init, action) => {
+const messages = (state = init, action = {}) => {
   switch (action.type) {
     case actionTypes.CLEAR_MESSAGES:
       return init;
@@ -25,6 +25,7 @@ const messages = (state = init, action) => {
         addFormError: '',
       };
     case actionTypes.RESERVATION_REQUEST_FAILURE:
+    case actionTypes.RESERVATION_ADD_REMOVE_FAILURE:
       return {
         ...state,
         error: action.payload.error,
