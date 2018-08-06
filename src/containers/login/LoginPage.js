@@ -20,7 +20,7 @@ class LoginPage extends PureComponent {
     // previene errori dovuti alla parziale idratazione del redux store
     return (
       <div className="row">
-        <DocumentTitle title="Login" />
+        <DocumentTitle title="Login | Servizio mensa" />
         <div className="col-md-4 col-md-offset-4">
           <PageHeader>
             Login

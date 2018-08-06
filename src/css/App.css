@@ -24,11 +24,11 @@ body {
 
 footer {
   background-color: rgb(190, 215, 236);
+  bottom: 0;
   color: black;
+  height: 4em;
   left: 0;
   padding: 1em;
-  height: 4em;
-    bottom: 0;
   right: 0;
   text-align: center;
 }
@@ -128,6 +128,21 @@ main {
 .tab-inline-block {
   display: inline-block;
   border: none;
+}
+
+.searchbar {
+  display: block;
+  margin-left: 70%;
+}
+
+label {
+  display: inline;
+}
+
+@media (max-width: 900px) {
+  .searchbar {
+    margin-left: 6em;
+  }
 }
 
 @media screen and (max-width: 600px) {

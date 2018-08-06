@@ -19,7 +19,7 @@ const DishPage = ({
   <MyPanel title="Piatti disponibili">
     <Panel>
       <Panel.Body>
-        <DocumentTitle title="Gestione piatti" />
+        <DocumentTitle title="Gestione piatti | Servizio mensa" />
         <p>
           Qui sono listati tutti i piatti disponibili nel sistema. &Egrave; possibile
           aggiungerli e toglierli.

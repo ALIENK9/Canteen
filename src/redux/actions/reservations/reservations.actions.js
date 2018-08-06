@@ -92,6 +92,11 @@ export const filterMeals = filter => ({
   payload: { filter },
 });
 
+export const searchUser = text => ({
+  type: actionTypes.SEARCH_USER,
+  payload: { text },
+});
+
 // form error
 export const hideErrorForm = () => ({
   type: actionTypes.HIDE_RESERVATION_ERROR_FORM,

@@ -5,6 +5,7 @@ import List from '../../components/List';
 import TextBox from '../../components/ListItems/TextBox';
 import UserReservationItem from '../../components/reservations/UserReservationItem';
 import { deleteReservation, getReservations } from '../../redux/actions/reservations/reservations.actions';
+import getSearchedReservation from '../selectors/searchuser.selector';
 
 // REVIEW: vedere se fare un PureComponent
 class UserList extends Component {
@@ -67,11 +68,11 @@ UserList.propTypes = {
     id: PropTypes.number,
     meals: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
-      id: PropTypes.number,
+      id: PropTypes.string,
     })),
     user: PropTypes.shape({
       name: PropTypes.string,
-      id: PropTypes.number,
+      id: PropTypes.string,
     }),
     hour: PropTypes.string,
   })),
@@ -96,7 +97,7 @@ UserList.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  list: state.reservations.data.list,
+  list: getSearchedReservation(state.reservations),
   moment: state.reservations.ui.moment,
 });
 

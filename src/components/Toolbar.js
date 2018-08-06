@@ -3,6 +3,8 @@ import {
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import React from 'react';
+import Select from 'react-select';
+import SearchArrow from './reservations/SearchArrow';
 
 // REVIEW: POTREBBE ESSERE PIÙ ESTENSIBILE
 /**
@@ -31,12 +33,24 @@ const Toolbar = ({
           </ButtonGroup>
         )}
 
+        {/* eslint-disable jsx-a11y/label-has-for */}
         {search.presence && (
-          <ButtonGroup role="group">
-            <Button onClick={search.func} className="pull-right" bsStyle="primary">
-                Here should be a search bar (to be implemented)
-            </Button>
-          </ButtonGroup>
+          <React.Fragment>
+            <label htmlFor="searchinput" className="hidden" aria-hidden="false">
+              Ricerca
+            </label>
+            {search.options}
+            <Select
+              arrowRenderer={SearchArrow}
+              aria-label="Ricerca di utenti"
+              className="searchbar"
+              noOptionsMessage={() => 'Nessun risultato'}
+              options={search.options}
+              onChange={search.func}
+              inputId="searchinput"
+              placeholder="Nome Cognome"
+            />
+          </React.Fragment>
         )}
       </ButtonToolbar>
     </Panel.Body>
@@ -57,6 +71,10 @@ Toolbar.propTypes = {
   add: PropTypes.shape({
     presence: PropTypes.bool.isRequired,
     func: PropTypes.func,
+    options: PropTypes.shape({
+      value: PropTypes.any,
+      label: PropTypes.string,
+    }),
   }).isRequired,
 };
 

@@ -2,6 +2,7 @@ import React from 'react';
 import Calendar from 'react-calendar';
 import PropTypes from 'prop-types';
 // import { Redirect } from 'react-router-dom';
+import DocumentTitle from 'react-document-title';
 
 import { Button, Glyphicon, Panel } from 'react-bootstrap';
 
@@ -52,9 +53,11 @@ class CalendarPage extends React.Component {
 
   render() {
     const { currentMonth, currentYear } = this.state;
+    const { type } = this.props;
     return (
       <div className="container">
         <Panel>
+          <DocumentTitle title={`Calendario | ${type === 'reservations' ? 'Prenotazioni' : 'Menu'}`} />
           <Panel.Heading componentClass="h1">
             Calendario
           </Panel.Heading>

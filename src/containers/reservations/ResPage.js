@@ -20,14 +20,14 @@ import { mapMomentToString } from '../utils';
 
 
 const ResPage = ({
-  match, error, closeAlert, view, loading, history, moment,
+  match, error, closeAlert, view, loading, history, moment, list,
 }) => {
   const { day } = match.params;
   return (
     <MyPanel title={`Prenotazioni del giorno ${day}`} history={history}>
       <Panel bsStyle="primary">
         <Panel.Heading>
-          <DocumentTitle title="Prenotazione" />
+          <DocumentTitle title={`Prenotazioni ${day} | Servizio mensa`} />
           <ViewTabs />
           <MomentTabs />
         </Panel.Heading>
@@ -41,7 +41,8 @@ const ResPage = ({
             {' '}
             {mapMomentToString(moment)}
           </p>
-          <ResToolbar view={view} />
+          {console.log(list)}
+          <ResToolbar view={view} list={list} />
           <Loader loading={loading} />
           <AddReservationModal day={day} />
           {console.log('Res Page view ', view)}
@@ -137,6 +138,7 @@ ResPage.propTypes = {
   // onViewChange: PropTypes.func.isRequired,
   // onMomentChange: PropTypes.func.isRequired,
   loading: PropTypes.bool,
+  list: PropTypes.array,
 };
 
 ResPage.defaultProps = {
@@ -145,6 +147,7 @@ ResPage.defaultProps = {
   history: null,
   moment: 'lunch',
   loading: true,
+  list: [],
   // success: '',
 };
 

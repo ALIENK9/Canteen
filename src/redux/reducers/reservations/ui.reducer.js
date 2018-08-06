@@ -6,6 +6,7 @@ const init = {
   moment: 'lunch',
   addModalShow: false,
   filter: 'ALL',
+  searchtext: '',
 };
 
 
@@ -47,6 +48,11 @@ const ui = (state = init, action = {}) => {
       return {
         ...state,
         filter: action.payload.filter,
+      };
+    case actionTypes.SEARCH_USER:
+      return {
+        ...state,
+        searchtext: action.payload.text,
       };
     default:
       return state;

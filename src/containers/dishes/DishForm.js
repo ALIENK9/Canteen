@@ -96,7 +96,7 @@ class DishForm extends Component {
               onChange={e => this.handleChange(e)}
               inline
             >
-            Primo
+              Primo
             </Radio>
             <Radio
               name="type"
@@ -105,7 +105,7 @@ class DishForm extends Component {
               onChange={e => this.handleChange(e)}
               inline
             >
-            Secondo
+              Secondo
             </Radio>
             <Radio
               name="type"
@@ -114,7 +114,7 @@ class DishForm extends Component {
               onChange={e => this.handleChange(e)}
               inline
             >
-            Contorno
+              Contorno
             </Radio>
             {validationErrors.type && (
             <HelpBlock bsClass="help-block-error">

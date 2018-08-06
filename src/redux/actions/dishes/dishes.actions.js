@@ -8,7 +8,6 @@ export const addDishSuccess = dish => ({
   payload: { dish },
 });
 
-
 export const removeDishSuccess = id => ({
   type: actionTypes.REMOVE_DISH_SUCCESS,
   payload: { id },
@@ -34,6 +33,12 @@ export const requestFailure = error => ({
 export const clearMessages = () => ({
   type: actionTypes.CLEAR_MESSAGES,
 });
+
+
+export const fetchDishesStarted = () => ({
+  type: actionTypes.FETCH_DISHES_STARTED,
+});
+
 
 // DISH FILTER ACTIONS
 
@@ -66,9 +71,9 @@ export const hideErrorForm = () => ({
 
 export const getDishes = () => (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
-  // const URL = 'http://localhost:4000/dishes';
   const URL = baseURLs.dishes;
-  return Http.get(URL, headers, null, dispatch, null, fetchDishesSuccess, requestFailure);
+  return Http.get(URL, headers, null, dispatch, fetchDishesStarted,
+    fetchDishesSuccess, requestFailure);
 };
 
 export const deleteDish = id => (dispatch) => {

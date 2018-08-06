@@ -133,7 +133,7 @@ class AddReservationForm extends Component {
       user: userSubmit,
       meals: [
         {
-          id: 'panino',
+          id: 'panino_id',
           name: 'Panino al sacco',
           type: 9,
         },
@@ -177,8 +177,10 @@ class AddReservationForm extends Component {
             </label>
             <Select
               options={users}
+              noOptionsMessage={() => 'Nessun utente con questo nome'}
               inputId={unsernameInput}
               onChange={opt => this.handleSelectChange(opt)}
+              isClearable
               placeholder="Mario Bianchi"
             />
 
@@ -203,14 +205,14 @@ class AddReservationForm extends Component {
               title="Pranzo al sacco (panino)"
               onChange={e => this.handleCheckboxChange(e)}
             >
-            Pranzo al sacco
+              Pranzo al sacco
             </Checkbox>
           </FormGroup>
 
           {typesArray.map(obj => (
             <FormGroup key={obj.type}>
               <p>
-              Scegli il
+                Scegli il
                 {' '}
                 {mapTypeToString(obj.type).toLowerCase()}
               </p>
@@ -259,10 +261,10 @@ class AddReservationForm extends Component {
         </Modal.Body>
         <Modal.Footer>
           <Button bsStyle="success" type="submit" className="pull-left">
-          Aggiungi
+            Aggiungi
           </Button>
           <Button bsStyle="danger" onClick={onHide}>
-          Annulla
+            Annulla
           </Button>
         </Modal.Footer>
       </form>

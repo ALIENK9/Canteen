@@ -1,7 +1,7 @@
 // import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Toolbar from '../../components/Toolbar';
-import { addModalShow, filterMeals } from '../../redux/actions/reservations/reservations.actions';
+import { addModalShow, filterMeals, searchUser } from '../../redux/actions/reservations/reservations.actions';
 import { FILTER_KEYS } from '../costants';
 
 const mapStateToProps = state => ({
@@ -32,7 +32,16 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       func: () => dispatch(filterMeals(FILTER_KEYS.SIDE)),
     },
   ] : [],
-  search: { presence: false },
+  search: {
+    presence: ownProps.view === 'users',
+    func: id => dispatch(searchUser(id)),
+    options: ownProps.view === 'users' ? ownProps.list.map(
+      user => ({
+        label: user.name,
+        value: user.id,
+      }),
+    ) : [],
+  },
   add: {
     // REVIEW: trick un po' sporco per avere acesso alla prop 'view' e nascondere la barra
     presence: ownProps.view === 'users',

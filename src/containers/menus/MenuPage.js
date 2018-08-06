@@ -48,7 +48,7 @@ class MenuPage extends Component {
       <MyPanel title={`Gestione menù del giorno ${day}`} history={history}>
         <Panel bsStyle="primary">
           <Panel.Heading>
-            <DocumentTitle title={`Menù ${day}`} />
+            <DocumentTitle title={`Menù ${day} | Servizio mensa`} />
             <MomentTabs />
           </Panel.Heading>
           <Panel.Body>
