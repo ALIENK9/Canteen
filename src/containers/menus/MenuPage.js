@@ -11,6 +11,7 @@ import { putMenus, changeSelectedMoment, clearMessages } from '../../redux/actio
 import Loader from '../../components/Loader';
 import MenuToolbar from './MenuToolbar';
 import MomentTabs from './MomentTabs';
+import { getMenu, getMoment } from '../selectors/menufilter.selector';
 
 class MenuPage extends Component {
   constructor(props) {
@@ -27,10 +28,11 @@ class MenuPage extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { onSubmit, meals, match } = this.props;
-    const { dinner, lunch } = meals;
+    const { onSubmit, allEntries, match } = this.props;
+    const { dinner, lunch, id } = allEntries;
     const { day } = match.params;
     const processedData = {
+      id,
       date: day,
       lunch: lunch.filter(meal => meal.checked === true),
       dinner: dinner.filter(meal => meal.checked === true),
@@ -83,7 +85,8 @@ MenuPage.propTypes = {
   closeAlert: PropTypes.func,
   // onMomentChange: PropTypes.func,
   onSubmit: PropTypes.func,
-  meals: PropTypes.shape({
+  allEntries: PropTypes.shape({
+    id: PropTypes.string,
     lunch: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string,
       checked: PropTypes.bool,
@@ -106,7 +109,8 @@ MenuPage.defaultProps = {
   closeAlert: () => {},
   // onMomentChange: () => {},
   onSubmit: () => {},
-  meals: {
+  allEntries: {
+    id: '',
     lunch: [],
     dinner: [],
   },
@@ -114,8 +118,8 @@ MenuPage.defaultProps = {
 
 const mapStateToProps = state => ({
   loading: state.menus.ui.loading,
-  meals: state.menus.data.meals,
-  moment: state.menus.ui.moment,
+  allEntries: getMenu(state.menus),
+  moment: getMoment(state.menus),
   error: state.menus.messages.error,
   success: state.menus.messages.success,
 });

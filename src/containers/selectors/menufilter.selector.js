@@ -1,23 +1,25 @@
 import { createSelector } from 'reselect';
 
 export const getFilter = state => state.ui.filter;
-export const getDishes = state => state.data.meals[state.data.ui.moment];
+export const getMenu = state => state.data.entries;
+export const getMoment = state => state.ui.moment;
 
-const getVisibleDishes = createSelector(
-  [getFilter, getDishes],
-  (visibilityFilter, dishes) => {
+const getVisibleMenu = createSelector(
+  [getFilter, getMoment, getMenu],
+  (visibilityFilter, moment, dishes) => {
+    console.log('select', dishes, visibilityFilter, typeof visibilityFilter);
     switch (visibilityFilter) {
       case 'MAIN':
-        return dishes.filter(dish => dish.type === 1);
+        return dishes[moment].filter(dish => dish.type === 1);
       case 'SECOND':
-        return dishes.filter(dish => dish.type === 2);
+        return dishes[moment].filter(dish => dish.type === 2);
       case 'SIDE':
-        return dishes.filter(dish => dish.type === 3);
+        return dishes[moment].filter(dish => dish.type === 3);
       case 'ALL':
       default:
-        return dishes;
+        return dishes[moment];
     }
   },
 );
 
-export default getVisibleDishes;
+export default getVisibleMenu;

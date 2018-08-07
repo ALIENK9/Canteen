@@ -8,10 +8,10 @@ const baseURL = {
   users: 'http://localhost:4000/users',
   daymenu: 'http://localhost:4000/daymenu',
 
-  auth: 'https://loginmensa.herokuapp.com/public/login',
-  menus: 'https://menumensa.herokuapp.com/menuplan',
-  reservations: 'https://reservationsmensa.herokuapp.com/reservations',
-  dishes: 'https://dishmensa.herokuapp.com/dishes',
+  auth: 'https://loginmensa.herokuapp.com/api/login',
+  menus: 'https://menumensa.herokuapp.com/api/menuplan',
+  reservations: 'https://reservationsmensa.herokuapp.com/api/reservations',
+  dishes: 'https://dishmensa.herokuapp.com/api/dishes',
 };
 
 export default baseURL;

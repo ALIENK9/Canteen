@@ -3,11 +3,28 @@ import * as actionTypes from '../../actions/dishes/dishes.actionsTypes';
 const init = {
   loading: false,
   addModalShow: false,
+  addLoading: false,
   filter: 'ALL',
 };
 
 const ui = (state = init, action = {}) => {
   switch (action.type) {
+    case actionTypes.DISH_ADD_STARTED:
+      return {
+        ...state,
+        addLoading: true,
+      };
+    case actionTypes.DISH_REMOVE_STARTED:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actionTypes.DISH_ADD_REMOVE_FAILURE:
+    case actionTypes.REMOVE_DISH_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
     case actionTypes.FETCH_DISHES_STARTED:
       return {
         ...state,
@@ -29,10 +46,16 @@ const ui = (state = init, action = {}) => {
         ...state,
         addModalShow: false,
       };
+    case actionTypes.SHOW_DISH_ERROR_FORM:
+      return {
+        addLoading: false,
+        loading: false,
+      };
     case actionTypes.ADD_DISH_SUCCESS:
       return {
         ...state,
         addModalShow: false,
+        addLoading: false,
       };
     case actionTypes.FILTER_MEALS:
       return {

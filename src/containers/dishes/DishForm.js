@@ -8,13 +8,7 @@ import { connect } from 'react-redux';
 import { postDish, hideErrorForm, hideAddForm } from '../../redux/actions/dishes/dishes.actions';
 import Alert from '../../components/Alert';
 import validateDish from '../../validation/dishes.validator';
-
-/*
-  Nome: string
-  Tipo: Primo | Secondo | Contorno
-  Descrizione: string
-*/
-
+import SmallSpinner from '../../components/SmallSpinner';
 
 class DishForm extends Component {
   constructor(props) {
@@ -53,7 +47,9 @@ class DishForm extends Component {
     const {
       name, type, description, validationErrors,
     } = this.state;
-    const { error, closeAlert, onHide } = this.props;
+    const {
+      error, closeAlert, onHide, addLoading,
+    } = this.props;
     return (
       <form onSubmit={e => this.handleSubmit(e)}>
         <Modal.Body>
@@ -143,7 +139,8 @@ class DishForm extends Component {
           </FormGroup>
         </Modal.Body>
         <Modal.Footer>
-          <Button bsStyle="success" type="submit">
+          <SmallSpinner loading={addLoading} />
+          <Button bsStyle="success" type="submit" disabled={addLoading}>
             Aggiungi
           </Button>
           <Button bsStyle="danger" onClick={onHide} className="pull-left">
@@ -157,18 +154,21 @@ class DishForm extends Component {
 
 DishForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  addLoading: PropTypes.bool,
   error: PropTypes.string,
   closeAlert: PropTypes.func,
   onHide: PropTypes.func.isRequired,
 };
 
 DishForm.defaultProps = {
+  addLoading: false,
   error: null,
   closeAlert: () => {},
 };
 
 const mapStateToProps = state => ({
   error: state.dishes.messages.addFormError,
+  addLoading: state.dishes.ui.addLoading,
 });
 
 

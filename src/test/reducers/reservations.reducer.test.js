@@ -2,7 +2,8 @@ import { Reducer } from 'redux-testkit';
 import Immutable from 'seamless-immutable';
 import reservations from '../../redux/reducers/reservations/reservations.reducer';
 import {
-  fetchReservationsStarted, fetchReservationsSuccess, requestFailure, removeReservationSuccess, removeReservationFailure, addReservationSuccess,
+  fetchReservationsStarted, fetchReservationsSuccess, requestFailure,
+  removeReservationSuccess, removeReservationFailure, addReservationSuccess,
 } from '../../redux/actions/reservations/reservations.actions';
 
 const initState = {

@@ -1,4 +1,5 @@
 import { isEmpty } from 'lodash';
+import 'url-search-params-polyfill';
 
 const NOTYPE = 'NOTYPE';
 const noType = () => ({
@@ -29,21 +30,22 @@ const fetchGet = (URL, headers, dispatch, onStart, onSuccess, onFail) => {
   dispatch(onStart());
   // const headers = getFetchHeaders();
   return fetch(URL, { method: 'GET', headers })
-    .then(response => Promise.all([response, response.json()]), err => console.log(err))
-  // error => handleRejectionError(dispatch, onFail, error)) // gestisce il reject della fetch
+    .then(response => Promise.all([response, response.json()]))
     .then(([response, json]) => {
-      if (response.status === 200) {
+      if (response.status === 404 && json.scope === 'db') dispatch(onSuccess(null));
+      else if (response.status === 200) {
         console.log('Dati ', json);
         dispatch(onSuccess(json));
       } else {
         console.error('Errore GET in corso', response);
+        console.log('Dati ', json);
         const errorMessage = isEmpty(json)
-          ? 'Errore: la richiesta GET al server non ha ricevuto risposta'
+          ? 'La richiesta GET al server è fallita'
           : json.message;
         dispatch(onFail(errorMessage));
       }
     }) // HACK: metodo di callback anche qui?
-    .catch(err => dispatch(onFail(`Qualcosa è andato storto. Per favore riprova ${err}`)));
+    .catch(err => dispatch(onFail('Qualcosa è andato storto. Per favore riprova')));
 };
 
 
@@ -119,7 +121,7 @@ const fetchPost = (URL, headers, dispatch, data, onStart, onSuccess, onFail) => 
         console.log('error posting data, response.json', json);
         console.log('Risposta', response.status, response.statusText);
         const errorMessage = isEmpty(json)
-          ? `Impossibile aggiungere i dati. Il server ha restituito ${response.status} ${response.statusText}`
+          ? 'Impossibile aggiungere i dati. Per favore riprova.'
           : json.message;
         dispatch(onFail(errorMessage));
       }

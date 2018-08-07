@@ -16,6 +16,7 @@ const initState = {
     loading: false,
     addModalShow: false,
     filter: 'ALL',
+    addLoading: false,
   },
 };
 

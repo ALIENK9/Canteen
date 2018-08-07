@@ -8,6 +8,14 @@ export const addDishSuccess = dish => ({
   payload: { dish },
 });
 
+export const addDishStarted = () => ({
+  type: actionTypes.DISH_ADD_STARTED,
+});
+
+export const removeDishStarted = () => ({
+  type: actionTypes.DISH_REMOVE_STARTED,
+});
+
 export const removeDishSuccess = id => ({
   type: actionTypes.REMOVE_DISH_SUCCESS,
   payload: { id },
@@ -78,10 +86,11 @@ export const getDishes = () => (dispatch) => {
 
 export const deleteDish = id => (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
-  const URL = `${baseURLs}/${id}`;
+  const URL = `${baseURLs.dishes}/${id}`;
   console.debug('URL DELTEE: ', URL);
   return Http
-    .delete(URL, headers, dispatch, null, removeDishSuccess.bind(this, id), removeDishFailure);
+    .delete(URL, headers, dispatch, removeDishStarted, removeDishSuccess.bind(this, id),
+      removeDishFailure);
 };
 
 
@@ -89,5 +98,6 @@ export const postDish = dish => (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
   const URL = baseURLs.dishes;
   return Http
-    .post(URL, headers, dispatch, JSON.stringify(dish), null, addDishSuccess, showErrorForm);
+    .post(URL, headers, dispatch, JSON.stringify(dish), addDishStarted, addDishSuccess,
+      showErrorForm);
 };
