@@ -6,30 +6,50 @@ const noType = () => ({
   type: NOTYPE,
 });
 
-// todo: per gli errori servità mostrare anche l'errore inviato dal server nel body della response
-
-/*
- * Utility to dispatch onFail action with provided error
- * @param {Function} dispatch redux dispatch function
- * @param {Function} onFail action creator to be dispatched on fail with error
- * @param {String} error the error message returned with rejection
- */
-/* function handleRejectionError(dispatch, onFail, error) {
-  console.debug('Rejecting serius');
-  return Promise.reject(dispatch(onFail(`C'è stato un errore di connessione al server:
-   controlla la connessione o attendi qualche minuto. L'errore completo è: ${error}`)));
-  // return [{}, {}];
-} */
-
-/* function handleDispatchError(dispatch, onFail) {
-  return Promise.reject(dispatch(onFail('C\'è stato un errore. Per favore riprova')));
-} */
 
 // TODO: gestire rejection e mostrare errori decenti anche nelle altre richieste
-const fetchGet = (URL, headers, dispatch, onStart, onSuccess, onFail) => {
+const fetchGet = async (URL, headers, dispatch, onStart, onSuccess, onFail) => {
   dispatch(onStart());
-  // const headers = getFetchHeaders();
-  return fetch(URL, { method: 'GET', headers })
+  try {
+    const response = await fetch(URL, { method: 'GET', headers });
+    const json = await response.json();
+    let data;
+    if (response.status === 404 && json.scope === 'db') data = null;
+    else if (response.status === 200) {
+      console.log('Dati ', json);
+      data = json;
+    } else {
+      const errorMessage = isEmpty(json)
+        ? 'La richiesta GET al server è fallita'
+        : json.message;
+      if (!onFail || typeof onFail !== 'function') {
+        return {
+          error: errorMessage,
+          failure: true,
+        };
+      }
+      return dispatch(onFail(errorMessage));
+    }
+    console.log('OnSuccess type', onSuccess, typeof onSuccess);
+    if (!onSuccess || typeof onSuccess !== 'function') {
+      return {
+        failure: false,
+        data,
+      };
+    }
+    return dispatch(onSuccess(data));
+  } catch (err) {
+    const errMessage = 'Qualcosa è andato storto. Per favore riprova';
+    if (!onFail || typeof onFail !== 'function') {
+      return {
+        error: errMessage,
+        failure: true,
+      };
+    }
+    return dispatch(onFail(errMessage));
+  }
+
+  /* return fetch(URL, { method: 'GET', headers })
     .then(response => Promise.all([response, response.json()]))
     .then(([response, json]) => {
       if (response.status === 404 && json.scope === 'db') dispatch(onSuccess(null));
@@ -45,7 +65,7 @@ const fetchGet = (URL, headers, dispatch, onStart, onSuccess, onFail) => {
         dispatch(onFail(errorMessage));
       }
     }) // HACK: metodo di callback anche qui?
-    .catch(err => dispatch(onFail('Qualcosa è andato storto. Per favore riprova')));
+    .catch(() => dispatch(onFail('Qualcosa è andato storto. Per favore riprova'))); */
 };
 
 

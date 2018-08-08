@@ -23,16 +23,17 @@ export const fetchMenuStarted = () => ({
 }); */
 
 export const fetchAllDataSuccess = (menu, dishes) => {
-  const menuList = menu || { lunch: [], dinner: [] };
+  const menuList = menu || { id: '1', lunch: [], dinner: [] };
+  const dishesList = dishes || [];
   console.log('DEUGB', menu, dishes);
   const ids = {
     lunch: (menu && menu.lunch && menu.lunch.map(el => el.id)) || [],
     dinner: (menu && menu.dinner && menu.dinner.map(el => el.id)) || [],
   };
-  const dinnerDishes = dishes.filter(dish => !ids.lunch.includes(dish.id));
-  const lunchDishes = dishes.filter(dish => !ids.dinner.includes(dish.id));
+  const dinnerDishes = dishesList.filter(dish => !ids.lunch.includes(dish.id));
+  const lunchDishes = dishesList.filter(dish => !ids.dinner.includes(dish.id));
   const entries = {
-    id: menu.id, // per la PUT
+    id: menuList.id, // per la PUT
     lunch: [
       ...menuList.lunch,
       ...dinnerDishes,
@@ -86,6 +87,7 @@ export const filterMeals = filter => ({
 
 // ASYNC
 
+/* // VECCHIA CHE VANNO BENISSIMo
 export const getAllDishes = json => (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
   const URL = baseURLs.dishes; // fetch dei piatti
@@ -100,22 +102,31 @@ export const getAllDishes = json => (dispatch) => {
 };
 
 
-export const getAllData = date => (dispatch) => {
+ export const getAllData = date => (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
   const params = { date };
   const URL = baseURLs.menus; // fetch dei menù
   return Http.get(URL, headers, params, dispatch, fetchMenuStarted, getAllDishes,
     fetchMenuFailure);
-};
+}; */
 
-
-/* export const getMenu = date => (dispatch) => {
+export const getAllData = date => async (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
   const params = { date };
-  const URL = baseURLs.menus;
-  return Http.get(URL, headers, params, dispatch, fetchMenuStarted, fetchMenuSuccess,
-    fetchMenuFailure);
-}; */
+  const menuURL = baseURLs.menus; // fetch previous menu
+  const menumeals = await Http.get(menuURL, headers, params, dispatch, fetchMenuStarted);
+  if (menumeals.failure) {
+    dispatch(fetchMenuFailure(menumeals.error));
+  } else {
+    const dishesURL = baseURLs.dishes; // fetch all dishes
+    const dishes = await Http.get(dishesURL, headers, null, dispatch, fetchMenuStarted);
+    if (dishes.failure) {
+      dispatch(fetchMenuFailure(dishes.error));
+    } else {
+      dispatch(fetchAllDataSuccess(menumeals.json, dishes.json));
+    }
+  }
+};
 
 export const putMenus = meals => (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map

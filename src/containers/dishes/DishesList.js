@@ -21,26 +21,36 @@ class DishesList extends Component {
     const {
       dishes, onDelete, loading,
     } = this.props;
+    console.log('Dishes in list', dishes);
     return (
-      <List>
-        {!loading && dishes.map(dish => (
-          <TextBox
-            key={dish.id}
-            id={dish.id}
-            onDelete={onDelete}
-            deleteLabel={`Elimina il piatto ${dish.name}`}
-            confirmation
-          >
-            {console.log('sdjkdsds', dish.id)}
-            <DishItem
+      <React.Fragment>
+        {(!dishes || !dishes.length) && (
+        <span>
+          Nessun piatto inserito
+        </span>
+        )}
+        {dishes && dishes.length && !loading && (
+          <List>
+            {dishes.map(dish => (
+              <TextBox
+                key={dish.id}
+                id={dish.id}
+                onDelete={onDelete}
+                deleteLabel={`Elimina il piatto ${dish.name}`}
+                confirmation
+              >
+                {console.log('sdjkdsds', dish.id)}
+                <DishItem
                 // id={dish.id}
-              name={dish.name}
-              type={mapTypeToString(dish.type)}
-              description={dish.description}
-            />
-          </TextBox>
-        ))}
-      </List>
+                  name={dish.name}
+                  type={mapTypeToString(dish.type)}
+                  description={dish.description}
+                />
+              </TextBox>
+            ))}
+          </List>,
+        )}
+      </React.Fragment>
     );
   }
 }
