@@ -40,25 +40,34 @@ class UserList extends Component {
     // const dayMeals = getMeals(match.params.day, moment);
     console.log('UserList list', list);
     return (
-      <List>
-        {console.log('ddddddddddddddddddddaaaaaaaaaaaaaaaati', list)}
-        { list.map(reserv => (
-          <TextBox
-            key={reserv.id}
-            id={reserv.id}
-            onDelete={this.handleDelete}
-            deleteLabel={reserv.user
-              ? `Rimuovi la prenotazione dell'utente ${reserv.user.name} ${reserv.hour
-                ? `delle ore ${reserv.hour}` : ''}` : ''}
-            confirmation
-          >
-            <UserReservationItem
-              name={reserv.user ? reserv.user.name : 'No-name'}
-              hour={reserv.hour || '--:--'} // ho tolto l'elenco dei pasti perchè non è utile
-            />
-          </TextBox>
-        )) }
-      </List>
+      <React.Fragment>
+        {(!list || !list.length) && (
+        <span>
+          Nessuna prenotazione inserita
+        </span>
+        )}
+        {(list && list.length) && (
+        <List>
+          {console.log('MEALS IN USERLIST', list)}
+          { list.map(reserv => (
+            <TextBox
+              key={reserv.id}
+              id={reserv.id}
+              onDelete={this.handleDelete}
+              deleteLabel={reserv.user
+                ? `Rimuovi la prenotazione dell'utente ${reserv.user.name} 
+                ${reserv.hour ? `delle ore ${reserv.hour}` : ''}` : ''}
+              confirmation
+            >
+              <UserReservationItem
+                name={reserv.user ? reserv.user.name : 'No-name'}
+                hour={reserv.hour || '--:--'}
+              />
+            </TextBox>
+          )) }
+        </List>
+        )}
+      </React.Fragment>
     );
   }
 }

@@ -6,6 +6,7 @@ import {
 import { connect } from 'react-redux';
 import validateLogin from '../../validation/login.validator';
 import { login } from '../../redux/actions/authentication/authentication.actions';
+import SmallSpinner from '../../components/SmallSpinner';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -89,6 +90,7 @@ class LoginForm extends Component {
         <Button className="login-submit" bsStyle="primary" type="submit" disabled={loading}>
           Accedi
         </Button>
+        <SmallSpinner loading={loading} />
       </form>
     );
   }

@@ -8,11 +8,13 @@ const init = {
 const messages = (state = init, action = {}) => {
   switch (action.type) {
     case actionTypes.POST_MENU_SUCCESS:
+    case actionTypes.PUT_MENU_SUCCESS:
       return {
         ...state,
         error: '',
-        success: action.payload.success,
+        success: 'Menù salvato con successo',
       };
+    case actionTypes.DELETE_MENU_FAILURE:
     case actionTypes.POST_MENU_FAILURE:
     case actionTypes.FETCH_MENU_FAILURE:
       return {

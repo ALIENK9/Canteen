@@ -39,7 +39,7 @@ const Toolbar = ({
             <label htmlFor="searchinput" className="hidden" aria-hidden="false">
               Ricerca
             </label>
-            {search.options}
+            {console.log(search.options)}
             <Select
               arrowRenderer={SearchArrow}
               aria-label="Ricerca di utenti"

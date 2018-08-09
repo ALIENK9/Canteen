@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import ReservationItem from '../../components/reservations/ReservationItem';
 import List from '../../components/List';
 import CollapseBox from '../../components/ListItems/CollapseBox';
-import { mapTypeToString, getVisibleDishes } from '../utils';
+import { mapTypeToString } from '../utils';
 import { getReservations } from '../../redux/actions/reservations/reservations.actions';
+import getVisibleDishes from '../selectors/dishfilter.selector';
 
 class ReservationsList extends Component {
   componentDidMount() {
@@ -23,17 +24,26 @@ class ReservationsList extends Component {
   render() {
     const { list } = this.props;
     return (
-      <List>
-        {list.map(item => (
-          <CollapseBox key={item.id}>
-            <ReservationItem
-              name={item.name}
-              reslist={item.reslist}
-              type={mapTypeToString(item.type)}
-            />
-          </CollapseBox>
-        ))}
-      </List>
+      <React.Fragment>
+        {(!list || !list.length) && (
+        <span>
+          Nessuna prenotazione inserita
+        </span>
+        )}
+        {(list && list.length > 0) && (
+        <List>
+          {list.map(item => (
+            <CollapseBox key={item.id}>
+              <ReservationItem
+                name={item.name}
+                reslist={item.reslist}
+                type={mapTypeToString(item.type)}
+              />
+            </CollapseBox>
+          ))}
+        </List>
+        )}
+      </React.Fragment>
     );
   }
 }
@@ -57,14 +67,10 @@ ReservationsList.defaultProps = {
   getData: () => [],
 };
 
-const mapStateToProps = (state) => {
-  const { list } = state.reservations.data;
-  const { filter } = state.reservations.ui;
-  return {
-    list: getVisibleDishes(list, filter),
-    moment: state.reservations.ui.moment,
-  };
-};
+const mapStateToProps = state => ({
+  list: getVisibleDishes(state.reservations),
+  moment: state.reservations.ui.moment,
+});
 
 const mapDispatchToProps = dispatch => ({
   getData: (day, moment) => dispatch(getReservations('meals', day, moment)),

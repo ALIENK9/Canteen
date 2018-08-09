@@ -40,6 +40,8 @@ const ui = (state = init, action = {}) => {
       };
     case actionTypes.RESERVATION_REQUEST_FAILURE:
     case actionTypes.FETCH_RESERVATIONS_SUCCESS:
+    case actionTypes.REMOVE_RESERVATION_SUCCESS:
+    case actionTypes.RESERVATION_ADD_REMOVE_FAILURE:
       return {
         ...state,
         loading: false,

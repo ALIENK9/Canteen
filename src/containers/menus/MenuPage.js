@@ -7,7 +7,9 @@ import DocumentTitle from 'react-document-title';
 import MyPanel from '../../components/Panel';
 import Alert from '../../components/Alert';
 import MenuList from './MenuList';
-import { putMenus, changeSelectedMoment, clearMessages } from '../../redux/actions/menus/menus.actions';
+import {
+  deleteMenu, putMenus, changeSelectedMoment, clearMessages,
+} from '../../redux/actions/menus/menus.actions';
 import Loader from '../../components/Loader';
 import MenuToolbar from './MenuToolbar';
 import MomentTabs from './MomentTabs';
@@ -18,6 +20,7 @@ class MenuPage extends Component {
     super(props);
     // this.handleMomentChange = this.handleMomentChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   /* handleMomentChange(key) {
@@ -25,6 +28,13 @@ class MenuPage extends Component {
     console.log(key);
     onMomentChange(key);
   } */
+
+  handleDelete() {
+    const { match, allEntries, onDelete } = this.props;
+    const { day } = match.params;
+    const { id } = allEntries;
+    if (id) onDelete(id);
+  }
 
   handleSubmit(event) {
     event.preventDefault();
@@ -38,12 +48,12 @@ class MenuPage extends Component {
       dinner: dinner.filter(meal => meal.checked === true),
     };
     console.log('before submit', processedData);
-    onSubmit(processedData);
+    if (processedData.lunch.length || processedData.dinner.length) onSubmit(processedData);
   }
 
   render() {
     const {
-      match, error, success, closeAlert, loading, history,
+      match, error, success, closeAlert, loading, history, allEntries,
     } = this.props;
     const { day } = match.params;
     return (
@@ -65,6 +75,15 @@ class MenuPage extends Component {
 
           </Panel.Body>
           <Panel.Footer className="center">
+            <Button
+              className="pull-left"
+              bsStyle="danger"
+              onClick={() => this.handleDelete()}
+              disabled={!allEntries.id}
+              title={allEntries.id ? '' : 'Non è stato ancora salvato un menù'}
+            >
+              Elimina il menù
+            </Button>
             <Button bsStyle="primary" type="submit" onClick={e => this.handleSubmit(e)}>
               Conferma e salva
             </Button>
@@ -85,6 +104,7 @@ MenuPage.propTypes = {
   closeAlert: PropTypes.func,
   // onMomentChange: PropTypes.func,
   onSubmit: PropTypes.func,
+  onDelete: PropTypes.func,
   allEntries: PropTypes.shape({
     id: PropTypes.string,
     lunch: PropTypes.arrayOf(PropTypes.shape({
@@ -109,6 +129,7 @@ MenuPage.defaultProps = {
   closeAlert: () => {},
   // onMomentChange: () => {},
   onSubmit: () => {},
+  onDelete: () => {},
   allEntries: {
     id: '',
     lunch: [],
@@ -127,6 +148,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   closeAlert: () => dispatch(clearMessages()),
   onSubmit: meals => dispatch(putMenus(meals)),
+  onDelete: menuId => dispatch(deleteMenu(menuId)),
   onMomentChange: moment => dispatch(changeSelectedMoment(moment)),
 });
 

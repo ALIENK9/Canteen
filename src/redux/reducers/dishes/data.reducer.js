@@ -12,7 +12,7 @@ const data = (state = init, action = {}) => {
       console.log('Reducing diches', action.payload.json);
       return {
         ...state,
-        list: action.payload.json,
+        list: action.payload.json || [],
       };
     case actionTypes.DISH_REQUEST_FAILURE:
       return {

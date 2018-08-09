@@ -15,7 +15,10 @@ const ui = (state = init, action = {}) => {
         loading: true,
       };
     case actionTypes.POST_MENU_FAILURE:
+    case actionTypes.DELETE_MENU_SUCCESS:
+    case actionTypes.DELETE_MENU_FAILURE:
     case actionTypes.POST_MENU_SUCCESS:
+    case actionTypes.PUT_MENU_SUCCESS:
     case actionTypes.FETCH_MENU_FAILURE: // case actionTypes.FETCH_MENU_SUCCESS:
     case actionTypes.FETCH_ALL_SUCCESS:
       return {

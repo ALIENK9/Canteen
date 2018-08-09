@@ -23,7 +23,24 @@ const data = (state = init, action = {}) => {
     case actionTypes.FETCH_ALL_SUCCESS:
       return {
         ...state,
-        entries: action.payload.entries,
+        entries: action.payload.entries || {},
+      };
+    case actionTypes.POST_MENU_SUCCESS:
+      return {
+        ...state,
+        entries: {
+          ...state.entries,
+          id: action.payload.id,
+        },
+      };
+    case actionTypes.DELETE_MENU_SUCCESS:
+      return {
+        ...state,
+        entries: {
+          id: '',
+          lunch: state.entries.lunch.map(meal => ({ ...meal, checked: false })),
+          dinner: state.entries.dinner.map(meal => ({ ...meal, checked: false })),
+        },
       };
     /* case actionTypes.FETCH_DISHES_SUCCESS:
       return {
@@ -38,6 +55,7 @@ const data = (state = init, action = {}) => {
     case actionTypes.FETCH_MENU_FAILURE:
       return init;
     case actionTypes.TOGGLE_MEAL:
+      console.log('Toggling checked', action.payload.moment, action.payload.id, action.payload.value);
       return {
         ...state,
         entries: {

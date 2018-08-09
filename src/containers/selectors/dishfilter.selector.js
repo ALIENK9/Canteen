@@ -6,6 +6,7 @@ export const getDishes = state => state.data.list;
 const getVisibleDishes = createSelector(
   [getFilter, getDishes],
   (visibilityFilter, dishes) => {
+    console.log('selection', dishes);
     switch (visibilityFilter) {
       case 'MAIN':
         return dishes.filter(dish => dish.type === 1);

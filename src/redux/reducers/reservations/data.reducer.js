@@ -11,9 +11,10 @@ const init = {
 const data = (state = init, action = {}) => {
   switch (action.type) {
     case actionTypes.FETCH_RESERVATIONS_SUCCESS:
+      console.log('STEONZO', action.payload.json);
       return {
         ...state,
-        list: action.payload.json,
+        list: action.payload.json || [],
       };
     case actionTypes.REMOVE_RESERVATION_SUCCESS:
       return {

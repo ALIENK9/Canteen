@@ -41,7 +41,6 @@ const ResPage = ({
             {' '}
             {mapMomentToString(moment)}
           </p>
-          {console.log(list)}
           <ResToolbar view={view} list={list} />
           <Loader loading={loading} />
           <AddReservationModal day={day} />

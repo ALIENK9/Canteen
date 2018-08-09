@@ -29,7 +29,7 @@ class DishesList extends Component {
           Nessun piatto inserito
         </span>
         )}
-        {dishes && dishes.length && !loading && (
+        {(dishes && dishes.length && !loading) && (
           <List>
             {dishes.map(dish => (
               <TextBox
@@ -48,7 +48,7 @@ class DishesList extends Component {
                 />
               </TextBox>
             ))}
-          </List>,
+          </List>
         )}
       </React.Fragment>
     );

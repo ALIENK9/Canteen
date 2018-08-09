@@ -7,12 +7,20 @@ const noType = () => ({
 });
 
 
+const withTimeout = async (ms, promise) => new Promise((resolve, reject) => {
+  setTimeout(() => {
+    reject(new Error('timeout'));
+  }, ms);
+  promise.then(resolve, reject);
+});
+
+
 // TODO: gestire rejection e mostrare errori decenti anche nelle altre richieste
 const fetchGet = async (URL, headers, dispatch, onStart, onSuccess, onFail) => {
   dispatch(onStart());
   try {
     const response = await fetch(URL, { method: 'GET', headers });
-    const json = await response.json();
+    const json = await response.json(); // await response.json();
     let data;
     if (response.status === 404 && json.scope === 'db') data = null;
     else if (response.status === 200) {
@@ -39,7 +47,9 @@ const fetchGet = async (URL, headers, dispatch, onStart, onSuccess, onFail) => {
     }
     return dispatch(onSuccess(data));
   } catch (err) {
-    const errMessage = 'Qualcosa è andato storto. Per favore riprova';
+    console.error(err);
+    const errMessage = err.message === 'timeout' ? 'La richiesta ha impiegato troppo tempo'
+      : 'Qualcosa è andato storto. Per favore riprova';
     if (!onFail || typeof onFail !== 'function') {
       return {
         error: errMessage,
@@ -81,7 +91,7 @@ const fetchPut = (URL, headers, dispatch, data, onStart, onSuccess, onFail) => {
   return fetch(URL, config)
     .then(response => Promise.all([response, response.json()]))
     .then(([response, json]) => {
-      if (response.ok === true) {
+      if (response.status === 200) {
         dispatch(onSuccess());
       } else {
         const errorMessage = isEmpty(json)
@@ -104,7 +114,7 @@ const fetchDelete = (URL, headers, dispatch, onStart, onSuccess, onFail) => {
   return fetch(URL, config)
     .then(response => Promise.all([response, response.json()]))
     .then(([response, json]) => {
-      if (response.ok === true) {
+      if (response.status === 200) {
         console.log('deleting');
         dispatch(onSuccess());
         console.log('deleted');
@@ -146,7 +156,10 @@ const fetchPost = (URL, headers, dispatch, data, onStart, onSuccess, onFail) => 
         dispatch(onFail(errorMessage));
       }
     })
-    .catch(() => dispatch(onFail('Qualcosa è andato storto. Per favore riprova')));
+    .catch((err) => {
+      console.log(err);
+      dispatch(onFail('Qualcosa è andato storto. Per favore riprova'));
+    });
 };
 
 const defaultHeaders = {
@@ -236,6 +249,16 @@ export default class Http {
     console.log('Posting data: ', data);
     console.log('URL: ', stringURL);
     return fetchPost(stringURL, headers, dispatch, data, startFunction, onSuccess, onFail);
+  }
+
+  static simpleGet(stringURL, headersMap = new Map(), searchParams = null) {
+    const headers = { ...defaultHeaders };
+    headersMap.forEach((v, k) => { headers[k] = v; });
+    const urlParams = new URLSearchParams(searchParams || {});
+    const url = new URL(stringURL);
+    url.search = urlParams;
+    console.log('simple URL', url, headers);
+    return withTimeout(5000, fetch(url, { method: 'GET', headers }));
   }
 }
 

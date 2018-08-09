@@ -18,9 +18,9 @@ class AddReservationForm extends Component {
     super(props);
     this.state = {
       user: { label: '', value: null },
-      maindish: '1',
-      seconddish: '5',
-      sidedish: '7',
+      maindish: {},
+      seconddish: {},
+      sidedish: {},
       lunchbag: false,
       hour: '',
       validationErrors: {},
@@ -56,6 +56,7 @@ class AddReservationForm extends Component {
    */
   handleChange(event) {
     const { name, value } = event.target;
+    console.log(value, typeof value);
     this.setState({ [name]: value });
   }
 
@@ -92,38 +93,36 @@ class AddReservationForm extends Component {
     if (!user.value || !maindish || !seconddish || !sidedish) return;
 
     // TALE COSA ESISTE PER L'UNICO SCOPO DI OTTENERE IL NOME DELLA PIETANZA DA MOSTRARE
-    const mealsid = [ // id come numeri dei patti scelti
-      Number.parseInt(maindish, 10),
-      Number.parseInt(seconddish, 10),
-      Number.parseInt(sidedish, 10),
-    ];
     const onlyIds = dayMeals.map(meal => meal.id);
     const mealsIndex = [ // indici degli elementi scelti nell'array dayMeals
-      onlyIds.indexOf(mealsid[0]),
-      onlyIds.indexOf(mealsid[1]),
-      onlyIds.indexOf(mealsid[2]),
+      onlyIds.indexOf(maindish),
+      onlyIds.indexOf(seconddish),
+      onlyIds.indexOf(sidedish),
     ];
+    console.log(mealsIndex);
     // -----------------------fine tale cosa----------------------------------------------
     const userSubmit = { id: user.value, name: user.label };
+    console.log(userSubmit);
 
+    console.log(maindish, seconddish, sidedish, typeof maindish);
     // NOTE: user: Object con { name: "Nome Cognome", id: (id) }
     const dato = !lunchbag ? {
       user: userSubmit,
       meals: [
         {
-          id: mealsid[0], // primo
+          id: dayMeals[mealsIndex[0]].id, // primo
           name: dayMeals[mealsIndex[0]].name,
-          type: 1,
+          type: dayMeals[mealsIndex[0]].type,
         },
         {
-          id: mealsid[1], // secondo
+          id: dayMeals[mealsIndex[1]].id, // secondo
           name: dayMeals[mealsIndex[1]].name,
-          type: 2,
+          type: dayMeals[mealsIndex[1]].type,
         },
         {
-          id: mealsid[2], // contorno
+          id: dayMeals[mealsIndex[2]].id, // contorno
           name: dayMeals[mealsIndex[2]].name,
-          type: 3,
+          type: dayMeals[mealsIndex[2]].type,
         },
       ],
       date: day,
@@ -142,7 +141,7 @@ class AddReservationForm extends Component {
       moment,
       hour: null,
     };
-    console.log('Dato pronto per submit: ', dato);
+    console.warn('Dato pronto per submit: ', dato);
     onSubmit(dato, moment, view);
   }
 
@@ -227,6 +226,7 @@ class AddReservationForm extends Component {
                   disabled={!!lunchbag}
                   inline
                 >
+                  {console.log('Prentazione', state, state[obj.inputname], meal)}
                   {meal.name}
                 </Radio>
               )) }
@@ -281,11 +281,11 @@ AddReservationForm.propTypes = {
     name: PropTypes.string,
     type: PropTypes.number,
     description: PropTypes.string,
-    id: PropTypes.number,
+    id: PropTypes.string,
   })),
   users: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
-    id: PropTypes.number,
+    id: PropTypes.string,
   })),
   getUsers: PropTypes.func.isRequired,
   getMeals: PropTypes.func.isRequired,
