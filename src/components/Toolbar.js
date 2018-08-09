@@ -39,7 +39,7 @@ const Toolbar = ({
             <label htmlFor="searchinput" className="hidden" aria-hidden="false">
               Ricerca
             </label>
-            {console.log(search.options)}
+            {console.log('opzioni', search.options)}
             <Select
               arrowRenderer={SearchArrow}
               aria-label="Ricerca di utenti"
@@ -48,6 +48,7 @@ const Toolbar = ({
               options={search.options}
               onChange={search.func}
               inputId="searchinput"
+              isClearable
               placeholder="Nome Cognome"
             />
           </React.Fragment>

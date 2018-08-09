@@ -9,45 +9,49 @@ const mapStateToProps = state => ({
 });
 
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  buttons: ownProps.view === 'meals' ? [
-    {
-      title: 'Tutti',
-      key: FILTER_KEYS.ALL,
-      func: () => dispatch(filterMeals(FILTER_KEYS.ALL)),
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const a = ownProps.list.map(
+    res => ({
+      label: res.user && res.user.name,
+      value: res.user && res.user.id,
+    }),
+  );
+  console.log('é un array', ownProps.view === 'users' && Array.isArray(ownProps.list));
+  console.log('eccolo: ', a);
+  return {
+    buttons: ownProps.view === 'meals' ? [
+      {
+        title: 'Tutti',
+        key: FILTER_KEYS.ALL,
+        func: () => dispatch(filterMeals(FILTER_KEYS.ALL)),
+      },
+      {
+        title: 'Primi',
+        key: FILTER_KEYS.MAIN,
+        func: () => dispatch(filterMeals(FILTER_KEYS.MAIN)),
+      },
+      {
+        title: 'Secondi',
+        key: FILTER_KEYS.SECOND,
+        func: () => dispatch(filterMeals(FILTER_KEYS.SECOND)),
+      },
+      {
+        title: 'Contorni',
+        key: FILTER_KEYS.SIDE,
+        func: () => dispatch(filterMeals(FILTER_KEYS.SIDE)),
+      },
+    ] : [],
+    search: {
+      presence: ownProps.view === 'users' && Array.isArray(ownProps.list),
+      func: id => dispatch(searchUser(id || { value: '' })),
+      options: (ownProps.view === 'users' && Array.isArray(ownProps.list)) ? a : [],
     },
-    {
-      title: 'Primi',
-      key: FILTER_KEYS.MAIN,
-      func: () => dispatch(filterMeals(FILTER_KEYS.MAIN)),
-    },
-    {
-      title: 'Secondi',
-      key: FILTER_KEYS.SECOND,
-      func: () => dispatch(filterMeals(FILTER_KEYS.SECOND)),
-    },
-    {
-      title: 'Contorni',
-      key: FILTER_KEYS.SIDE,
-      func: () => dispatch(filterMeals(FILTER_KEYS.SIDE)),
-    },
-  ] : [],
-  search: {
-    presence: ownProps.view === 'users' && Array.isArray(ownProps.list),
-    func: id => dispatch(searchUser(id)),
-    options: (ownProps.view === 'users' && Array.isArray(ownProps.list)
-    && ownProps.list.lenght > 0 && ownProps.list.map(
-      res => ({
-        label: res.user.name,
-        value: res.user.id,
-      }),
-    )) || [],
-  },
-  add: {
+    add: {
     // REVIEW: trick un po' sporco per avere acesso alla prop 'view' e nascondere la barra
-    presence: ownProps.view === 'users',
-    func: () => dispatch(addModalShow()),
-  },
-});
+      presence: ownProps.view === 'users',
+      func: () => dispatch(addModalShow()),
+    },
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);

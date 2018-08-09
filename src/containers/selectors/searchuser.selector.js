@@ -5,7 +5,7 @@ export const getReservations = state => state.data.list;
 
 const getSearchedReservation = createSelector(
   [getSearchKey, getReservations],
-  (id, reservations) => (id ? reservations.find(res => res.user.id === id) : reservations),
+  (id, reservations) => (id ? [reservations.find(res => res.user.id === id)] || [] : reservations),
 );
 
 export default getSearchedReservation;

@@ -6,7 +6,12 @@ const noType = () => ({
   type: NOTYPE,
 });
 
-
+/**
+ * Add a timeout with specified milliseconds. If promise doesn't resolve in time
+ * it will be rejected with error 'timeout'
+ * @param {Number} ms
+ * @param {Promise} promise
+ */
 const withTimeout = async (ms, promise) => new Promise((resolve, reject) => {
   setTimeout(() => {
     reject(new Error('timeout'));
@@ -19,7 +24,7 @@ const withTimeout = async (ms, promise) => new Promise((resolve, reject) => {
 const fetchGet = async (URL, headers, dispatch, onStart, onSuccess, onFail) => {
   dispatch(onStart());
   try {
-    const response = await fetch(URL, { method: 'GET', headers });
+    const response = await withTimeout(5000, fetch(URL, { method: 'GET', headers }));
     const json = await response.json(); // await response.json();
     let data;
     if (response.status === 404 && json.scope === 'db') data = null;
