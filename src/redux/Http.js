@@ -8,7 +8,7 @@ const noType = () => ({
 
 const genericError = (error) => {
   console.log('THERE WAS ERROR HERE', error);
-  return (error.message === 'timeout'
+  return (error && error.message === 'timeout'
     ? 'La connessione al server ha impiegato troppo tempo. Ti preghiamo di riprovare o attendere qualche minuto.'
     : 'Qualcosa è andato storto. Per favore riprova');
 };

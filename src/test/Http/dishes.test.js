@@ -193,4 +193,24 @@ describe('Dishes async actions tests', () => {
       },
     });
   });
+
+  it('should fail timeout', async () => {
+    const store = mockStore({});
+    const json = {
+      name: 'Nuovo piatto nome',
+      type: 2,
+      description: 'Descrizione piatto',
+    };
+    window.fetch = jest.fn().mockImplementation(() => Promise.reject(new Error('timeout')));
+    await store.dispatch(postDish(json));
+    const expectedActions = store.getActions();
+    expect(expectedActions.length).toBe(2);
+    expect(expectedActions[0]).toEqual({ type: actions.DISH_ADD_STARTED });
+    expect(expectedActions[1]).toEqual({
+      type: actions.SHOW_DISH_ERROR_FORM,
+      payload: {
+        error: 'La connessione al server ha impiegato troppo tempo. Ti preghiamo di riprovare o attendere qualche minuto.',
+      },
+    });
+  });
 });
