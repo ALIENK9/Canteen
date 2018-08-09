@@ -95,6 +95,10 @@ button, html [type=button] {
   min-height: 100%;
 }
 
+.panel-footer {
+  overflow: hidden;
+}
+
 .navbar {
   margin: 0 !important;
 }
@@ -120,6 +124,21 @@ main {
 /* .invisible {
   visibility: hidden;
 } */
+
+.welcome-page-blank {
+  height: 400px;
+  display: block;
+}
+
+.welcome-image {
+  display: block;
+  margin: 30px 100px;
+  background-image: url('./img/welcome.png');
+  background-position: bottom;
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 400px;
+}
 
 .tabsbar {
   border-bottom: 1px solid white;

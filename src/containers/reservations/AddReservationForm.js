@@ -18,9 +18,9 @@ class AddReservationForm extends Component {
     super(props);
     this.state = {
       user: { label: '', value: null },
-      maindish: {},
-      seconddish: {},
-      sidedish: {},
+      maindish: '',
+      seconddish: '',
+      sidedish: '',
       lunchbag: false,
       hour: '',
       validationErrors: {},
@@ -77,9 +77,11 @@ class AddReservationForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    console.log('sajskjaskjajs');
 
     if (!this.isValid()) return;
 
+    console.log('dsddsdsdsdsdsdsdsdsdsd');
     const {
       onSubmit, moment, view, dayMeals, match,
     } = this.props;
@@ -139,7 +141,7 @@ class AddReservationForm extends Component {
       ],
       date: day,
       moment,
-      hour: null,
+      hour: '--:--',
     };
     console.warn('Dato pronto per submit: ', dato);
     onSubmit(dato, moment, view);
@@ -260,9 +262,15 @@ class AddReservationForm extends Component {
           </FormGroup>
         </Modal.Body>
         <Modal.Footer>
-          <Button bsStyle="success" type="submit" className="pull-left">
+          { Array.isArray(dayMeals) && dayMeals.length ? (
+            <Button bsStyle="success" type="submit" className="pull-left">
             Aggiungi
-          </Button>
+            </Button>
+          ) : (
+            <p className="help-block-error pull-left">
+              Nessun piatto nel men&ugrave; di oggi
+            </p>
+          ) }
           <Button bsStyle="danger" onClick={onHide}>
             Annulla
           </Button>

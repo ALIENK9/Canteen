@@ -1,7 +1,8 @@
 # TODO
 
 ## !!!
-
+- [ ] Fixare Inserimento Pranzo a sacco
+- [ ] Fixare caso PRENOTAZIONE in cui non sia disponibile un menù completo in un giorno
 - [x] Creare dinamicamente header delle pagine apponendo il giusto titolo
 - [x] Trovare un modo decente per disabilitare i link in modo accessibile
 - [x] Aggiungere react-select component al Nome utente in addReservation
@@ -11,12 +12,12 @@
 - [ ] Mettere SmallSpinner sul form di Reservation e quello grande alla cancellazione
 - [ ] Criptare dati sessionStorage/tenere token
 - [ ] Test sui reducer
-- [ ] Definire il tipo dell'ID (String|Number)
-- [ ] Problema con containers connessi a redux (condividono lo stato ma non dovrebbero)
+- [x] Definire il tipo dell'ID (String|Number)
+- [x] Problema con containers connessi a redux (condividono lo stato ma non dovrebbero)
 
 ## !!
-- [ ] `Reselect` per selectors che rendono più efficienti i metodi di filter
-- [ ] Aggiungere ricerca utenti su prenotazioni (react-select)
+- [x] `Reselect` per selectors che rendono più efficienti i metodi di filter
+- [x] Aggiungere ricerca utenti su prenotazioni (react-select)
 
 ## !
 

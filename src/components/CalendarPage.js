@@ -27,10 +27,10 @@ class CalendarPage extends React.Component {
       currentYear,
     };
     console.log(currentMonth);
-    const minDate = new Date(currentYear, 6, 1);
-    const lastDayOfMonth = new Date(minDate - 1).getDate();
-    const maxDate = new Date(currentYear, currentMonth, lastDayOfMonth);
-    // HACK: eventuale contrllo per capire se è admin. Poi setta config
+    // const minDate = new Date(currentYear, 6, 1);
+    // const lastDayOfMonth = new Date(minDate - 1).getDate();
+    // const maxDate = new Date(currentYear, currentMonth, lastDayOfMonth);
+    // note: eventuale contrllo per capire se è admin. Poi setta config
     this.calendarConfig = {
       onClickDay: this.redirect,
       calendarType: 'ISO 8601',
@@ -39,8 +39,8 @@ class CalendarPage extends React.Component {
       onActiveDateChange: this.setCurrentMonth,
       value: new Date(),
       maxDetail: 'month',
-      maxDate,
-      minDate,
+      // maxDate,
+      // minDate,
     };
   }
 
@@ -53,7 +53,7 @@ class CalendarPage extends React.Component {
 
   async downloadReport() {
     const headers = getAuthFieldsFromStorage()// header per file xlsx
-      // .set('Content-Type', 'application/vnd.ms-excel'); // Map
+    // .set('Content-Type', 'application/vnd.ms-excel'); // Map
       .set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); // Map
     const URL = baseURLs.report;
     const { currentMonth, currentYear: year } = this.state;
@@ -110,7 +110,9 @@ class CalendarPage extends React.Component {
             Calendario
           </Panel.Heading>
           <Panel.Body>
-          Scegli il giorno di cui effettuare la prenotazione
+            <p>
+              Scegli il giorno di cui effettuare la prenotazione
+            </p>
             <Calendar {...this.calendarConfig} />
           </Panel.Body>
           <Panel.Footer className="center">

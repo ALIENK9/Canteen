@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-const WelcomePage = ({ username, welcomeText }) => (
+const WelcomePage = ({ username, welcomeText, welcomeBottom }) => (
   <div className="container">
     <div className="row">
       <div className="col">
@@ -28,17 +28,20 @@ const WelcomePage = ({ username, welcomeText }) => (
           )}
       </div>
     </div>
+    {welcomeBottom}
   </div>
 );
 
 WelcomePage.propTypes = {
   welcomeText: PropTypes.string,
   username: PropTypes.string,
+  welcomeBottom: PropTypes.node,
 };
 
 WelcomePage.defaultProps = {
   welcomeText: '',
   username: '',
+  welcomeBottom: null,
 };
 
 export default WelcomePage;

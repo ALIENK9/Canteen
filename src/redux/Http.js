@@ -6,6 +6,13 @@ const noType = () => ({
   type: NOTYPE,
 });
 
+const genericError = (error) => {
+  console.log('THERE WAS ERROR HERE', error);
+  return (error.message === 'timeout'
+    ? 'La connessione al server ha impiegato troppo tempo. Ti preghiamo di riprovare o attendere qualche minuto.'
+    : 'Qualcosa è andato storto. Per favore riprova');
+};
+
 /**
  * Add a timeout with specified milliseconds. If promise doesn't resolve in time
  * it will be rejected with error 'timeout'
@@ -13,7 +20,7 @@ const noType = () => ({
  * @param {Promise} promise
  */
 const withTimeout = async (ms, promise) => new Promise((resolve, reject) => {
-  setTimeout(() => {
+  const timer = setTimeout(() => {
     reject(new Error('timeout'));
   }, ms);
   promise.then(resolve, reject);
@@ -53,15 +60,13 @@ const fetchGet = async (URL, headers, dispatch, onStart, onSuccess, onFail) => {
     return dispatch(onSuccess(data));
   } catch (err) {
     console.error(err);
-    const errMessage = err.message === 'timeout' ? 'La richiesta ha impiegato troppo tempo'
-      : 'Qualcosa è andato storto. Per favore riprova';
     if (!onFail || typeof onFail !== 'function') {
       return {
-        error: errMessage,
+        error: genericError(err),
         failure: true,
       };
     }
-    return dispatch(onFail(errMessage));
+    return dispatch(onFail(genericError(err)));
   }
 
   /* return fetch(URL, { method: 'GET', headers })
@@ -93,7 +98,7 @@ const fetchPut = (URL, headers, dispatch, data, onStart, onSuccess, onFail) => {
     headers,
     body: data,
   };
-  return fetch(URL, config)
+  return withTimeout(5000, fetch(URL, config)
     .then(response => Promise.all([response, response.json()]))
     .then(([response, json]) => {
       if (response.status === 200) {
@@ -104,8 +109,8 @@ const fetchPut = (URL, headers, dispatch, data, onStart, onSuccess, onFail) => {
           : json.message;
         dispatch(onFail(errorMessage));
       }
-    })
-    .catch(() => dispatch(onFail('Qualcosa è andato storto. Per favore riprova')));
+    }))
+    .catch(err => dispatch(onFail(genericError(err))));
 };
 
 
@@ -116,7 +121,7 @@ const fetchDelete = (URL, headers, dispatch, onStart, onSuccess, onFail) => {
     method: 'DELETE',
     headers,
   };
-  return fetch(URL, config)
+  return withTimeout(5000, fetch(URL, config)
     .then(response => Promise.all([response, response.json()]))
     .then(([response, json]) => {
       if (response.status === 200) {
@@ -130,8 +135,8 @@ const fetchDelete = (URL, headers, dispatch, onStart, onSuccess, onFail) => {
           : json.message;
         dispatch(onFail(errorMessage));
       }
-    })
-    .catch(() => dispatch(onFail('Qualcosa è andato storto. Per favore riprova')));
+    }))
+    .catch(err => dispatch(onFail(genericError(err))));
 };
 
 const fetchPost = (URL, headers, dispatch, data, onStart, onSuccess, onFail) => {
@@ -145,7 +150,7 @@ const fetchPost = (URL, headers, dispatch, data, onStart, onSuccess, onFail) => 
   };
   console.log('Posted body', config.body);
 
-  return fetch(URL, config)
+  return withTimeout(5000, fetch(URL, config)
     .then(response => Promise.all([response, response.json()]))
   // error => handleRejectionError(dispatch, onFail, error)) // gestisce il reject della fetch
     .then(([response, json]) => {
@@ -160,11 +165,8 @@ const fetchPost = (URL, headers, dispatch, data, onStart, onSuccess, onFail) => 
           : json.message;
         dispatch(onFail(errorMessage));
       }
-    })
-    .catch((err) => {
-      console.log(err);
-      dispatch(onFail('Qualcosa è andato storto. Per favore riprova'));
-    });
+    }))
+    .catch(err => dispatch(onFail(genericError(err))));
 };
 
 const defaultHeaders = {

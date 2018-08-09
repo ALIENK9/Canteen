@@ -23,7 +23,7 @@ const baseURL = {
   menus: `http://${ip}:${port}/menu/api/menuplan`,
   reservations: `http://${ip}:${port}/reservation/api/reservations`,
   dishes: `http://${ip}:${port}/dish/api/dishes`,
-  report: `http://${ip}:${port}/api/report/download`,
+  report: `http://${ip}:${port}/reservation/api/report/download`,
 };
 
 export default baseURL;

@@ -74,7 +74,7 @@ class MenuPage extends Component {
             <MenuList day={day} />
 
           </Panel.Body>
-          <Panel.Footer className="center">
+          <Panel.Footer>
             <Button
               className="pull-left"
               bsStyle="danger"
@@ -84,7 +84,12 @@ class MenuPage extends Component {
             >
               Elimina il menù
             </Button>
-            <Button bsStyle="primary" type="submit" onClick={e => this.handleSubmit(e)}>
+            <Button
+              className="pull-right"
+              bsStyle="success"
+              type="submit"
+              onClick={e => this.handleSubmit(e)}
+            >
               Conferma e salva
             </Button>
           </Panel.Footer>
