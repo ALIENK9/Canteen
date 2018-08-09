@@ -20,7 +20,7 @@ const genericError = (error) => {
  * @param {Promise} promise
  */
 const withTimeout = async (ms, promise) => new Promise((resolve, reject) => {
-  const timer = setTimeout(() => {
+  setTimeout(() => {
     reject(new Error('timeout'));
   }, ms);
   promise.then(resolve, reject);
