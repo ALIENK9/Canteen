@@ -173,6 +173,10 @@ label {
     float: none !important;
   }
 
+  .flex-item {
+    max-width: 100%;
+  }
+
   main, footer {
     max-height: unset;
   }

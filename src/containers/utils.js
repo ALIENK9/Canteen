@@ -19,12 +19,14 @@ export const compareDishes = (a, b) => {
 
 export const mapTypeToString = (type) => {
   switch (type) {
-    case 1:
+    case 1 || '1':
       return 'Primo';
-    case 2:
+    case 2 || '2':
       return 'Secondo';
-    case 3:
+    case 3 || '3':
       return 'Contorno';
+    case 4 || '4':
+      return 'Dessert';
     default:
       return 'Unknown';
   }

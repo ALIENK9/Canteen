@@ -9,6 +9,7 @@ import { postDish, hideErrorForm, hideAddForm } from '../../redux/actions/dishes
 import Alert from '../../components/Alert';
 import validateDish from '../../validation/dishes.validator';
 import SmallSpinner from '../../components/SmallSpinner';
+import { mapTypeToString } from '../utils';
 
 class DishForm extends Component {
   constructor(props) {
@@ -50,6 +51,7 @@ class DishForm extends Component {
     const {
       error, closeAlert, onHide, addLoading,
     } = this.props;
+    const types = ['1', '2', '3', '4']; // aggiungere qui tipi per aggiungere opzioni
     return (
       <form onSubmit={e => this.handleSubmit(e)}>
         <Modal.Body>
@@ -85,33 +87,18 @@ class DishForm extends Component {
                 *
               </abbr>
             </p>
-            <Radio
-              name="type"
-              checked={type === '1' ? 'checked' : false}
-              value="1"
-              onChange={e => this.handleChange(e)}
-              inline
-            >
-              Primo
-            </Radio>
-            <Radio
-              name="type"
-              checked={type === '2' ? 'checked' : false}
-              value="2"
-              onChange={e => this.handleChange(e)}
-              inline
-            >
-              Secondo
-            </Radio>
-            <Radio
-              name="type"
-              checked={type === '3' ? 'checked' : false}
-              value="3"
-              onChange={e => this.handleChange(e)}
-              inline
-            >
-              Contorno
-            </Radio>
+            {types.map(el => (
+              <Radio
+                name="type"
+                checked={type === el ? 'checked' : false}
+                value={el}
+                onChange={e => this.handleChange(e)}
+                inline
+              >
+                {mapTypeToString(el)}
+              </Radio>
+            ))}
+
             {validationErrors.type && (
             <HelpBlock bsClass="help-block-error">
               {validationErrors.type}

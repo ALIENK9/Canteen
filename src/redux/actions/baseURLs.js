@@ -1,4 +1,5 @@
-const ip = '192.168.30.102';
+// const ip = '192.168.30.102';
+const ip = '192.168.32.15';
 const port = '9004';
 
 const baseURL = {

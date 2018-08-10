@@ -7,43 +7,41 @@ import { Table } from 'react-bootstrap';
  * @param {bool} viewList
  * @param {Array} reslist
  */
-const renderView = (viewList, reslist) => {
-  if (viewList) {
-    return (
-      <Table hover>
-        <thead>
-          <tr>
-            <th>
-              Nome
-            </th>
-            <th>
-              Orario
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {reslist.map(item => (
-            <tr key={item.id}>
-              <td>
-                {item.name}
-              </td>
-              <td>
-                {item.hour}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    );
-  }
-  return (
+const renderView = (viewList, reslist) => (
+  <React.Fragment>
     <p>
       Prenotazioni:
       {' '}
       {reslist.length}
     </p>
-  );
-};
+    {viewList && (
+    <Table hover>
+      <thead>
+        <tr>
+          <th>
+              Nome
+          </th>
+          <th>
+              Orario
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {reslist.map(item => (
+          <tr key={item.id}>
+            <td>
+              {item.name}
+            </td>
+            <td>
+              {item.hour}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
+    )}
+  </React.Fragment>
+);
 
 /**
  * Component to render reservations for one meal

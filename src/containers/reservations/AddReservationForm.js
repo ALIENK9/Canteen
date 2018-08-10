@@ -18,15 +18,17 @@ class AddReservationForm extends Component {
     super(props);
     this.state = {
       user: { label: '', value: null },
-      maindish: '',
-      seconddish: '',
-      sidedish: '',
+      maindish: 'none1',
+      seconddish: 'none2',
+      sidedish: 'none3',
+      dessert: 'none4',
       lunchbag: false,
       hour: '',
       validationErrors: {},
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
   }
 
@@ -77,22 +79,23 @@ class AddReservationForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log('sajskjaskjajs');
 
     if (!this.isValid()) return;
 
-    console.log('dsddsdsdsdsdsdsdsdsdsd');
     const {
       onSubmit, moment, view, dayMeals, match,
     } = this.props;
     const {
-      user, maindish, seconddish, sidedish, hour, lunchbag,
+      user, maindish, seconddish, sidedish, hour, lunchbag, dessert,
     } = this.state;
-
     const { day } = match.params;
 
-    // campi obbbligatori
-    if (!user.value || !maindish || !seconddish || !sidedish) return;
+    // APPROSSIMA L'ORARIO AL QUARTO D'ORA PIÙ VICINO
+    const [hours, minutes] = hour.split(':');
+    const dateHour = new Date(2000, 1, 1, Number.parseInt(hours, 10), Number.parseInt(minutes, 10));
+    dateHour.setMinutes(dateHour.getMinutes() - (dateHour.getMinutes() % 15));
+    const h = dateHour.getHours().toString();
+    const m = dateHour.getMinutes().toString();
 
     // TALE COSA ESISTE PER L'UNICO SCOPO DI OTTENERE IL NOME DELLA PIETANZA DA MOSTRARE
     const onlyIds = dayMeals.map(meal => meal.id);
@@ -100,43 +103,30 @@ class AddReservationForm extends Component {
       onlyIds.indexOf(maindish),
       onlyIds.indexOf(seconddish),
       onlyIds.indexOf(sidedish),
+      onlyIds.indexOf(dessert),
     ];
-    console.log(mealsIndex);
     // -----------------------fine tale cosa----------------------------------------------
     const userSubmit = { id: user.value, name: user.label };
-    console.log(userSubmit);
 
-    console.log(maindish, seconddish, sidedish, typeof maindish);
-    // NOTE: user: Object con { name: "Nome Cognome", id: (id) }
+    const selectedList = mealsIndex.filter(id => id !== -1);
+    // elimina dalla lista gli utenti che hanno già una prenotazione
     const dato = !lunchbag ? {
       user: userSubmit,
-      meals: [
-        {
-          id: dayMeals[mealsIndex[0]].id, // primo
-          name: dayMeals[mealsIndex[0]].name,
-          type: dayMeals[mealsIndex[0]].type,
-        },
-        {
-          id: dayMeals[mealsIndex[1]].id, // secondo
-          name: dayMeals[mealsIndex[1]].name,
-          type: dayMeals[mealsIndex[1]].type,
-        },
-        {
-          id: dayMeals[mealsIndex[2]].id, // contorno
-          name: dayMeals[mealsIndex[2]].name,
-          type: dayMeals[mealsIndex[2]].type,
-        },
-      ],
+      meals: selectedList.map(id => ({
+        id: dayMeals[id].id,
+        name: dayMeals[id].name,
+        type: dayMeals[id].type,
+      })),
       date: day,
       moment,
-      hour: hour.trim(),
+      hour: `${h}:${m}`.trim(),
     } : {
       user: userSubmit,
       meals: [
         {
           id: 'panino_id',
           name: 'Panino al sacco',
-          type: 9,
+          type: 1,
         },
       ],
       date: day,
@@ -153,16 +143,18 @@ class AddReservationForm extends Component {
       hour, lunchbag, validationErrors,
     } = state;
     const {
-      error, closeAlert, dayMeals, users, onHide, moment,
+      error, closeAlert, dayMeals, users, onHide, moment, list,
     } = this.props;
     const typesArray = [
       { type: 1, inputname: 'maindish' },
       { type: 2, inputname: 'seconddish' },
       { type: 3, inputname: 'sidedish' },
+      { type: 4, inputname: 'dessert' },
     ];
     const unsernameInput = 'username';
+    const userResList = list.map(res => res.user.id);
 
-    /* eslint-disable jsx-a11y/label-has-for */
+
     return (
       <form onSubmit={this.handleSubmit}>
         <Modal.Body>
@@ -177,7 +169,7 @@ class AddReservationForm extends Component {
               </abbr>
             </label>
             <Select
-              options={users}
+              options={users.filter(u => !userResList.includes(u.value))}
               noOptionsMessage={() => 'Nessun utente con questo nome'}
               inputId={unsernameInput}
               onChange={opt => this.handleSelectChange(opt)}
@@ -232,8 +224,25 @@ class AddReservationForm extends Component {
                   {meal.name}
                 </Radio>
               )) }
+              <Radio
+                key={`none${obj.type}`}
+                id={`none${obj.type}`}
+                value={`none${obj.type}`}
+                name={obj.inputname}
+                checked={state[obj.inputname] === `none${obj.type}`}
+                onChange={e => this.handleChange(e)}
+                disabled={!!lunchbag}
+                inline
+              >
+                Nessuno
+              </Radio>
             </FormGroup>
           ))}
+          {validationErrors.dishes && (
+          <HelpBlock bsClass="help-block-error">
+            {validationErrors.dishes}
+          </HelpBlock>
+          )}
 
           <FormGroup controlId="hour">
             <ControlLabel>
@@ -281,6 +290,7 @@ class AddReservationForm extends Component {
 }
 
 AddReservationForm.propTypes = {
+  list: PropTypes.array,
   error: PropTypes.string,
   closeAlert: PropTypes.func.isRequired,
   onHide: PropTypes.func.isRequired,
@@ -303,6 +313,7 @@ AddReservationForm.propTypes = {
 };
 
 AddReservationForm.defaultProps = {
+  list: [],
   error: '',
   dayMeals: [],
   users: [],
@@ -315,6 +326,7 @@ const mapStateToProps = state => ({
   moment: state.reservations.ui.moment,
   view: state.reservations.ui.view,
   dayMeals: state.reservations.data.daymeals,
+  list: state.reservations.data.list,
   users: state.reservations.data.users.map(({ id, name }) => ({ value: id, label: name })),
 });
 
