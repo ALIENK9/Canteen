@@ -13,6 +13,7 @@ import {
 } from '../../redux/actions/reservations/reservations.actions';
 import validateReservation from '../../validation/addReservation.validator';
 import Loader from '../../components/Loader';
+import SmallSpinner from '../../components/SmallSpinner';
 
 class AddReservationForm extends Component {
   constructor(props) {
@@ -144,7 +145,7 @@ class AddReservationForm extends Component {
       hour, lunchbag, validationErrors,
     } = state;
     const {
-      error, closeAlert, dayMeals, users, onHide, moment, list, loading,
+      error, closeAlert, dayMeals, users, onHide, moment, list, getLoading, postLoading,
     } = this.props;
     const typesArray = [
       { type: 1, inputname: 'maindish' },
@@ -160,7 +161,7 @@ class AddReservationForm extends Component {
       <form onSubmit={this.handleSubmit}>
         <Modal.Body>
           { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
-          <Loader loading={loading} />
+          <Loader loading={getLoading} />
           <FormGroup>
             <label htmlFor={unsernameInput}>
               Nome utente
@@ -275,9 +276,12 @@ class AddReservationForm extends Component {
         </Modal.Body>
         <Modal.Footer>
           { Array.isArray(dayMeals) && dayMeals.length ? (
-            <Button bsStyle="success" type="submit" className="pull-left">
-            Aggiungi
-            </Button>
+            <React.Fragment>
+              <Button bsStyle="success" type="submit" className="pull-left">
+              Aggiungi
+              </Button>
+              <SmallSpinner className="pull-left" loading={postLoading} />
+            </React.Fragment>
           ) : (
             <p className="help-block-error pull-left">
               Nessun piatto nel men&ugrave; di oggi
@@ -313,7 +317,8 @@ AddReservationForm.propTypes = {
   match: PropTypes.object.isRequired,
   moment: PropTypes.oneOf(['lunch', 'dinner']),
   view: PropTypes.oneOf(['meals', 'users']),
-  loading: PropTypes.bool,
+  getLoading: PropTypes.bool,
+  postLoading: PropTypes.bool,
 };
 
 AddReservationForm.defaultProps = {
@@ -323,12 +328,14 @@ AddReservationForm.defaultProps = {
   users: [],
   moment: 'lunch',
   view: 'users',
-  loading: true,
+  getLoading: true,
+  postLoading: false,
 };
 
 const mapStateToProps = state => ({
   error: state.reservations.messages.addFormError,
-  loading: state.reservations.ui.addLoading,
+  getLoading: state.reservations.ui.formDataLoading,
+  postLoading: state.reservations.ui.addLoading,
   moment: state.reservations.ui.moment,
   view: state.reservations.ui.view,
   dayMeals: state.reservations.data.daymeals,

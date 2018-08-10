@@ -126,7 +126,7 @@ class DishForm extends Component {
           </FormGroup>
         </Modal.Body>
         <Modal.Footer>
-          <SmallSpinner loading={addLoading} />
+          <SmallSpinner className="pull-right" loading={addLoading} />
           <Button bsStyle="success" type="submit" disabled={addLoading}>
             Aggiungi
           </Button>

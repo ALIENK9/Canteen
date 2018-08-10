@@ -1,13 +1,14 @@
 import * as actionTypes from '../../actions/reservations/reservations.actionTypes';
 
 const init = {
-  loading: false,
+  loading: false, // fetch/delete pagina principale
   view: 'meals',
   moment: 'lunch',
   addModalShow: false,
   filter: 'ALL',
   searchtext: '',
-  addLoading: false,
+  formDataLoading: false, // mentre fa GET dei dati del form
+  addLoading: false, // mentre aspetta la risposta per la POST
 };
 
 
@@ -29,10 +30,25 @@ const ui = (state = init, action = {}) => {
         addModalShow: true,
       };
     case actionTypes.ADD_RESERVATION_SUCCESS:
+      return {
+        ...state,
+        addLoading: true,
+        addModalShow: false,
+      };
     case actionTypes.ADD_MODAL_HIDE:
       return {
         ...state,
         addModalShow: false,
+      };
+    case actionTypes.ADD_RESERVATION_STARTED:
+      return {
+        ...state,
+        addLoading: true,
+      };
+    case actionTypes.SHOW_RESERVATION_ERROR_FORM:
+      return {
+        ...state,
+        addLoading: false,
       };
     case actionTypes.FETCH_RESERVATIONS_STARTED:
       return {
@@ -50,7 +66,7 @@ const ui = (state = init, action = {}) => {
     case actionTypes.LOAD_FORM_DATA_STARTED:
       return {
         ...state,
-        addLoading: true,
+        formDataLoading: true,
       };
     case actionTypes.LOAD_USERS_FAILURE:
     case actionTypes.LOAD_USERS_SUCCESS:
@@ -58,7 +74,7 @@ const ui = (state = init, action = {}) => {
     case actionTypes.LOAD_DAYMEALS_SUCCESS:
       return {
         ...state,
-        addLoading: false,
+        formDataLoading: false,
       };
     case actionTypes.FILTER_MEALS:
       return {

@@ -28,6 +28,10 @@
   background-color: rgba(214, 205, 205, 0.3);
 }
 
+.small-spinner-wrapper {
+  margin-top: 1%;
+}
+
 .small-spinner {
   display: inline-block;
   font-size: 1.7em;

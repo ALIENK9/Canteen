@@ -23,6 +23,10 @@ export const removeReservationSuccess = id => ({
   payload: { id },
 });
 
+export const addReservationStarted = () => ({
+  type: actionTypes.ADD_RESERVATION_STARTED,
+});
+
 export const addReservationSuccess = json => ({
   type: actionTypes.ADD_RESERVATION_SUCCESS,
   payload: { json },
