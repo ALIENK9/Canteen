@@ -42,6 +42,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     options: (Array.isArray(ownProps.list)) ? ownProps.list.map(
       dish => ({ label: dish.name, value: dish.id }),
     ) : [],
+    placeholder: 'Pasta, carne, ...',
   },
   add: {
     presence: true,

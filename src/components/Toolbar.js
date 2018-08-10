@@ -16,7 +16,7 @@ const Toolbar = ({
 }) => (
   <Panel>
     <Panel.Body>
-      <ButtonToolbar className="NObutton-toolbar">
+      <ButtonToolbar className="button-toolbar">
         <ToggleButtonGroup role="group" type="radio" name="options" defaultValue={defaultButtonKey}>
           {buttons.map(button => (
             <ToggleButton onClick={button.func} value={button.key} key={button.key}>
@@ -42,14 +42,14 @@ const Toolbar = ({
             {console.log('opzioni IN TOOLBAR', search.options)}
             <Select
               arrowRenderer={SearchArrow}
-              aria-label="Ricerca di utenti"
+              aria-label="Ricerca elementi"
               className="searchbar"
               noOptionsMessage={() => 'Nessun risultato'}
               options={search.options}
               onChange={search.func}
               inputId="searchinput"
               isClearable
-              placeholder="Nome Cognome"
+              placeholder={search.placeholder}
             />
           </React.Fragment>
         )}
@@ -68,14 +68,15 @@ Toolbar.propTypes = {
   search: PropTypes.shape({
     presence: PropTypes.bool.isRequired,
     func: PropTypes.func,
-  }).isRequired,
-  add: PropTypes.shape({
-    presence: PropTypes.bool.isRequired,
-    func: PropTypes.func,
+    placeholder: PropTypes.string,
     options: PropTypes.arrayOf(PropTypes.shape({
       value: PropTypes.any,
       label: PropTypes.string,
     })),
+  }).isRequired,
+  add: PropTypes.shape({
+    presence: PropTypes.bool.isRequired,
+    func: PropTypes.func,
   }).isRequired,
 };
 

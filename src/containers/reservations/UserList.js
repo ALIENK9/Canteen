@@ -46,7 +46,7 @@ class UserList extends Component {
           Nessuna prenotazione inserita
         </span>
         )}
-        {(list && list.length) && (
+        {(list && list.length > 0) && (
         <List>
           {console.log('MEALS IN USERLIST', list)}
           { list.map(reserv => (

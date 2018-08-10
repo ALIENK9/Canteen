@@ -50,6 +50,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       presence: ownProps.view === 'users' && Array.isArray(ownProps.list),
       func: id => dispatch(searchUser(id || { value: '' })),
       options: (ownProps.view === 'users' && Array.isArray(ownProps.list)) ? a : [],
+      placeholder: 'Nome Cognome',
     },
     add: {
     // REVIEW: trick un po' sporco per avere acesso alla prop 'view' e nascondere la barra

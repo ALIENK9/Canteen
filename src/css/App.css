@@ -103,10 +103,6 @@ button, html [type=button] {
   margin: 0 !important;
 }
 
-.button-toolbar {
-  margin: 0 30%;
-}
-
 /* così lo spinner è al centro del Jumbotron */
 main {
   height: 80%;
@@ -119,6 +115,10 @@ main {
 
 .gliph-text {
   margin: auto 0.5em auto auto;
+}
+
+.height90 {
+  height: 100%;
 }
 
 /* .invisible {
@@ -137,7 +137,7 @@ main {
   background-position: bottom;
   background-size: contain;
   background-repeat: no-repeat;
-  height: 50%;
+  height: 60%;
   min-height: 50px;
 }
 
@@ -150,9 +150,18 @@ main {
   display: inline-block;
 }
 
+.button-toolbar {
+  display: flex;
+  flex-direction: row; /* dispone gli items in riga */
+  flex-wrap: wrap; /* se non ci stanno in una riga va a capo */
+  align-items: center;
+  justify-content: space-between; /* allinea orizzontalmente gli items di una riga */
+}
+
 .searchbar {
-  display: block;
-  margin-left: 70%;
+  margin-left: 5px;
+  width: 30%;
+  min-width: 200px;
 }
 
 label {
@@ -161,7 +170,7 @@ label {
 
 @media (max-width: 900px) {
   .searchbar {
-    margin-left: 6em;
+    margin-left: 0;
   }
 }
 

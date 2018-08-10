@@ -8,10 +8,18 @@ const mapStateToProps = (state) => {
   let welcomeBottom = null;
   if (!auth.isAuthenticated) {
     welcomeText = 'Benvenuto nel servizio mensa. Accedi per continuare';
-    welcomeBottom = <span className="welcome-page-blank" />;
+    welcomeBottom = (<span className="welcome-page-blank" />);
   } else if (auth.user.admin) {
     welcomeText = 'Benvenuto nel pannello di admin';
-    welcomeBottom = <span className="welcome-image" />;
+    welcomeBottom = (
+      <div className="row height90">
+        <p>
+          Da qui &egrave; possibile gestire i piatti, i men&ugrave; per ogni
+          giornata e le prenotazioni
+        </p>
+        <span className="welcome-image" />
+      </div>
+    );
   } else {
     welcomeText = 'Benvenuto nel serivio di prenotazione pasti';
   }

@@ -159,7 +159,7 @@ export const getDayMenu = (date, moment) => async (dispatch) => {
   const params = { date };
   const menu = await Http.get(URL, headers, params, dispatch, loadFormDataStarted, null,
     loadDayMealsFailure);
-  const correctData = menu && menu.data && menu.data[moment] || [];
+  const correctData = (menu && menu.data && menu.data[moment]) || [];
   return dispatch(loadDayMealsSuccess(correctData));
 };
 

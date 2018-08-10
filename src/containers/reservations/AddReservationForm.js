@@ -12,6 +12,7 @@ import {
   getDayMenu, postReservation, hideErrorForm, getUserList, addModalHide,
 } from '../../redux/actions/reservations/reservations.actions';
 import validateReservation from '../../validation/addReservation.validator';
+import Loader from '../../components/Loader';
 
 class AddReservationForm extends Component {
   constructor(props) {
@@ -143,7 +144,7 @@ class AddReservationForm extends Component {
       hour, lunchbag, validationErrors,
     } = state;
     const {
-      error, closeAlert, dayMeals, users, onHide, moment, list,
+      error, closeAlert, dayMeals, users, onHide, moment, list, loading,
     } = this.props;
     const typesArray = [
       { type: 1, inputname: 'maindish' },
@@ -159,7 +160,7 @@ class AddReservationForm extends Component {
       <form onSubmit={this.handleSubmit}>
         <Modal.Body>
           { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
-
+          <Loader loading={loading} />
           <FormGroup>
             <label htmlFor={unsernameInput}>
               Nome utente
@@ -202,47 +203,49 @@ class AddReservationForm extends Component {
             </Checkbox>
           </FormGroup>
 
-          {typesArray.map(obj => (
-            <FormGroup key={obj.type}>
-              <p>
+          <FormGroup>
+            {typesArray.map(obj => (
+              <FormGroup key={obj.type}>
+                <p>
                 Scegli il
-                {' '}
-                {mapTypeToString(obj.type).toLowerCase()}
-              </p>
-              { dayMeals.filter(meal => meal.type === obj.type).map(meal => (
+                  {' '}
+                  {mapTypeToString(obj.type).toLowerCase()}
+                </p>
+                { dayMeals.filter(meal => meal.type === obj.type).map(meal => (
+                  <Radio
+                    key={meal.id}
+                    id={meal.id}
+                    name={obj.inputname}
+                    checked={state[obj.inputname] === meal.id.toString()}
+                    value={meal.id}
+                    onChange={e => this.handleChange(e)}
+                    disabled={!!lunchbag}
+                    inline
+                  >
+                    {console.log('Prentazione', state, state[obj.inputname], meal)}
+                    {meal.name}
+                  </Radio>
+                )) }
                 <Radio
-                  key={meal.id}
-                  id={meal.id}
+                  key={`none${obj.type}`}
+                  id={`none${obj.type}`}
+                  value={`none${obj.type}`}
                   name={obj.inputname}
-                  checked={state[obj.inputname] === meal.id.toString()}
-                  value={meal.id}
+                  checked={state[obj.inputname] === `none${obj.type}`}
                   onChange={e => this.handleChange(e)}
                   disabled={!!lunchbag}
                   inline
                 >
-                  {console.log('Prentazione', state, state[obj.inputname], meal)}
-                  {meal.name}
-                </Radio>
-              )) }
-              <Radio
-                key={`none${obj.type}`}
-                id={`none${obj.type}`}
-                value={`none${obj.type}`}
-                name={obj.inputname}
-                checked={state[obj.inputname] === `none${obj.type}`}
-                onChange={e => this.handleChange(e)}
-                disabled={!!lunchbag}
-                inline
-              >
                 Nessuno
-              </Radio>
-            </FormGroup>
-          ))}
-          {validationErrors.dishes && (
-          <HelpBlock bsClass="help-block-error">
-            {validationErrors.dishes}
-          </HelpBlock>
-          )}
+                </Radio>
+              </FormGroup>
+            ))}
+            {validationErrors.dishes && (
+            <HelpBlock bsClass="help-block-error">
+              {validationErrors.dishes}
+            </HelpBlock>
+            )}
+          </FormGroup>
 
           <FormGroup controlId="hour">
             <ControlLabel>
@@ -310,6 +313,7 @@ AddReservationForm.propTypes = {
   match: PropTypes.object.isRequired,
   moment: PropTypes.oneOf(['lunch', 'dinner']),
   view: PropTypes.oneOf(['meals', 'users']),
+  loading: PropTypes.bool,
 };
 
 AddReservationForm.defaultProps = {
@@ -319,10 +323,12 @@ AddReservationForm.defaultProps = {
   users: [],
   moment: 'lunch',
   view: 'users',
+  loading: true,
 };
 
 const mapStateToProps = state => ({
   error: state.reservations.messages.addFormError,
+  loading: state.reservations.ui.addLoading,
   moment: state.reservations.ui.moment,
   view: state.reservations.ui.view,
   dayMeals: state.reservations.data.daymeals,

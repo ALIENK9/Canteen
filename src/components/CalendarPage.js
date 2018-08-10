@@ -118,7 +118,7 @@ class CalendarPage extends React.Component {
           <Panel.Footer className="center">
             <Button bsStyle="primary" onClick={this.downloadReport} disabled={loading}>
               <span className="gliph-text">
-                Scarica report
+                Scarica report delle prenotazioni del
                 {' '}
                 {Number.parseInt(currentMonth, 10) + 1}
                 /

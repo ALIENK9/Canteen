@@ -7,6 +7,7 @@ const init = {
   addModalShow: false,
   filter: 'ALL',
   searchtext: '',
+  addLoading: false,
 };
 
 
@@ -45,6 +46,19 @@ const ui = (state = init, action = {}) => {
       return {
         ...state,
         loading: false,
+      };
+    case actionTypes.LOAD_FORM_DATA_STARTED:
+      return {
+        ...state,
+        addLoading: true,
+      };
+    case actionTypes.LOAD_USERS_FAILURE:
+    case actionTypes.LOAD_USERS_SUCCESS:
+    case actionTypes.LOAD_DAYMEALS_FAILURE:
+    case actionTypes.LOAD_DAYMEALS_SUCCESS:
+      return {
+        ...state,
+        addLoading: false,
       };
     case actionTypes.FILTER_MEALS:
       return {

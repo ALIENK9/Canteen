@@ -8,7 +8,7 @@ import DishItem from '../../components/dishes/DishItem';
 import {
   getDishes, deleteDish,
 } from '../../redux/actions/dishes/dishes.actions';
-import { /* getVis..., */ mapTypeToString } from '../utils';
+import { mapTypeToString } from '../utils';
 import getSearchedVisibleDishes from '../selectors/dishfilter.selector';
 
 class DishesList extends Component {
@@ -29,7 +29,7 @@ class DishesList extends Component {
           Nessun piatto inserito
         </span>
         )}
-        {(dishes && dishes.length && !loading) && (
+        {(dishes && dishes.length > 0 && !loading) && (
           <List>
             {dishes.map(dish => (
               <TextBox
@@ -41,7 +41,6 @@ class DishesList extends Component {
               >
                 {console.log('sdjkdsds', dish.id)}
                 <DishItem
-                // id={dish.id}
                   name={dish.name}
                   type={mapTypeToString(dish.type)}
                   description={dish.description}
