@@ -5,4 +5,5 @@ export const FILTER_KEYS = {
   MAIN: 'MAIN', // primi piatti
   SECOND: 'SECOND', // secondi piatti
   SIDE: 'SIDE', // contorni
+  DESSERT: 'DESSERT', // dessert
 };

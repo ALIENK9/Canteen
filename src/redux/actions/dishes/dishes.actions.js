@@ -55,6 +55,11 @@ export const filterMeals = filter => ({
   payload: { filter },
 });
 
+export const searchDish = text => ({
+  type: actionTypes.SEARCH_DISH,
+  payload: { text },
+});
+
 // DISH ADD FORM ACTIONS
 
 export const showAddForm = () => ({

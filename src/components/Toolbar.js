@@ -27,7 +27,7 @@ const Toolbar = ({
 
         {add.presence && (
           <ButtonGroup role="group">
-            <Button onClick={add.func} className="" bsStyle="primary">
+            <Button onClick={add.func} title="Aggiungi un elemento" className="" bsStyle="primary">
               <Glyphicon glyph="glyphicon glyphicon-plus" />
             </Button>
           </ButtonGroup>
@@ -39,7 +39,7 @@ const Toolbar = ({
             <label htmlFor="searchinput" className="hidden" aria-hidden="false">
               Ricerca
             </label>
-            {console.log('opzioni', search.options)}
+            {console.log('opzioni IN TOOLBAR', search.options)}
             <Select
               arrowRenderer={SearchArrow}
               aria-label="Ricerca di utenti"

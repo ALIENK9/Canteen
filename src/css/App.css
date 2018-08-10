@@ -5,8 +5,11 @@
   padding: 0;
 }
 
-html, body {
+html, body, #root, #app, .container{
   height: 100%;
+}
+
+html, body {
   word-break: break-all;
   text-align: justify;
 }
@@ -91,9 +94,6 @@ button, html [type=button] {
   color: blueviolet;
 }
 
-#root, #app {
-  min-height: 100%;
-}
 
 .panel-footer {
   overflow: hidden;
@@ -109,7 +109,7 @@ button, html [type=button] {
 
 /* così lo spinner è al centro del Jumbotron */
 main {
-  min-height: 100%;
+  height: 80%;
   position: relative;
 }
 
@@ -132,12 +132,13 @@ main {
 
 .welcome-image {
   display: block;
-  margin: 30px 100px;
+  margin: 2em 6em;
   background-image: url('./img/welcome.png');
   background-position: bottom;
   background-size: contain;
   background-repeat: no-repeat;
-  height: 400px;
+  height: 50%;
+  min-height: 50px;
 }
 
 .tabsbar {
@@ -145,8 +146,8 @@ main {
 }
 
 .tab-inline-block {
-  display: inline-block;
   border: none;
+  display: inline-block;
 }
 
 .searchbar {
@@ -179,6 +180,10 @@ label {
 
   main, footer {
     max-height: unset;
+  }
+
+  footer {
+    position: relative;
   }
 }
 

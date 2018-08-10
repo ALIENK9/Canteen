@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 export const getSearchKey = state => state.ui.searchtext;
 export const getReservations = state => state.data.list;
 
-const getSearchedReservation = createSelector(
+const getSearchedContent = createSelector(
   [getSearchKey, getReservations],
   (id, reservations) => {
     if (!id) return reservations;
@@ -12,4 +12,4 @@ const getSearchedReservation = createSelector(
   },
 );
 
-export default getSearchedReservation;
+export default getSearchedContent;

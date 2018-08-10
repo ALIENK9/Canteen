@@ -5,6 +5,7 @@ const init = {
   addModalShow: false,
   addLoading: false,
   filter: 'ALL',
+  searchtext: '',
 };
 
 const ui = (state = init, action = {}) => {
@@ -61,6 +62,11 @@ const ui = (state = init, action = {}) => {
       return {
         ...state,
         filter: action.payload.filter,
+      };
+    case actionTypes.SEARCH_DISH:
+      return {
+        ...state,
+        searchtext: action.payload.text.value,
       };
     default:
       return state;

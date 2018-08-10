@@ -9,7 +9,7 @@ import {
   getDishes, deleteDish,
 } from '../../redux/actions/dishes/dishes.actions';
 import { /* getVis..., */ mapTypeToString } from '../utils';
-import getVisibleDishes from '../selectors/dishfilter.selector';
+import getSearchedVisibleDishes from '../selectors/dishfilter.selector';
 
 class DishesList extends Component {
   componentDidMount() {
@@ -79,8 +79,7 @@ DishesList.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  dishes: getVisibleDishes(state.dishes),
-  // getVisibleDishes(state.dishes.data.list, state.dishes.ui.filter),
+  dishes: getSearchedVisibleDishes(state.dishes),
   loading: state.dishes.ui.loading,
 });
 

@@ -11,10 +11,11 @@ import Alert from '../../components/Alert';
 import MyPanel from '../../components/Panel';
 import { clearMessages } from '../../redux/actions/dishes/dishes.actions';
 import Loader from '../../components/Loader';
+import { getDishes } from '../selectors/dishfilter.selector';
 
 
 const DishPage = ({
-  success, error, closeAlert, loading,
+  success, error, closeAlert, loading, dishes,
 }) => (
   <MyPanel title="Piatti disponibili">
     <Panel>
@@ -24,7 +25,7 @@ const DishPage = ({
           Qui sono listati tutti i piatti disponibili nel sistema. &Egrave; possibile
           aggiungerli e toglierli.
         </p>
-        <DishToolbar />
+        <DishToolbar list={dishes} />
         <AddModal />
         <Loader loading={loading} />
         { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
@@ -36,6 +37,7 @@ const DishPage = ({
 );
 
 DishPage.propTypes = {
+  dishes: PropTypes.array,
   loading: PropTypes.bool,
   error: PropTypes.string,
   success: PropTypes.string,
@@ -43,12 +45,14 @@ DishPage.propTypes = {
 };
 
 DishPage.defaultProps = {
+  dishes: [],
   loading: true,
   error: '',
   success: '',
 };
 
 const mapStateToProps = state => ({
+  dishes: getDishes(state.dishes),
   loading: state.dishes.ui.loading,
   success: state.dishes.messages.success,
   error: state.dishes.messages.error,

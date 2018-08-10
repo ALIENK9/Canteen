@@ -31,6 +31,11 @@ const mapDispatchToProps = dispatch => ({
       key: FILTER_KEYS.SIDE,
       func: () => dispatch(filterMeals(FILTER_KEYS.SIDE)),
     },
+    {
+      title: 'Dessert',
+      key: FILTER_KEYS.DESSERT,
+      func: () => dispatch(filterMeals(FILTER_KEYS.DESSERT)),
+    },
   ],
   search: {
     presence: false,
