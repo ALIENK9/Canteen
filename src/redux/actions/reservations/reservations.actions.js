@@ -118,23 +118,10 @@ export const showErrorForm = error => ({
 
 // ASYNC ACTION
 
-/* export const changeTab = (view, moment) => (dispatch) => {
-  let URL = 'http://localhost:4000/';
-  if (view === 'users') URL = URL.concat(moment === 'lunch' ? 'userLunch' : 'userDinner');
-  else if (view === 'meals') URL = URL.concat(moment === 'lunch' ? 'mealsLunch' : 'mealsDinner');
-  else URL = null;
-  console.log(URL, moment, view);
-  return Http.get(URL, dispatch, null, changeSelectedView, requestFailure);
-}; */
-
 export const getReservations = (mode, date, moment) => (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
   const URL = `${baseURLs.reservations}/${mode}`;
   const params = { date, moment };
-  // const URL = 'http://localhost:4000/';
-  // if (mode === 'users') URL = URL.concat(moment === 'lunch' ? 'userLunch' : 'userDinner');
-  // else if (mode === 'meals') URL = URL.concat(moment === 'lunch' ? 'mealsLunch' : 'mealsDinner');
-  // else URL = null;
   console.log('ISJIJISJDISJDISJDISJDIS', URL, moment, mode);
   return Http
     .get(URL, headers, params, dispatch, fetchReservationsStarted, fetchReservationsSuccess,
@@ -161,16 +148,21 @@ export const getDayMenu = (date, moment) => async (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
   const URL = baseURLs.menus;
   const params = { date };
-  const menu = await Http.get(URL, headers, params, dispatch, loadFormDataStarted, null,
-    loadDayMealsFailure);
-  const correctData = (menu && menu.data && menu.data[moment]) || [];
-  return dispatch(loadDayMealsSuccess(correctData));
+  // TODO: fix this NOTE: HACK: FIXME:
+  try {
+    const menu = await Http.get(URL, headers, params, dispatch, loadFormDataStarted);
+    if (menu.failure) return dispatch(loadDayMealsFailure(menu.error));
+    const correctData = (menu && menu.data && menu.data[moment]) || [];
+    return dispatch(loadDayMealsSuccess(correctData));
+  } catch (err) {
+    return dispatch(loadDayMealsFailure(err));
+  }
 };
 
 export const postReservation = data => (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
   const baseURL = baseURLs.reservations;
   // const URL = baseURL.concat(moment === 'lunch' ? 'userLunch/' : 'userDinner/');
-  return Http.post(baseURL, headers, dispatch, JSON.stringify(data), null, addReservationSuccess,
-    showErrorForm);
+  return Http.post(baseURL, headers, dispatch, JSON.stringify(data), addReservationStarted,
+    addReservationSuccess, showErrorForm);
 };

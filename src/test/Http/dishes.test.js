@@ -69,7 +69,7 @@ describe('Dishes async actions tests', () => {
     expect(expectedActions[0]).toEqual({ type: actions.FETCH_DISHES_STARTED });
     expect(expectedActions[1]).toEqual({
       type: actions.DISH_REQUEST_FAILURE,
-      payload: { error: 'La richiesta GET al server è fallita' },
+      payload: { error: 'Impossibile completare la richiesta. Riprova o attendi qualche minuto' },
     });
   });
 

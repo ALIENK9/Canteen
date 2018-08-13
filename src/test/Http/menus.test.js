@@ -7,7 +7,7 @@ import { getAllData, putMenus, deleteMenu } from '../../redux/actions/menus/menu
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('', () => {
+describe('Test menus async actions', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });

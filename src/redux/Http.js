@@ -41,7 +41,7 @@ const fetchGet = async (URL, headers, dispatch, onStart, onSuccess, onFail) => {
       data = json;
     } else {
       const errorMessage = isEmpty(json)
-        ? 'La richiesta GET al server è fallita'
+        ? 'Impossibile completare la richiesta. Riprova o attendi qualche minuto'
         : json.message;
       if (!onFail || typeof onFail !== 'function') {
         return {
@@ -105,7 +105,7 @@ const fetchPut = (URL, headers, dispatch, data, onStart, onSuccess, onFail) => {
         dispatch(onSuccess());
       } else {
         const errorMessage = isEmpty(json)
-          ? `Problema con la richiesta PUT: ${response.status} ${response.statusText}`
+          ? 'Impossibile completare la richiesta. Riprova o attendi qualche minuto'
           : json.message;
         dispatch(onFail(errorMessage));
       }
@@ -131,7 +131,7 @@ const fetchDelete = (URL, headers, dispatch, onStart, onSuccess, onFail) => {
       } else {
         console.log('error deleting');
         const errorMessage = isEmpty(json)
-          ? `Problema con la richiesta di cancellazione. Il server ha risposto con ${response.status} ${response.statusText}`
+          ? 'Impossibile effettuare la richiesta di cancellazione'
           : json.message;
         dispatch(onFail(errorMessage));
       }

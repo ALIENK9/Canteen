@@ -85,7 +85,7 @@ describe('authenticatione async actions', () => {
     expect(expectedActions[1]).toEqual({
       type: actions.LOGIN_FAILURE,
       payload: {
-        error: 'La richiesta GET al server è fallita',
+        error: 'Impossibile completare la richiesta. Riprova o attendi qualche minuto',
       },
     });
   });

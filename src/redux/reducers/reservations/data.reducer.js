@@ -41,7 +41,7 @@ const data = (state = init, action = {}) => {
     case actionTypes.LOAD_DAYMEALS_SUCCESS:
       return {
         ...state,
-        daymeals: action.payload.json,
+        daymeals: action.payload.json || [],
       };
     case actionTypes.LOAD_DAYMEALS_FAILURE:
       return {
@@ -51,7 +51,7 @@ const data = (state = init, action = {}) => {
     case actionTypes.LOAD_USERS_SUCCESS:
       return {
         ...state,
-        users: action.payload.json,
+        users: action.payload.json || [],
       };
     case actionTypes.LOAD_USERS_FAILURE:
       return {
