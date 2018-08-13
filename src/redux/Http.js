@@ -6,6 +6,7 @@ const noType = () => ({
   type: NOTYPE,
 });
 
+
 const genericError = (error) => {
   console.log('THERE WAS ERROR HERE', error);
   return (error && error.message === 'timeout'
@@ -92,7 +93,6 @@ const fetchGet = async (URL, headers, dispatch, onStart, onSuccess, onFail) => {
 const fetchPut = (URL, headers, dispatch, data, onStart, onSuccess, onFail) => {
   console.log('PUT data: ', data);
   dispatch(onStart());
-  // const headers = getFetchHeaders();
   const config = {
     method: 'PUT',
     headers,
@@ -169,11 +169,9 @@ const fetchPost = (URL, headers, dispatch, data, onStart, onSuccess, onFail) => 
     .catch(err => dispatch(onFail(genericError(err))));
 };
 
+/* Default header put on every request */
 const defaultHeaders = {
   'Content-Type': 'application/json',
-  // 'Access-Control-Allow-Origin': '*',
-  // 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-  // 'Cache-Control': 'no-cache',
 };
 
 export default class Http {
@@ -216,7 +214,7 @@ export default class Http {
   static put(stringURL, headersMap = new Map(), dispatch, data, onStart, onSuccess, onFail) {
     const headers = { ...defaultHeaders };
     headersMap.forEach((v, k) => { headers[k] = v; });
-    console.debug('Header put', defaultHeaders, headersMap);
+    // console.debug('Header put', defaultHeaders, headersMap);
     const startFunction = onStart || noType;
     return fetchPut(stringURL, headers, dispatch, data, startFunction, onSuccess, onFail);
   }
@@ -269,28 +267,27 @@ export default class Http {
   }
 }
 
-// COSE OLD
+// VERSIONE UNA FETCH
+/*
+const GET = 'GET';
+const POST = 'POST';
+const PUT = 'PUT';
+const DELETE = 'DELETE';
 
-/**
- * Return header with authorization token obtained from sessionStorage
- */
-/* function getFetchHeaders() {
-  const root = JSON.parse(sessionStorage.getItem('persist:root'))
-  || { authentication: { user: { token: null } } };
-  console.log('root', root, typeof root);
-  const { authentication } = root;
-  const { user } = JSON.parse(authentication);
-  console.log('user', user);
-  const { token } = user;
-  const headers = token ? {
-    'Content-Type': 'application/json',
-    // 'Cache-Control': 'no-cache',
-    Authorization: `Bearer ${token}`,
-  } : {
-    Authorization: `Basic ${btoa('sam:asd')}`,
-    // 'Access-Control-Allow-Headers': 'Accept',
-    'Content-Type': 'application/json',
-  };
-  console.log('header: ', headers);
-  return headers;
-} */
+/* const fetchMethod = async (method, URL, headers, body, onStart, onSuccess, onFailure) => {
+  onStart();
+  const errors = {};
+  try {
+    const config = body ? { method, headers, body } : { method, headers };
+    const response = await withTimeout(5000, fetch(URL, config));
+  } catch (err) {
+    errors = {
+      error: genericError(err),
+      failure: true,
+    };
+  }
+  if (typeof onSuccess === 'function' && typeof onFailure === 'function') {
+
+  }
+};
+*/

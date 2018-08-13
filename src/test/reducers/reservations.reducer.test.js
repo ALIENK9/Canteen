@@ -24,6 +24,8 @@ const initState = {
     addModalShow: false,
     filter: 'ALL',
     searchtext: '',
+    addLoading: false,
+    formDataLoading: false,
   },
 };
 
@@ -88,6 +90,7 @@ const astate = {
     view: 'users',
     moment: 'lunch',
     addModalShow: false,
+    addLoading: false,
     filter: 'ALL',
     searchtext: '',
   },

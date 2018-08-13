@@ -1,4 +1,4 @@
-import * as actionTypes from './dishes.actionsTypes';
+import * as actionTypes from './dishes.actionTypes';
 import Http from '../../Http';
 import { getAuthFieldsFromStorage } from '../../utils';
 import baseURLs from '../baseURLs';

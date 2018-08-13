@@ -2,15 +2,6 @@ import * as actionTypes from '../../actions/menus/menus.actionTypes';
 import { immutableUpdate } from '../../utils';
 
 const init = {
-  /* meals: {
-    dinner: [],
-    lunch: [],
-  },
-  dishes: [],
-  selected: {
-    dinner: [],
-    lunch: [],
-  }, */
   entries: {
     id: '',
     lunch: [],

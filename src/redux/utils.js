@@ -15,6 +15,7 @@ export function immutableAdd(array, value) {
 }
 
 export function immutableInsert(array, index, value) {
+  if (index === -1) return array;
   return [
     ...array.slice(0, index),
     value,
@@ -23,6 +24,7 @@ export function immutableInsert(array, index, value) {
 }
 
 export function immutableRemove(array, index) {
+  if (index === -1) return array;
   const arr = [
     ...array.slice(0, index),
     ...array.slice(index + 1),
@@ -38,6 +40,7 @@ export function immutableRemove(array, index) {
  * @param {Object} value Un oggetto con le sole proprietà da aggiornare
  */
 export function immutableUpdate(array, index, value) {
+  if (index === -1) return array;
   const a = array.map((item, idx) => {
     if (index !== idx) return item;
     return {
@@ -45,7 +48,6 @@ export function immutableUpdate(array, index, value) {
       ...value,
     };
   });
-  console.debug(a);
   return a;
 }
 

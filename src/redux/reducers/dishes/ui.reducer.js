@@ -1,4 +1,4 @@
-import * as actionTypes from '../../actions/dishes/dishes.actionsTypes';
+import * as actionTypes from '../../actions/dishes/dishes.actionTypes';
 
 const init = {
   loading: false,

@@ -32,7 +32,7 @@ const ui = (state = init, action = {}) => {
     case actionTypes.ADD_RESERVATION_SUCCESS:
       return {
         ...state,
-        addLoading: true,
+        addLoading: false,
         addModalShow: false,
       };
     case actionTypes.ADD_MODAL_HIDE:

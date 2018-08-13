@@ -1,4 +1,4 @@
-import * as actionTypes from '../../actions/dishes/dishes.actionsTypes';
+import * as actionTypes from '../../actions/dishes/dishes.actionTypes';
 import { immutableAdd, immutableRemove } from '../../utils';
 
 

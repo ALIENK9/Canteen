@@ -1,7 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import mockResponse from './mockResponse';
-import * as actions from '../../redux/actions/dishes/dishes.actionsTypes';
+import * as actions from '../../redux/actions/dishes/dishes.actionTypes';
 import { getDishes, postDish } from '../../redux/actions/dishes/dishes.actions';
 
 const middlewares = [thunk];
@@ -102,7 +102,6 @@ describe('Dishes async actions tests', () => {
     });
   });
 
-  // TODO: fare i reducer con spinner per post/delete
   it('should post new dish with success', async () => {
     const store = mockStore({});
     const json = {
@@ -193,6 +192,7 @@ describe('Dishes async actions tests', () => {
       },
     });
   });
+
 
   it('should fail timeout', async () => {
     const store = mockStore({});

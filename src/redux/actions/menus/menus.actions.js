@@ -30,6 +30,7 @@ export const fetchAllDataSuccess = (menu, dishes) => {
     lunch: (menu && menu.lunch && menu.lunch.map(el => el.id)) || [],
     dinner: (menu && menu.dinner && menu.dinner.map(el => el.id)) || [],
   };
+  // prende da dishes solo quelli non già presenti nel menù
   const dinnerDishes = dishesList.filter(dish => !ids.lunch.includes(dish.id));
   const lunchDishes = dishesList.filter(dish => !ids.dinner.includes(dish.id));
   const entries = {
