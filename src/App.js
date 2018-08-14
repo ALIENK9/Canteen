@@ -8,23 +8,16 @@ import {
 import { Jumbotron } from 'react-bootstrap';
 import './css/bootstrap/css/bootstrap.min.css';
 import './css/App.css';
+import './css/Loader.css';
 import DocumentTitle from 'react-document-title';
 import Navbar from './containers/Navbar';
 import Footer from './components/Footer';
 import Reservations from './components/homes/Reservations';
 import Menus from './components/homes/Menus';
-// import Login from './components/homes/Login';
-/* import {
-  ReservationsH,
-  MenuH,
-  DishesH,
-  LoginH,
-} from './components/Headers'; */
 import ResPage from './containers/reservations/ResPage';
 import MenuPage from './containers/menus/MenuPage';
 import LoginPage from './containers/login/LoginPage';
 import DishPage from './containers/dishes/DishPage';
-// import AdminPage from './containers/AdminPage';
 import { RequireRole } from './containers/Auth';
 import Welcome from './containers/Welcome';
 import ForbiddenPage from './components/ForbiddenPage';
@@ -37,10 +30,6 @@ class App extends Component {
         <BrowserRouter>
           <div id="app">
             <header className="App-header">
-              {/* <Route path="/reservations" component={ReservationsH} />
-              <Route path="/menus" component={MenuH} />
-              <Route path="/dishes" component={DishesH} />
-              <Route exact path="/" component={LoginH} /> */}
               <Navbar />
             </header>
             <Jumbotron componentClass="main" bsClass="jumbotron-main">

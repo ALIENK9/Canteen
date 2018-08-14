@@ -55,7 +55,7 @@ class LoginForm extends Component {
           validationState={errors.identifier ? 'error' : null}
         >
           <ControlLabel>
-            Indirizzo e-mail
+            Username
           </ControlLabel>
           <FormControl
             name="identifier"
@@ -87,10 +87,12 @@ class LoginForm extends Component {
             </HelpBlock>
           )}
         </FormGroup>
-        <Button className="login-submit" bsStyle="primary" type="submit" disabled={loading}>
-          Accedi
-        </Button>
-        <SmallSpinner loading={loading} />
+        <div className="login-submit-wrapper">
+          <Button className="login-submit pull-left" bsStyle="primary" type="submit" disabled={loading}>
+            Accedi
+          </Button>
+          <SmallSpinner loading={loading} className="pull-left" />
+        </div>
       </form>
     );
   }

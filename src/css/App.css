@@ -246,6 +246,14 @@ nav p.active {
   width: 100% !important;
 }
 
+.login-submit-wrapper {
+  overflow: hidden;
+}
+
+.login-submit-wrapper .small-spinner {
+  margin: 0.4em 0.5em;
+}
+
 .login-submit {
   margin: 0.5em auto;
 }

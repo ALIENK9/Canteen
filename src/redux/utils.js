@@ -57,20 +57,18 @@ export function immutableUpdate(array, index, value) {
  * @returns {Map} With auth header (bearer)
  */
 export function getAuthFieldsFromStorage() {
-  const data = sessionStorage.getItem('persist:auth');
-  if (!data) return new Map();
-  console.debug('RAW DATA', data, typeof data);
-  const rootObject = JSON.parse(data);
-  console.debug('PARSED DATA', rootObject, typeof rootObject);
-  const { authentication } = JSON.parse(data); // || '{"token":""}';
-  console.debug('AUTH SUBOBJECT', authentication, typeof authentication);
-  const { user } = JSON.parse(authentication);
-  console.debug('USER', user, typeof user);
-  const { token } = user;
-  console.debug('TOKEN', token, typeof token);
-  /* doppio parse necessario per implement di redux-persist v5+
+  /*
+    Doppio JSON.parse() necessario per implementazione di redux-persist v5+
     Info: https://github.com/rt2zz/redux-persist/issues/489
   */
+  const data = sessionStorage.getItem('persist:auth');
+  if (!data) return new Map();
+  // console.debug('RAW DATA', data, typeof data);
+  // console.debug('PARSED DATA', rootObject, typeof rootObject);
+  const { authentication } = JSON.parse(data); // || '{"token":""}';
+  // console.debug('AUTH SUBOBJECT', authentication, typeof authentication);
+  const { token } = JSON.parse(authentication);
+  // console.debug('TOKEN', token, typeof token);
   const headers = token ? new Map().set('Authorization', `Bearer ${token}`) : new Map();
   console.debug('FINAL HEADERS:', headers);
   return headers;

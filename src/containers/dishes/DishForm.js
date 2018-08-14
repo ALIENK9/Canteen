@@ -126,11 +126,11 @@ class DishForm extends Component {
           </FormGroup>
         </Modal.Body>
         <Modal.Footer>
-          <SmallSpinner className="pull-right" loading={addLoading} />
-          <Button bsStyle="success" type="submit" disabled={addLoading}>
+          <Button bsStyle="success" className="pull-left" type="submit" disabled={addLoading}>
             Aggiungi
           </Button>
-          <Button bsStyle="danger" onClick={onHide} className="pull-left">
+          <SmallSpinner className="pull-left" loading={addLoading} />
+          <Button bsStyle="danger" onClick={onHide}>
             Annulla
           </Button>
         </Modal.Footer>

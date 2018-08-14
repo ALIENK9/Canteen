@@ -278,7 +278,7 @@ class AddReservationForm extends Component {
           { Array.isArray(dayMeals) && dayMeals.length ? (
             <React.Fragment>
               <Button bsStyle="success" type="submit" className="pull-left">
-              Aggiungi
+                Aggiungi
               </Button>
               <SmallSpinner className="pull-left" loading={postLoading} />
             </React.Fragment>
