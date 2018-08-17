@@ -1,72 +1,209 @@
-# Un confronto fra React.Js e Angular
+# Un confronto fra React.js e Angular
 
 ## Introduzione
 
-Questo documento mira ad evidenziare le principali differenze fra il framework _Angular v6.1.1_ e la libreria JavaScript _React.Js v16.4.2_. Questi sono fra gli strumenti oggi maggiormente utilizzati per la creazione di interfaccie per applicazioni web. 
+Questo documento mira ad evidenziare le principali differenze fra il framework _Angular v6.1.1_ e la libreria JavaScript _React.js v16.4.2_. Questi sono fra gli strumenti oggi maggiormente utilizzati per la creazione di interfaccie per applicazioni web. 
 
-React.Js ha una storia più recente di Angular. La prima release è stata pubblicata a Marzo 2013, mentre la primissima versione di angular (Angular.Js o Angular 1.x) risale ad Ottobre 2010. Nel 2015 fu rilasciato Angular 2.0.0, una nuova versione di Angular.Js completamente riscritto in TypeScript e incompatibile con la precedente versione. 
+React.js ha una storia più recente di Angular. La prima release è stata pubblicata a Marzo 2013, mentre la primissima versione di angular (Angular v1.x, anche detto Angular.js) risale ad Ottobre 2010. Nel 2015 fu rilasciato Angular 2.0.0, una nuova versione di Angular.js completamente riscritto in TypeScript e incompatibile con la precedente versione. 
 
-Da quel momento in poi con _Angular_ si intende qualunque versione del framework dalla versione 2 in poi, mentre con _Angualr.Js_ si identifica la vecchia versione 1.x.
+Da quel momento in poi con _Angular_ si intende qualunque versione del framework dalla versione 2 in poi, mentre con _Angular.js_ si identifica la vecchia versione 1.x.
 
-Nel presente documento le parole _Angular_ e _React.Js_ si riferiscono alle versioni sopra indicate. Per brevità userò la parola _React_ come sinonimo di _React.Js_.
-
-#### Potenzialità diverse
-
-Essendo Angular un framework e React una semplice libreria essi hanno una grado di completezza ben differente. Per la precisione Angular è un framework MVC-MVVM e offre un insieme di strumenti da utilizzare assieme per far fronte ad ogni esigenza di uno sviluppatore. React è una libreria con poche funzionalità rispetto al primo. Di conseguenza per effettuare un confronto signifiativo assumerò l'utilizzo si React sia complementato da un certo numero di librerie che lo rendano paragonabile ad Angular.
-
-[Remind]:
-
-- Redux
-- Reselect
-- React-router
-- (Css modules)
-- (Redux-persist)
+Nel presente documento le parole _Angular_ e _React.js_ si riferiscono alle versioni indicate nelle prime righe del documento. Inoltre per brevità userò la parola _React_ come sinonimo di _React.js_.
 
 ## Architettura a componenti
 
-In Angular e React si basano sul concetto di `Component`, che rappresentano i tasselli con la quale è costruita una pagina web. Si tratta quindi di blocchi di codice HTML potenziati con funzioni JavaScript o TypeScript che implementano una certa funzionalità.
+Angular e React si basano sul concetto di `Component`, che rappresentano i tasselli con i quali è costruita una pagina web. Si tratta di blocchi di codice HTML potenziati con funzioni JavaScript o TypeScript che implementano una certa funzionalità.
 
 Vi sono due differenze concettuali su come React e Angular organizzano il lavoro.
 
-_Angular_ distingue i **servizi** dai **componenti**. La documentazione ufficiale dice che un servizio è un'insieme di funzionalità di cui un'applicazione necessita. Il componente dovrebbe solamente abilitare la presentazione dei contenuti e l'interazione con l'utente, ma dovrebbe delegare il 'come farlo' ad uno o più servizi.
+_Angular_ distingue i **servizi** dai **componenti**. La documentazione ufficiale
 
-In _React-redux_ solitamente si distinguono i _dumb components_ spesso chiamati solo **components** dagli _smart component_, solitamente chiamati (Redux) **containers**. Un container è un component connesso al Redux store (precisamente è un component 'decorato' con i dati dal redux store). Tale componente diventa 'smart' perchè è consapevole di quali dati sta visualizzando e di quali funzioni chiamare per effettuare il dispatch di azioni. I components invece gestiscono la visualizzazione dei dati, ma sono inconsapevoli della sorgente del dato e non effettuano su di esso alcun controllo. Possono essere _stateful_ o _stateless_ e solitamente sono le 'maschere' visibili all'utente.
+[^1]: Disponibile sul sito https://angular.io/
 
-Mentre in Angular ad un Component corrisponde sempre del codice HTML, in React non è così. Un component potrebbe funzionare da semplice wrapper,  per esempio effettuando dei controlli prima di mostrare altri componenti, e in generale decorandoli di funzionalità.
+dice che un servizio è un'insieme di funzionalità di cui un'applicazione necessita. Il componente dovrebbe solamente abilitare la presentazione dei contenuti e l'interazione con l'utente, ma dovrebbe delegare il 'come farlo' ad uno o più servizi.
 
+Quindi seguendo l'approccio a servizi di Angular, rappresentato nella figura sottostante, ogni componente che necessiti di dati esterni dovrà essere dotato di un servizio che in qualche modo glieli fornisca (sia tramite richieste remote oppure attingendo da una cache locale).
+
+![Interazione fra componenti e servizi in Angular](./img/angular-service-flow.png)
+
+
+
+La dichiarazione di un servizio è effettuata nel seguente modo, specificando nei _metadati_ di `@Injectable` il nome del componente nel quale sarà iniettato.
+
+```typescript
+@Injectable ({
+	providedIn: 'app-mycomponent',
+})
+export class Service {
+    constructor() {}
+    
+    fetchData() : DataType {
+    	return fetch(...).then(...).catch(...);
+	}
+}
 ```
-Esempio di SERVICE: no c'è già sotto (e anche container)   !!!!!!!!!!!!!!
+
+Al componente che lo utilizza basta inserire un parametro di tipo `Service` nel costruttore. Di come e quando istanziare il servizio se ne occupa il framework.
+
+```typescript
+@Component({
+  selector: 'app-mycomponent',	// nome del componente
+  templateUrl: './mycomponent.component.html',
+  styleUrls: [ './mycomponent.component.css' ]
+})
+export class MyComponent implements OnInit {
+
+  constructor(private service: Service) { }
+
+  ngOnInit() {
+    this.getData();
+  }
+
+  getData() : void {
+    this.service.fetchData();
+  }
+}
 ```
+
+In *React.js* non esiste tale distinzione: tutto è un **componente**. La creazione di classi per separare elementi presentazionali da moduli di recupero di dati è totalmente a discrezione del programmatore. Questa è una delle ragioni per le quali moltissime applicazioni in React utilizzano anche Redux o altre librerie di gestione dello stato, che tratterò in seguito.
+
+Quindi, mentre in Angular vi è un preciso modo di separare la logica di presentazione dal reperimento dei dati da visualizzare, in React non vi è un meccanismo pronto per tale obiettivo.
+
+Un componente in React estende la classe `Component` ed è dichiarato nel seguente modo:
+
+```jsx
+import React from 'react';
+
+class Component extends React.Component {
+  this.state = {
+    // inizializzazione dei campi dello stato del componente       
+  }
+
+  render() { // specifica l'HTML a cui corrisponde il component
+    return (
+      <div>
+      	<OtherComponent />
+      </div>
+  	)
+  }
+}
+```
+
+Mentre in Angular ad un Component corrisponde sempre del codice HTML, in React non è così. Un component potrebbe funzionare da semplice wrapper,  per esempio effettuando dei controlli prima di mostrare altri componenti, e in generale decorandoli di funzionalità. In effetti un componente di React non è altro che una classe/funzione JavaScript, con un metodo _render()_ che definisce il codice HTML.
+In Angular invece, la natura ben definita di un componente rende necessario avere un corrispettivo frammento di pagina HTML da mostrare nel browser. Per il resto esistono i servizi.
+
+### Condivisione di dati fra componenti
+
+In una applicazione *React* lo stato dell'applicazione è mantenuto da uno o più componenti. React implementa un one-way data binding nel quale il flusso dei dati scende seguendo la gerarchia di componenti. Nei casi in cui serva interazione dell'utente con i componenti è però spesso necessario avere un modo di far fluire i dati nella direzione opposta, quindi dalla view, verso lo stato interno dell'applicazione. Ad esempio ad un click dell'utente, si potrebbe dover modificare un certo dato contenuto nello stato. Utilizzando solamente React questo si può fare con un meccanismo di callback: ogni componente che contiene stato (detto _stateful_) può esporre dei metodi per modificare il suo stato interno. Può dunque passare questi metodi ai componenti figli. Questo avviene tramite il passaggio di _props_, ovvero di proprietà, che possono essere un qualunque tipo di oggetto JavaScript, incluse quindi funzioni. Come rappresentato nella figura sotto, un componente che voglia modificare lo stato di un componente più alto nella gerarchia deve invocare su di esso uno di questi metodi.
+In questo modo è il componente che contiene lo stato a fornire ai figli i dati da visualizzare e le funzioni da invocare quando sia necessario effettuare un'operazione sui dati. I componenti figli, in questo caso, sono chiamati _componenti controllati_, in quanto non hanno uno stato e la loro apparenza nella vista è completamente definita dallo stato dei componenti sopra di loro.
+
+![Gerarchia di componenti e props](./img/react-tree.png)
+
+**Fig. Esecuzione di *callback* verso un componente genitore in React.js**
+
+![Passaggio di props e funzioni nella gerarchia di React](./img/react-props-tree.png)
+
+**Fig. Passaggio di *props* in React.js**
+
+<!--In _React-redux_ solitamente si distinguono i _dumb components_ spesso chiamati solo **components** dagli _smart component_, solitamente chiamati (Redux) **containers**. Un container è un component connesso al Redux store (precisamente è un component 'decorato' con i dati prelevati dal redux store). Tale componente diventa 'smart' perchè è consapevole di quali dati sta visualizzando e di quali funzioni chiamare per effettuare il dispatch di azioni. I components invece gestiscono la visualizzazione dei dati, ma sono inconsapevoli della sorgente del dato e non effettuano su di esso alcun controllo. Possono essere _stateful_ o _stateless_ e solitamente sono le 'maschere' visibili all'utente. -->
+
+
 
 <!-- In entrambi i casi non è il caso che tutti i componenti siano consapevoli della fonte dei dati da mostrare. Perchè siano riutilizzabili ci si affida al passsaggio di `proprietà` da un componente padre ai figli. Questo permette rendere il componente completamente inconsapevole di che tipo di dati stia manipolando, e quindi creare template comuni per visualizzare dati simili (ad esempio si pensi alle liste). -->
 
 
 
-### Cosa serve in React.js vs Angular
+#### Potenzialità diverse
 
-Segue una lista di strumenti che sono da considerarsi indispensabili per sviluppare con entrambi gli approcci. Ovviamente Angular è un framework e pertanto include tutto quello che serve al suo interno. React.js, invece fornisce solo gli strumenti per costruire il componente `View` di un MVC. Per applicazioni più costruite diventa necessario utilizzare altri pacchetti, in modo di estrarre la logica e posizionarla all'esterno dei component, che hanno scopo presentazionale.
+Essendo Angular un framework e React una semplice libreria essi hanno una grado di completezza ben differente. Per la precisione Angular è un framework MVC-MVVM (Model View Controller - Model View View-Model) e offre un insieme di strumenti da utilizzare assieme per far fronte ad ogni esigenza di uno sviluppatore. React è una libreria con poche funzionalità rispetto al primo. Di conseguenza per effettuare un confronto significativo assumerò che l'utilizzo di React sia complementato da un certo numero di librerie che lo rendano paragonabile ad Angular (https://medium.com/dailyjs/react-and-angular-a-contrast-b19210c3fe89). I principali strumenti che mancano a React.js e che invece sono forniti in Angular, sono:
 
-#### 1. Gestione dello stato
+- Gestione dello stato;
+- Routing client-side;
+- Gestione di richieste Http;
+- Css scoping.
 
-React.Js implementa un one-way data binding nel quale il flusso dei dati scende seguendo la gerarchia di componenti. Nei casi in cui serva interazione dell'utente con i componenti è però spesso necessario avere un modo di far fluire i dati nella direzione opposta, quindi dalla view, verso lo stato interno dell'applicazione. Utilizzando solamente React (senza Redux) questo si può fare solamente con un meccanismo di callback: un componente (tipicamente il _Closest Common Ancestor_) mantiene lo stato locale e i componenti al suo interno (detti figli) gestiscono la presentazione dei dati all'utente. Il componente che contiene lo stato passa come proprietà ai figli i dati da visualizzare e le funzioni da invocare quando sia necessario effettuare un'operazione sui dati. Pertanto queste funzioni sono in realtà metodi appartenenenti all'oggetto padre che esso `presta` ai figli, utilizzando le funzionalità di binding di JavaScript per 'legare il contesto di invocazione' (_this_) alla funzione prestata. 
+##### Gestione dello stato
 
-![Flusso dei dati in React vs React-Redux](/home/alessandro/stagedev/dolphin/docs/img/state-store.svg)
+Una web application dovrà mostrare dei dati all'utente, che solitamente sono reperiti da un server remoto. Una volta che questi dati siano stati ottenuti l'applicazione dovrà salvarli da qualche parte per poterli visualizzare. In un'applicazione in stile _restful_ questo stato ha natura volatile, e viene continuamente sincronizzato con il server. Avere uno stato locale può essere utile ad esempio per effettuare operazioni di ricerca o di filtraggio degli elementi visualizzati senza alcun intervento del server. Per gestione dello stato intendo quindi il problema di dove e come mantenere questi dati per poterli presentare e manipolare.
 
-**Fig. 1 Gestione dello stato in React.js con e senza Redux**
+Vi sono varie librerie di _state management_ che possono essere utilizzate in **Angular,** fra le quali NGRX (una specie di adattamento ad Angular di Redux) e la più recente NGXS. Queste librerie implementano un popolare paradigma nel quale l'intero stato dell'applicazione viene mantenuto all'interno di un unico oggetto definito _store_.
 
-Sebbene sia quindi possibile 'spezzettare' lo stato fra i componenti questo può portare a una gerarchia di componenti difficilemtnte mantenibile, nel quale i dati devono essere passati verso il basso per diversi livelli prima di essere usati. Una scelta molto popolare è utilizzare sistemi di gestione centralizzati, come Flux e un suo derivato, Redux. Redux offre un'unico stato che contiene tutti i dati dell'applicazione. La 'connessione' dei componenti allo store di Redux viene gestita automaticamente dal pacchetto `react-redux`, che implementa un pattern `Observer` nel quale i compoennti vengono aggiornati automaticamente al cambiamento dei dati dello store.
+###### Cos'è e quando serve uno _store_?
 
-**Angular** invece sente meno la necessità di un sistema di gestione come quelli appena descritti (sebbene sia perfettamente possibile utilizzare Flux o Redux in Angular). L'approccio che viene consigliato nel tutorial di Angular è di delegare l'ottenimento dei dati ai servizi (`services`) e utilizzare la Dependency Injection per rendere disponibile tali servizi ai componenti. I componenti, quando istanziati, poi utilizzeranno il servizio per ottenere i dati da visualizzare. Dunque non c'è bisogno di centralizzare lo stato in quanto ogni componente gestisce tramite servizi i dati che lo riguardano.
+Tutte le librerie di _state management_ definiscono Store l'oggetto o la collezione di oggetti che contengono tutti i dati dell'applicazione. Quindi lo store potrebbe contenere sia i dati reperiti da un server, che informazioni sullo stato della GUI. In genere queste librerie forniscono meccanismi di _iscrizione_ dei componenti a certe parti dello store. Qual'ora qualche dato nello store fosse modificato, ad esempio in seguito ad una sincronizzazione con il server oppure ad un evento scatenato dall'utente, tutti i componenti iscritti a quel dato saranno automaticamente notificati e aggiornati. Quindi si tratta di una implementazione del pattern _Observable_.
 
-![Interazione fra componenti e servizi in Angular](/home/alessandro/stagedev/dolphin/docs/img/observable-service-data-flow.svg)
+Non è detto che ci sia bisogno di utilizzare uno store, ovvero di uno o più oggetti dedicati al mantenimento dei dati. È anche possibile far in modo che ogni elemento che abbia necessità dei dati effettui la propria richiesta al server e una volta ottenuti li utilizzi come deve.
+
+Il grosso vantaggio di uno store, tralasciando considerazioni progettuali sulla scelta di centralizzare il modello dei dati del client, si percepisce quando diversi componenti di una applicazione web hanno bisogno di accedere ad uno stesso dato. In questa situazione rifare la stessa richiesta da diversi componenti può diventare inutile visto che quel dato era già stato prelevato in precedenza. Un'altra situazione nel quale può tornare utile centralizzare lo stato è quando più attori, (per esempio server e utente client) possono modificare i dati, ed in tal caso avere diverse istanze di essi può diventare difficile da gestire.
+
+(Fonte: Angular Service Layers: Redux, RxJs and Ngrx Store - When to Use a Store And Why?, giugno 2018)
+
+------
+
+Tuttavia, particolarmente in Angular, non vi è necessità di utilizzare una delle succitate librerie. Angular, a differenza di React, propone l'utilizzo dei _servizi_. Come già detto un servizio è un oggetto che mette a disposizione tutte le funzionalità di cui un componente necessita. Uno dei problemi che l'utilizzo di uno store risolve elegantemente è la necessità di fornire gli stessi dati a più componenti. Tuttavia Angular fornisce un avanzato meccanismo di *dependency injection* che, tramite l'utilizzo di servizi, risolve questo problema (https://blog.angular-university.io/angular-2-redux-ngrx-rxjs/). Infatti:
+
+- è possibile creare servizi ed effettuarne l'_injection_ in specifici componenti;
+- i servizi di Angular possono mantenere localmente dei dati e condividerli in più componenti nei quali sono iniettati;
+- ogni servizio iniettato in una data gerarchia di componenti è un _singleton_. Ovvero tutta la gerarchia condividerà la stessa istanza del servizio (https://angular.io/guide/dependency-injection-in-action).
+
+Quindi un servizio di Angular può all'occorrenza agire come un piccolo _store_, diventando la sola sorgente di quel dato per tutti i componenti che lo richiedono.
+
+**React**, invece, non beneficia del meccanismo di _dependency injection_ di Angular. La condivisione di dati fra componenti avviene attraverso un passaggio di proprietà lungo la gerarchia di componenti. Diventa quindi desiderabile avere uno stato esterno ad  ogni componente che sia l'unica sorgente di dati dell'intera applicazione. L'implementazione del pattern observable fra i componenti e lo store, offerta nativamente in queste librerie, fa in modo che i componenti rispecchino in ogni momento i dati contenuti nello store.
+
+Come si vede nella figura sotto, l'utilizzo di una libreria come Redux, delega il Redux store a contenere l'intero stato dell'applicazione. Tramite il pattern Observable i componenti connessi (o iscritti) allo store sono automaticamente notificati di ogni cambiamento ad esso. L'utilizzo di questa libreria è molto popolare visto che elimina la necessità di distribuire callback ai componenti figli ai fini di far fluire informazioni nel senso opposto alla gerarchia. Più informazioni sull'interazione fra React e Redux sono fornite nella prossima sezione.
+
+![Flusso dei dati in React vs React-Redux](./img/state-store.png)
+
+Fig. Flusso dei dati in React con e senza Redux.
+
+Redux (https://redux.js.org/)
 
 
 
-**Fig 2. Interazione fra componenti e servizi in Angular**
+##### Routing
 
-Nella figura sopra si vede come i componenti si interfaccino con i servizi per effettuare operazioni sui dati.
+Il routing su una web application permette il caricamento di componenti diversi a seconda dell'URL della pagina. Permette l'emulazione del cambio pagina al click su un link, pur senza effettuare un ricaricamento della pagina, e abilita l'utente a salvare l'indirizzo delle pagine nei preferiti ed a utilizzare i pulsanti di navigazione del browser. React non fornisce alcuna soluzione di questo genere. Angular invece fornisce il pacchetto `@angular-router` all'interno del framework. Per l'utilizzo in React sono disponibili diverse soluzioni, fra le quali `React-mini-router`, `React-router` e `Universal-router`.
 
-L'approccio a servizi è solitamente usato anche in React.js + Redux, anche se viene implementato in modo diverso, anche per la mancanza del meccanismo di Dependency Injection di Angular. Solitamente ogni componente ha accesso a un numero ristretto di 'azioni' di cui è possibile fare il dispatch verso lo store. Queste azioni sono l'equivalente dei metodi esposti da ogni servizio in Angular.
+React-router (https://reacttraining.com/react-router/)
+
+##### Gestione di richieste Http
+
+Nel caso l'applicazione web richieda di reperire dati remoti è necessario effettuare chiamate Http. Angular suggerisce l'utilizzo della _reactive programming_ e del tipo _Observable_, disponibile nella libreria `Rxjs`, già inclusa nel framework. Per React invece è necessario installare una qualunque libreria. Se si vuole utilizzare l'approccio simile ad Angular con React e Redux esiste `redux-observable`
+
+[^3]: https://redux-observable.js.org/
+
+. Oppure è possibile utilizzare Redux con librerie come `axios`
+
+[^4]: https://github.com/axios/axios
+
+ o `fetch`, che fa da poco parte dello standard JavaScript.
+
+##### Scoping del foglio di stile
+
+Angular permette di definire fra i _metadata_ di un componente anche il foglio di stile da utiliizare per esso. Questo può essere fatto come si vede alla linea 4 del blocco di codice sottostante. Il _css_ associato ad un componente è specifico per esso e quindi non influisce sui template di tutti gli altri componenti. Questa soluzione ha il vantaggio di evitare effetti indesiderati dovuti alla ripetizione di nomi di classi o ad interferenze fra di esse.
+
+```typescript
+@Component({
+  selector: 'my-component',
+  templateUrl: './mycomponent.component.html',
+  styleUrls: [ './mycomponent.component.css' ]
+})
+export class MyComponent implements OnInit {
+  ...
+}
+```
+
+In React, per far uso di una soluzione simile, è necessario installare il pacchetto _react css modules_ (https://github.com/gajus/react-css-modules), tramite il quale è possibile assegnare ad ogni componente uno specifico foglio di stile, sfruttando il pattern decorator. Al caricamento del componente ad ogni tag HTML saranno associati nomi di classi univoci che garantiscono la non interferenza con gli altri fogli di stile.
+
+React-css-modules (https://github.com/gajus/react-css-modules)
+
+<!-- Remind:
+
+- Redux
+- Reselect
+- React-router
+- (Css modules)
+- (Redux-persist)-->
 
 
 
@@ -75,15 +212,27 @@ Link:
 - https://kuanhsuh.github.io/2017/09/28/What-s-Redux-and-how-to-use-it/
 - https://medium.com/@ttemplier/angular2-decorators-and-class-inheritance-905921dbd1b7
 
-### Redux actions e Angular services
+### React, Redux e la gestione dello stato
 
-#### Perchè serve Redux?
+#### Cos'è Redux?
 
-React e Redux sono due librerie separate e mantenute da team differenti che non devono necessariamente essere utilizzate assieme. Tuttavia l'utilizzo di React-redux rende molto semplice ed efficiente `iscrivere` i component ai 'pezzetti di stato' di cui hanno bisogno. Sarebbe tuttavia possibile seguire un apporccio simile ad Angular utilizzando RxJs utilizzando il middleware `redux-observable`.
+React e Redux sono due librerie separate e mantenute da team differenti che non devono necessariamente essere utilizzate assieme. 
+
+Redux è una libreria che offre un container per lo stato di applicazioni JavaScript. Si è ispirato a Flux, un pattern architetturale sviluppato da Facebook specificatamente per l'utilizzo con React. Redux si basa su tre principi
+
+[^6]: https://redux.js.org/introduction/threeprinciples
+
+:
+
+- Singola sorgente di dati: tutto lo stato dell'applicazione è contenuto all'interno di un oggetto in un unico store (Flux invece prevedeva Store multipli);
+- Lo store è in sola lettura: non è possibile modificare direttamente lo stato in esso contenuto. L'unico modo di farlo è emettere un'azione e farla processare ad un _reducer_;
+- I cambiamenti allo store sono effettuati con funzioni pure: un reducer non effettua side effect, ma restituisce il nuovo stato in un nuovo oggetto.
+
+L'utilizzo di React con Redux si basa sulla possibilità di *iscrivere* i componenti React ai pezzetti di Redux store di cui hanno bisogno. è anche possibile utilizzare Redux con un approccio simile a quello di Angular utilizzando RxJs per gestire le chimate Http facendo uso del middleware `redux-observable`.
 
 #### React e Redux
 
-Con React-Redux tutto lo stato dell'applicazione, i dati da visualizzare e lo stato della UI, può essere salvato all'interno del Redux store. L'unico modo di apportare modifiche a questo oggetto è effettuare il _dispatch_ di _actions_ che contengono le 'istruzioni' di cosa cambiare e come farlo. Una action non è altro che un oggetto che normalmente ha la seguente struttura:
+Con React-Redux tutto lo stato dell'applicazione, i dati da visualizzare e lo stato della UI, può essere salvato all'interno del Redux store. L'unico modo di apportare modifiche a questo oggetto è effettuare il _dispatch_ di _actions_ che contengono le 'istruzioni' di cosa cambiare e come farlo. Un'azione non è altro che un oggetto che normalmente ha la seguente struttura:
 
 ```javascript
 const typicalAction = {
@@ -92,24 +241,29 @@ const typicalAction = {
 }
 ```
 
-Quando una azione viene 'mandata' verso lo store questa viene processata da un _REDUCER_. Il reducer è una funzione _pura_ che dato lo stato precedente e l'azione da compiere ritorna lo stato successivo (non modifica lo stato precedente, ma fa una _deep copy_ dell'oggetto, lo altera e lo restituisce). 
+Quando un'azione viene 'mandata' verso lo store questa viene processata da un _reducer_. Il reducer è una funzione _pura_ che dato lo stato precedente e l'azione da compiere ritorna lo stato successivo (non modifica lo stato precedente, ma fa una _deep copy_ dell'oggetto, lo altera e lo restituisce).
 
-Il meccanismo ad azioni può essere sfruttato anche per 'popolare' lo store con i dati, che spesso sono inviati da un server, e quindi devono essere ottenuti tramite chiamate REST, che sono asincrone. Quindi in questo caso le azioni dovrebbero attendere che i dati arrivino. Il reducer non può sapere di questa attesa e si aspetta un risultato immediato. È possibile gestire tale asinconia utilizzando un _middleware_, che è semplicemente una funzione che attende il completamento di un'azione asincrona prima di effettuare il dispatch dell'azione appropriata verso il reducer. Questo permette di attendere risposta dal server e poi effettuare il dispatch corretto in caso di successo, oppure di errore. Per React esistono vari middleware che svolgono questo compito. Uno molto famoso e molto semplice è 'redux-thunk' (che io utilizzo). ve ne sono altri, come 'redux-saga' e `redux-promise-middleware` che offrono maggiori funzionalità, desiderabili nel caso di grosse applicazioni.
+Il meccanismo ad azioni può essere sfruttato anche per popolare lo store con i dati, che spesso sono inviati da un server, e quindi devono essere ottenuti tramite chiamate REST, che sono asincrone. Quindi in questo caso le azioni dovrebbero attendere che i dati arrivino. Il reducer non può sapere di questa attesa e si aspetta un risultato immediato. È possibile gestire tale asinconia utilizzando un _middleware_, che è semplicemente una funzione che attende il completamento di un'azione asincrona prima di effettuare il dispatch dell'azione appropriata verso il reducer. Questo permette di attendere risposta dal server e poi effettuare il dispatch corretto in caso di successo, oppure di errore. Per React esistono vari middleware che svolgono questo compito. Uno molto utilzzato e molto semplice è `redux-thunk`. ve ne sono altri più complessi come `redux-saga` e `redux-promise-middleware` che seguono un approccio più personalizzato.
+La figura sottostante riporta lo schema di azione generale in React-redux, a partire dal emissione di un evento dalla view, fino all'aggiornamento del componente con i dati dello store.
 
-![Interazione fra azioni e stato in React-redux](/home/alessandro/stagedev/dolphin/docs/img/react-redux-flow.gif)
+![Interazione fra azioni e stato in React-redux](./img/react-redux-flow.gif)
 
 **Fig. 3 Interazione fra Componenti (view), azioni e stato in React-redux **
 
 
 
-Una volta definite delle azioni asincrone che utilizzano un middleware  esse vanno rese disponibili al componente perchè le possa chiamare (ad esempio al caricamento del component). L' _injection_ avviene sfruttando le funzionalità di _react-redux_. Esso mette a disposizione la funzione `connect()`.
+Una volta definite delle azioni asincrone che utilizzano un middleware esse vanno rese disponibili al componente perchè le possa chiamare (ad esempio al caricamento del componente nella pagina). Per fare questo la libreria `react-redux`
 
-Tale funzione decora, utilizzando il pattern _decorator_ un component iniettando in esso delle proprietà. Serve però indicare a Redux come trasporre il suo _state_ in proprietà, fornendo solo quello che serve ad un componente. Per questa ragione si definiscono i seguenti due metodi (i nomi sono arbitrari, ma convenzionalmente sono sempre questi):
+[^5]: è il collegamento ufficiale fra React.js e Redux, disponibile al seguente link: https://github.com/reduxjs/react-redux
 
-- `mapStateToProps`: definisce come lo stato di Redux deve essere trasformato nelle proprietà  che sono passate al component. In questo metodo è possibile accedere a tutto lo stato, ma difficilemente ogni sua parte sarà utile ad un componente, che avrà bisogno solo di un preciso sottoinsieme.
-- `mapDispatchToProps`: nella sua implementazione base rende disponibile la funzione `dispatch` al component, permettendogli di operare azioni sullo stato, che altrimenti  non sarebbe accessibile. È però usanza comune definire anche in questo caso proprietà che corrispondono ad azioni (quindi a funzioni), anche per maggiore chiarezza.
+ mette a disposizione la funzione `connect()`.
 
-In genere questi componenti 'connessi' allo store di Redux sono chimati _container_ perchè potendovi accedere acquisiscono la capacità di ottenere dati e modificarli.
+Tale funzione decora (utilizzando il pattern _decorator_) un component iniettando in esso delle proprietà. Serve però indicare a Redux come trasporre il suo *store* in proprietà, fornendo solo quello che serve ad un componente. Per questa ragione si definiscono i seguenti due metodi (i nomi sono arbitrari, ma convenzionalmente sono sempre questi):
+
+- `mapStateToProps`: definisce come lo stato di Redux deve essere trasformato nelle proprietà che sono passate al component. In questo metodo è possibile accedere a tutto lo stato, ma difficilemente ogni sua parte sarà utile ad un componente, che avrà bisogno solo di un preciso sottoinsieme.
+- `mapDispatchToProps`: nella sua implementazione base rende disponibile la funzione `dispatch` al component, permettendogli di operare azioni sullo stato, che altrimenti non sarebbe accessibile. È però usanza comune definire anche in questo caso proprietà che corrispondono ad azioni (quindi a funzioni), in modo da dichiarare chiaramente di quali azioni è possibile fare il dispatch in ogni componente.
+
+In genere questi componenti 'connessi' allo store di Redux sono chiamati _container_ perchè potendovi accedere acquisiscono la capacità di ottenere dati e modificarli.
 
 Un esempio di _container_ è il seguente.
 
@@ -130,64 +284,24 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps)(MyComponent);
 ```
 
-Nell'esempio la `connect` rende disponibile al component `MyComponent` le proprietà `prop1`, `prop2` e `fun` che è una funzione, per esempio da invocare all'avvenire di qualche evento. Questa è la maniera con cui in React è possibile separare componenti puramente presentazionali (*component*) dal meccanismo di ottenimento dei dati da visualizzare (del quale si occupa il _container_).
-
-#### Angular services
-
-Anche in Angular i componenti non devono essere responsabili del processo di recupero dei dati dal server, ma dovrebbero avere solo funzione presentazionale. Questa separazione è concretizzata dall'utilizzo dei servizi: ogni componente che ha necessità di interfacciarsi con il server esporrà un servizio `@Injectable`. 
-
-```typescript
-@Injectable ({
-    providedIn: 'component',
-})
-export class Service {
-    constructor() {}
-    
-    fetchData() : DataType {
-    	return fetch(...).then(...).catch(...);
-	}
-}
-```
-
-Un servizio quindi è un insieme di metodi che sono messi a disposizione di un component per effettuare operazioni sui dati visualizzati, incluse connessioni al server.
-
-Nel componente poi, è necessario andare a fare l'_inject_ del servizio in modo che lo possa usare. In Angular è sufficiente inserire i giusti parametri al costruttore del componente e l'_injection_ sarà effettuata senza ulteriori sforzi.
-
-Solitamente ogni componente espone una serie di metodi che rappresentano chiamate ai servizi, i quali si occupano di prelevare i dati o eseguire operazioni verso il server.
-
-```typescript
-@Component({
-  selector: 'app-mycomponent',
-  templateUrl: './mycomponent.component.html',
-  styleUrls: [ './mycomponent.component.css' ]
-})
-export class MyComponent implements OnInit {
-
-  constructor(private service: Service) { }
-
-  ngOnInit() {
-    this.getData();
-  }
-
-  getData(): void {
-    this.service.fetchData();
-  }
-}
-```
+Nell'esempio la `connect` rende disponibile al component `MyComponent` le proprietà `prop1`, `prop2` e `fun` che è una funzione, per esempio da invocare all'avvenire di qualche evento. Si noti che `MyComponent`, nell'esempio riportato, non è consapevole della fonte di nessuna delle tre proprietà che il container recupera dallo store.
+Questa è la maniera con cui in React-redux è possibile separare componenti puramente presentazionali (*component*) dal meccanismo di ottenimento dei dati da visualizzare (del quale si occupa il _container_).
 
 ### React-router vs Angular router
 
 In una web application non ci sono veri e propri cambi di pagina così come non si effettuano refresh.  Inoltre sarebbe impossibile utilizzare un link tradizionale perchè non si potrebbe specificare una pagina di destinazione in `<a href="">` in quanto una web app in Angular o React è una composizione di Component, e non esiste il concetto di 'pagina'. Il _routing client-side_ serve quindi a simulare la navigazione in pagine diverse permettendo di sostituire un component con un'altro component, senza effettivamente cambiare pagina o effettuare redirezioni. Il routing abilita inoltre l'utente a salvare tra i preferiti una specifica pagina dell'applicazione e ad utilizzare i pulsanti back/forward del browser nell'applicazione.
 
-React.Js non possiede mecanismi di routing intergrati, in quanto è solo una libreria. Al contrario Angular integra il suo router tramite il pacchetto `@Angular/router`.  Vi sono varie soluzioni per React, ma la più utilizzata e una delle meglio documentate è `React-router.`
+React.js non possiede mecanismi di routing intergrati, in quanto è solo una libreria. Al contrario Angular integra il suo router tramite il pacchetto `@angular/router`. Come già accennato, vi sono varie soluzioni che assolvono allo stesso compito per React, ma la più utilizzata e una delle meglio documentate è `React-router.`
 
-L'unica significativa differenza riguarda il funzionamento "sotto il cofano" dei due pacchetti, non tanto l'agio di utilizzo. _Angular router_ usa **routing statico**. Ovvero le route sono dichiarate in un file che viene caricato durante l'inizializzazione dell'app, prima che qualunque componente sia mostrato.
+L'unica significativa differenza riguarda il funzionamento "sotto il cofano" dei due pacchetti, non tanto l'agio di utilizzo. _Angular router_ usa **routing statico**. Ovvero le route sono dichiarate in un file che viene caricato durante l'inizializzazione dell'app, prima che qualunque componente sia caricato e mostrato.
 
 Invece in _React-router_ (dalla versione 4 in poi) il routing avviene direttamente quando viene mostrata l'applicazione, non all'avvio dell'app. Questo perchè ogni pezzo di react-router è un component, che 'decide' cosa mostrare quando esso viene caricato nell'app. In questo caso si parla di **routing dinamico**.
 
 Per fare un esempio rapido, in React ogni _route_ viene definita da un componente `Route`. Per una route definita come `<Route path="/path" component={Component}>`, essa mostra il componente 'Component' solo se l'indirizzo del browser è '/path'. Altrimenti non mostra nulla.
 
 React-router quindi segue l'approccio dichiarativo di React.js, nel quale ogni cosa è un componente. Angular router invece usa un approccio più tradizionale. Ad ogni modo sono diponibili pacchetti per effettuare il routing statico anche con React.
+
+OK FINO A QUA'
 
 ### Ciclo di sviluppo e mantenimento
 
@@ -283,14 +397,6 @@ class Component extends React.Component {
 
 In entrambi i casi modificando il testo nella casella di input cambierebbe il valore anche nel component.
 
-### TypeScript vs JavaScript
-
-La nuova versione di Angular (2+) è pensata per l'utilizzo con TypeScript, con tutti i vantaggi che conseguono. La quasi totalità dei tutorial usano questo linguaggio.
-
-React.js, invece, è più orientata a JavaScript, sebbene sia anche possibile utilizzarlo con TypeScript. La maggior parte dei progetti esistenti usa JavaScript + JSX.
-
-Valutare se sia meglio utilizzare l'uno rispetto all'altro dipende dallo scopo così come da preferenze individuali. Quello che è certo è che dischiarare i tipi può aiutare a scriverre codice più leggibile e anche a produrre della buona documentazione.
-
 ###  Separazione fra codice HTML e JavaScript
 
 In Angular la tipica organizzazione dei file in un progetto è:
@@ -352,7 +458,10 @@ Comunemente si devono visualizzare liste e quindi è necessario iterare su un'ar
 
 ## 
 
+## TODO:
 
+- virtual DOM vs real DOM
+- @Input vs props
 
 ### Design Pattern
 
