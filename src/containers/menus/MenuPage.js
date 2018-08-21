@@ -23,15 +23,8 @@ class MenuPage extends Component {
     this.handleDelete = this.handleDelete.bind(this);
   }
 
-  /* handleMomentChange(key) {
-    const { onMomentChange } = this.props;
-    console.log(key);
-    onMomentChange(key);
-  } */
-
   handleDelete() {
-    const { match, allEntries, onDelete } = this.props;
-    const { day } = match.params;
+    const { allEntries, onDelete } = this.props;
     const { id } = allEntries;
     if (id) onDelete(id);
   }
@@ -75,7 +68,7 @@ class MenuPage extends Component {
 
           </Panel.Body>
           <Panel.Footer>
-            <Button
+            <Button // volendo aggiungere un ConfirmModal
               className="pull-left"
               bsStyle="danger"
               onClick={() => this.handleDelete()}
