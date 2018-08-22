@@ -1,9 +1,9 @@
 import * as actionTypes from '../../actions/dishes/dishes.actionTypes';
 
 const init = {
-  loading: false,
+  loading: false, // loading lista di piatti
   addModalShow: false,
-  addLoading: false,
+  addLoading: false, // loading per form di aggiunta piatto
   filter: 'ALL',
   searchtext: '',
 };
@@ -49,6 +49,7 @@ const ui = (state = init, action = {}) => {
       };
     case actionTypes.SHOW_DISH_ERROR_FORM:
       return {
+        ...state,
         addLoading: false,
         loading: false,
       };
@@ -66,7 +67,7 @@ const ui = (state = init, action = {}) => {
     case actionTypes.SEARCH_DISH:
       return {
         ...state,
-        searchtext: action.payload.text.value,
+        searchtext: action.payload.object.value,
       };
     default:
       return state;

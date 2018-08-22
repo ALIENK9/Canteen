@@ -74,7 +74,7 @@ Un componente in React estende la classe `Component` ed è dichiarato nel seguen
 ```jsx
 import React from 'react';
 
-class Component extends React.Component {
+export class Component extends React.Component {
   this.state = {
     // inizializzazione dei campi dello stato del componente       
   }
@@ -212,9 +212,9 @@ Link:
 - https://kuanhsuh.github.io/2017/09/28/What-s-Redux-and-how-to-use-it/
 - https://medium.com/@ttemplier/angular2-decorators-and-class-inheritance-905921dbd1b7
 
-### React, Redux e la gestione dello stato
+## React, Redux e la gestione dello stato
 
-#### Cos'è Redux?
+### Cos'è Redux?
 
 React e Redux sono due librerie separate e mantenute da team differenti che non devono necessariamente essere utilizzate assieme. 
 
@@ -230,7 +230,7 @@ Redux è una libreria che offre un container per lo stato di applicazioni JavaSc
 
 L'utilizzo di React con Redux si basa sulla possibilità di *iscrivere* i componenti React ai pezzetti di Redux store di cui hanno bisogno. è anche possibile utilizzare Redux con un approccio simile a quello di Angular utilizzando RxJs per gestire le chimate Http facendo uso del middleware `redux-observable`.
 
-#### React e Redux
+### React e Redux
 
 Con React-Redux tutto lo stato dell'applicazione, i dati da visualizzare e lo stato della UI, può essere salvato all'interno del Redux store. L'unico modo di apportare modifiche a questo oggetto è effettuare il _dispatch_ di _actions_ che contengono le 'istruzioni' di cosa cambiare e come farlo. Un'azione non è altro che un oggetto che normalmente ha la seguente struttura:
 
@@ -287,7 +287,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(MyComponent);
 Nell'esempio la `connect` rende disponibile al component `MyComponent` le proprietà `prop1`, `prop2` e `fun` che è una funzione, per esempio da invocare all'avvenire di qualche evento. Si noti che `MyComponent`, nell'esempio riportato, non è consapevole della fonte di nessuna delle tre proprietà che il container recupera dallo store.
 Questa è la maniera con cui in React-redux è possibile separare componenti puramente presentazionali (*component*) dal meccanismo di ottenimento dei dati da visualizzare (del quale si occupa il _container_).
 
-### React-router vs Angular router
+## Routing: React router e Angular router
 
 In una web application non ci sono veri e propri cambi di pagina così come non si effettuano refresh.  Inoltre sarebbe impossibile utilizzare un link tradizionale perchè non si potrebbe specificare una pagina di destinazione in `<a href="">` in quanto una web app in Angular o React è una composizione di Component, e non esiste il concetto di 'pagina'. Il _routing client-side_ serve quindi a simulare la navigazione in pagine diverse permettendo di sostituire un component con un'altro component, senza effettivamente cambiare pagina o effettuare redirezioni. Il routing abilita inoltre l'utente a salvare tra i preferiti una specifica pagina dell'applicazione e ad utilizzare i pulsanti back/forward del browser nell'applicazione.
 
@@ -297,15 +297,13 @@ L'unica significativa differenza riguarda il funzionamento "sotto il cofano" dei
 
 Invece in _React-router_ (dalla versione 4 in poi) il routing avviene direttamente quando viene mostrata l'applicazione, non all'avvio dell'app. Questo perchè ogni pezzo di react-router è un component, che 'decide' cosa mostrare quando esso viene caricato nell'app. In questo caso si parla di **routing dinamico**.
 
-Per fare un esempio rapido, in React ogni _route_ viene definita da un componente `Route`. Per una route definita come `<Route path="/path" component={Component}>`, essa mostra il componente 'Component' solo se l'indirizzo del browser è '/path'. Altrimenti non mostra nulla.
+Per fare un esempio pratico, in React-router ogni _route_ viene definita da un componente `Route`. Per una route definita come `<Route path="/path" component={Component}>`, essa mostra il componente 'Component' solo se l'indirizzo del browser è '/path'. Altrimenti non mostra nulla.
 
 React-router quindi segue l'approccio dichiarativo di React.js, nel quale ogni cosa è un componente. Angular router invece usa un approccio più tradizionale. Ad ogni modo sono diponibili pacchetti per effettuare il routing statico anche con React.
 
-OK FINO A QUA'
+## Ciclo di sviluppo e mantenimento
 
-### Ciclo di sviluppo e mantenimento
-
-Per gli sviluppatori è importante avere una versione di riferimento e sapere che il loro lavoro non sarà buttato dopo qualche mese per un aggiornamento del framework che rende inutile tutto quello che avevano fatto.
+Per gli sviluppatori è importante conoscere la stabilità del framework a versione di riferimento e sapere che il loro lavoro non sarà buttato dopo qualche mese per un aggiornamento del framework che rende inutile tutto quello che avevano fatto.
 
 **Angular** è mantenuto dal team di sviluppo di Google. Una versione di angular è identificata dal formato `x.y.z`.
 
@@ -313,13 +311,13 @@ Per gli sviluppatori è importante avere una versione di riferimento e sapere ch
 - y: _minor release_ che può introdurre nuove funzionalità, e mantiene campleta compatibilità con quelle esistenti. Non è previsto nessun 'adattamento' alle nuove aggiunte, ma potrebbe essere necessario imparare nuove API.
 - z: _patch_: aggiornamento di sicurezza senza rischi associati. Corregge bug e non è necessario alcuno sforzo.
 
-#### Frequenza
+### Frequenza
 
 - 1 major release ogni 6 mesi
 - 1-3 minor release ogni major release (quindi in circa 6 mesi)
 - una patch release circa ogni settimana
 
-#### Support & Deprecation policy
+### Support & Deprecation policy
 
 All'uscita di una nuova major release, la versione precedente entra nelle fase LTS, nella quale saranno fornite solo patch di aggiornamento per fix e per la sicurezza. Il supporto LTS ha la durata di 12 mesi. Quindi ogni versione resta supportata e aggiornata per circa 18 mesi (6 attiva + 12 LTS).
 
@@ -335,11 +333,7 @@ Anche in questo caso solo le major release possono introdurre cambiamenti radica
 
 Info: https://github.com/facebook/react/releases
 
-
-
- ## Differenze
-
-### Data binding
+## Data binding
 
 Una delle differenze più evidenti è il modo di collegare il modello dei dati alle view. React è spiccatamente `one way data binding`, ovvero dal modello verso le view.
 
@@ -372,24 +366,26 @@ class HeroesComponent implements OnInit {
 }
 ```
 
-In **React.js** invece questo va implementato 'a mano', quindi nel seguente modo.
+Ogni modifica apportata grazie al campo input si rifletterebbe sul campo dati `data.property` grazie al two way data binding.
+
+In **React.js** invece questo va implementato 'a mano', ad esempio nel seguente modo.
 
 ```jsx
 class Component extends React.Component {
     this.state = {
-		value: ''        
+			value: ''        
     }
 
-    handleChange(e) {
-        const { value } = e.target
-        this.setState({
-            value,
-        })
+    handleChange(e) {								// callback
+      const { value } = e.target		// recupera il valore digitato dall'utente
+      this.setState({								// aggiorna lo stato locale
+        value,
+      })
     }
 
     render() {
-		return (
-        	<input type="text" onChange={e => this.handleChange(e)} />
+      return (
+          <input type="text" onChange={e => this.handleChange(e)} />
         )
     }
 }
@@ -397,66 +393,9 @@ class Component extends React.Component {
 
 In entrambi i casi modificando il testo nella casella di input cambierebbe il valore anche nel component.
 
-###  Separazione fra codice HTML e JavaScript
-
-In Angular la tipica organizzazione dei file in un progetto è:
-
-```
- app
-│   ├── app.component.css
-│   ├── app.component.html
-│   ├── app.component.ts
-│   ├── app.module.ts
-│   ├── app-routing.module.ts
-│   ├── dashboard
-│   │   ├── dashboard.component.css
-│   │   ├── dashboard.component.html
-│   │   └── dashboard.component.ts
-│   ├── heroes
-│   │   ├── heroes.component.css
-│   │   ├── heroes.component.html
-│   │   └── heroes.component.ts
-```
-
-L'angular CLI permette di generare automaticamente i file di un componente con `ng generate component nome_compoent`. Ogni component è quindi costituito da tre file (escludendo i test):
-
-```
-dashboard
-│   ├── dashboard.component.css				// foglio di stile privato
-│   ├── dashboard.component.html			// template HTML
-│   └── dashboard.component.ts				// logica del component
-```
-
-Lo stesso progetto in React potrebbe essere questa struttura:
-
-```
-├── App.css
-├── App.js
-├── components
-│   ├── dashboard.js									// HTML + logica
-│   └── heroes.js
-├── css
-│   ├── dashboard.css									// usando CSS-modules
-│   └── heroes.css
-```
-
-In React tutto è generalmente riunito sotto un unico file, quello dove è dichiarata la classe, o funzione che rappresenta il component. Come nell'esempio precedente la funzione che 'si occupa' del markup della pagina visualizzata è la funzione `render()`. Grazie a `JSX`, un superset di JavaScript che permette di includere codice HTML in mezzo al codice JavaScript, è estremamente immediato definire cosa quel componente dovrà visualizzare, utilizzando quindi semplice codice JavaScript per rendere liste, con `map()`, ecc. Nel metodo `render()` si possono inserire anche le classi CSS del foglio di stile globale. Alternativamente è possibile utilizzare fogli di stile separati, ad esempio utilizzando il pacchetto `css-modules`
-
-[^1]: https://www.npmjs.com/package/react-css-modules
-
-.
-
-### *ngFor e direttive in HTML
-
-Comunemente si devono visualizzare liste e quindi è necessario iterare su un'array di elementi. Angular utilizza l'attributo speciale `*ngFor="let item of listItems"`, per accedere ad ogni elemento. In React.js il codice HTML corrispondente ad un componente è inserito all'interno del metodo `render()` della classe Javascript del componente. 
+OKKK
 
 
-
-... mettere esempi ...
-
-
-
-## 
 
 ## TODO:
 

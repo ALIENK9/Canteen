@@ -71,4 +71,62 @@ export class MyComponent implements OnInit {
 }
 ```
 
-### 
+### Altre cose
+
+### *ngFor e direttive in HTML
+
+Comunemente si devono visualizzare liste e quindi è necessario iterare su un'array di elementi. Angular utilizza l'attributo speciale `*ngFor="let item of listItems"`, per accedere ad ogni elemento. In React.js il codice HTML corrispondente ad un componente è inserito all'interno del metodo `render()` della classe Javascript del componente. 
+
+
+
+... mettere esempi ...
+
+### Separazione fra codice HTML e JavaScript 
+
+In Angular la tipica organizzazione dei file in un progetto è:
+
+```
+ app
+│   ├── app.component.css
+│   ├── app.component.html
+│   ├── app.component.ts
+│   ├── app.module.ts
+│   ├── app-routing.module.ts
+│   ├── dashboard
+│   │   ├── dashboard.component.css
+│   │   ├── dashboard.component.html
+│   │   └── dashboard.component.ts
+│   ├── heroes
+│   │   ├── heroes.component.css
+│   │   ├── heroes.component.html
+│   │   └── heroes.component.ts
+```
+
+L'angular CLI permette di generare automaticamente i file di un componente con `ng generate component nome_compoent`. Ogni component è quindi costituito da tre file (escludendo i test):
+
+```
+dashboard
+│   ├── dashboard.component.css				// foglio di stile privato
+│   ├── dashboard.component.html			// template HTML
+│   └── dashboard.component.ts				// logica del component
+```
+
+Lo stesso progetto in React potrebbe essere questa struttura:
+
+```
+├── App.css
+├── App.js
+├── components
+│   ├── dashboard.js									// HTML + logica
+│   └── heroes.js
+├── css
+│   ├── dashboard.css									// usando CSS-modules
+│   └── heroes.css
+```
+
+In React tutto è generalmente riunito sotto un unico file, quello dove è dichiarata la classe, o funzione che rappresenta il component. Come nell'esempio precedente la funzione che 'si occupa' del markup della pagina visualizzata è la funzione `render()`. Grazie a `JSX`, un superset di JavaScript che permette di includere codice HTML in mezzo al codice JavaScript, è estremamente immediato definire cosa quel componente dovrà visualizzare, utilizzando quindi semplice codice JavaScript per rendere liste, con `map()`, ecc. Nel metodo `render()` si possono inserire anche le classi CSS del foglio di stile globale. Alternativamente è possibile utilizzare fogli di stile separati, ad esempio utilizzando il pacchetto `css-modules`
+
+[^1]: https://www.npmjs.com/package/react-css-modules
+
+.
+

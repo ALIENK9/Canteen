@@ -99,9 +99,9 @@ export const filterMeals = filter => ({
   payload: { filter },
 });
 
-export const searchUser = text => ({
+export const searchUser = object => ({
   type: actionTypes.SEARCH_USER,
-  payload: { text },
+  payload: { object },
 });
 
 // form error

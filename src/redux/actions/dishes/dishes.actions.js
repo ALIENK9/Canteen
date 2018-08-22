@@ -55,9 +55,9 @@ export const filterMeals = filter => ({
   payload: { filter },
 });
 
-export const searchDish = text => ({
+export const searchDish = object => ({
   type: actionTypes.SEARCH_DISH,
-  payload: { text },
+  payload: { object },
 });
 
 // DISH ADD FORM ACTIONS

@@ -82,10 +82,10 @@ const ui = (state = init, action = {}) => {
         filter: action.payload.filter,
       };
     case actionTypes.SEARCH_USER:
-      console.log('searching text', action.payload.text.value);
+      console.log('searching text', action.payload.object.value);
       return {
         ...state,
-        searchtext: action.payload.text.value,
+        searchtext: action.payload.object.value,
       };
     default:
       return state;

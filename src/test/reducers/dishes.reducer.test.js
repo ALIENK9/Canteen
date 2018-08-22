@@ -5,7 +5,14 @@ import {
   fetchDishesSuccess, requestFailure, clearMessages, addDishStarted, addDishSuccess,
   removeDishSuccess,
   removeDishFailure,
+  filterMeals,
+  searchDish,
+  showAddForm,
+  hideAddForm,
+  showErrorForm,
+  hideErrorForm,
 } from '../../redux/actions/dishes/dishes.actions';
+import { FILTER_KEYS } from '../../containers/costants';
 
 const initState = {
   data: {
@@ -66,7 +73,7 @@ describe('dishes.reducer', () => {
       .toReturnState({ ...initState, ui: { ...initState.ui, addLoading: true } });
   });
 
-  it('should stop loading after new dish add success', () => {
+  it('should stop loading and add new dish', () => {
     const dish = {
       name: 'AS',
       type: 1,
@@ -80,6 +87,15 @@ describe('dishes.reducer', () => {
         data: {
           list: [dish],
         },
+      });
+  });
+
+  it('should stop loading after new dish add failure and set message', () => {
+    Reducer(dishesReducer).expect(showErrorForm('qwerty'))
+      .toReturnState({
+        ...initState,
+        ui: { ...initState.ui, addLoading: false },
+        messages: { ...initState.messages, addFormError: 'qwerty' },
       });
   });
 
@@ -129,12 +145,103 @@ describe('dishes.reducer', () => {
       });
   });
 
-  it('should set message after remove failure', () => {
-    Reducer(dishesReducer).expect(removeDishFailure('errore add/rem')).toReturnState({
+  it('should set message after remove failure and stop loading', () => {
+    const astate = { ...initState, ui: { ...initState.ui, loading: true } };
+    Reducer(dishesReducer).withState(astate).expect(removeDishFailure('errore add/rem')).toReturnState({
+      ...astate,
+      ui: { ...astate.ui, loading: false },
+      messages: {
+        ...astate.messages,
+        error: 'errore add/rem',
+      },
+    });
+  });
+
+  it('should set dish filter', () => {
+    Reducer(dishesReducer).expect(filterMeals(FILTER_KEYS.SECOND)).toReturnState({
+      ...initState,
+      ui: {
+        ...initState.ui,
+        filter: FILTER_KEYS.SECOND,
+      },
+    });
+  });
+
+  it('should set search text', () => {
+    const reactSelectObj = { label: 'sds', value: '99' };
+    Reducer(dishesReducer).expect(searchDish(reactSelectObj)).toReturnState({
+      ...initState,
+      ui: {
+        ...initState.ui,
+        searchtext: '99',
+      },
+    });
+  });
+
+  it('should show dishes add form', () => {
+    Reducer(dishesReducer).expect(showAddForm()).toReturnState({
+      ...initState,
+      ui: {
+        ...initState.ui,
+        addModalShow: true,
+      },
+    });
+  });
+
+  it('should hide dishes add form', () => {
+    Reducer(dishesReducer).expect(hideAddForm()).toReturnState({
+      ...initState,
+      ui: {
+        ...initState.ui,
+        addModalShow: false,
+      },
+    });
+  });
+
+  it('should show null dish error form', () => {
+    const astate = Immutable({
+      ...initState,
+      ui: {
+        ...initState.ui,
+        addModalShow: true,
+      },
+    });
+    Reducer(dishesReducer).withState(astate).expect(showErrorForm(null)).toReturnState({
+      ...astate,
+      messages: {
+        ...astate.messages,
+        addFormError: null,
+      },
+    });
+  });
+
+  it('should show valid dish error form', () => {
+    Reducer(dishesReducer).expect(showErrorForm('hello')).toReturnState({
       ...initState,
       messages: {
         ...initState.messages,
-        error: 'errore add/rem',
+        addFormError: 'hello',
+      },
+    });
+  });
+
+  it('should hide dish error form', () => {
+    const astate = Immutable({
+      ...initState,
+      ui: {
+        ...initState.ui,
+        addModalShow: true,
+      },
+      messages: {
+        ...initState.messages,
+        addFormError: 'errore',
+      },
+    });
+    Reducer(dishesReducer).withState(astate).expect(hideErrorForm()).toReturnState({
+      ...astate,
+      messages: {
+        ...astate.messages,
+        addFormError: '',
       },
     });
   });
