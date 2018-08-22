@@ -35,7 +35,7 @@ const data = (state = init, action = {}) => {
     case actionTypes.LOAD_FORM_DATA_STARTED:
       return {
         ...state,
-        daymeals: [],
+        daymeals: [], // svuota eventuali valori vecchi
         users: [],
       };
     case actionTypes.LOAD_DAYMEALS_SUCCESS:

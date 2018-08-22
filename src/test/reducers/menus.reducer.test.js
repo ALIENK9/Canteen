@@ -130,7 +130,7 @@ describe('Menus reducer tests', () => {
           entries: {
             id: 'menu4ws',
             lunch: [
-              ...menu.lunch, // NOTE: conta l'ordine con lo spred op negli array
+              ...menu.lunch, // NOTE: conta l'ordine con lo spred operator negli array
               ...dishes,
             ],
             dinner: [
@@ -183,12 +183,24 @@ describe('Menus reducer tests', () => {
       });
   });
 
-  it('should set errorafter menu fetch failure', () => {
+  it('should set error after menu fetch failure', () => {
     Reducer(menusReducer).expect(fetchMenuFailure('error2a')).toReturnState({
       ...initState,
       messages: {
         ...initState.messages,
         error: 'error2a',
+      },
+    });
+  });
+
+  it('should stop loading after fetch failure', () => {
+    const state = Immutable({ ...initState, ui: { ...initState.ui, loading: true } });
+    Reducer(menusReducer).withState(state).expect(fetchMenuFailure('errora')).toReturnState({
+      ...initState,
+      ui: { ...state.ui, loading: false },
+      messages: {
+        ...state.messages,
+        error: 'errora',
       },
     });
   });

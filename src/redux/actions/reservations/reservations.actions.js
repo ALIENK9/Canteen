@@ -4,7 +4,7 @@ import { getAuthFieldsFromStorage } from '../../utils';
 import baseURLs from '../baseURLs';
 
 
-export const fetchReservationsStarted = () => ({
+export const fetchReservationsStarted = () => ({ // anche per delete
   type: actionTypes.FETCH_RESERVATIONS_STARTED,
 });
 
