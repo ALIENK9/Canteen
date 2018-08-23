@@ -105,12 +105,6 @@ In questo modo è il componente che contiene lo stato a fornire ai figli i dati 
 
 **Fig. Passaggio di *props* in React.js**
 
-<!--In _React-redux_ solitamente si distinguono i _dumb components_ spesso chiamati solo **components** dagli _smart component_, solitamente chiamati (Redux) **containers**. Un container è un component connesso al Redux store (precisamente è un component 'decorato' con i dati prelevati dal redux store). Tale componente diventa 'smart' perchè è consapevole di quali dati sta visualizzando e di quali funzioni chiamare per effettuare il dispatch di azioni. I components invece gestiscono la visualizzazione dei dati, ma sono inconsapevoli della sorgente del dato e non effettuano su di esso alcun controllo. Possono essere _stateful_ o _stateless_ e solitamente sono le 'maschere' visibili all'utente. -->
-
-
-
-<!-- In entrambi i casi non è il caso che tutti i componenti siano consapevoli della fonte dei dati da mostrare. Perchè siano riutilizzabili ci si affida al passsaggio di `proprietà` da un componente padre ai figli. Questo permette rendere il componente completamente inconsapevole di che tipo di dati stia manipolando, e quindi creare template comuni per visualizzare dati simili (ad esempio si pensi alle liste). -->
-
 
 
 #### Potenzialità diverse
@@ -158,8 +152,6 @@ Fig. Flusso dei dati in React con e senza Redux.
 
 Redux (https://redux.js.org/)
 
-
-
 ##### Routing
 
 Il routing su una web application permette il caricamento di componenti diversi a seconda dell'URL della pagina. Permette l'emulazione del cambio pagina al click su un link, pur senza effettuare un ricaricamento della pagina, e abilita l'utente a salvare l'indirizzo delle pagine nei preferiti ed a utilizzare i pulsanti di navigazione del browser. React non fornisce alcuna soluzione di questo genere. Angular invece fornisce il pacchetto `@angular-router` all'interno del framework. Per l'utilizzo in React sono disponibili diverse soluzioni, fra le quali `React-mini-router`, `React-router` e `Universal-router`.
@@ -197,16 +189,6 @@ In React, per far uso di una soluzione simile, è necessario installare il pacch
 
 React-css-modules (https://github.com/gajus/react-css-modules)
 
-<!-- Remind:
-
-- Redux
-- Reselect
-- React-router
-- (Css modules)
-- (Redux-persist)-->
-
-
-
 Link: 
 
 - https://kuanhsuh.github.io/2017/09/28/What-s-Redux-and-how-to-use-it/
@@ -228,7 +210,7 @@ Redux è una libreria che offre un container per lo stato di applicazioni JavaSc
 - Lo store è in sola lettura: non è possibile modificare direttamente lo stato in esso contenuto. L'unico modo di farlo è emettere un'azione e farla processare ad un _reducer_;
 - I cambiamenti allo store sono effettuati con funzioni pure: un reducer non effettua side effect, ma restituisce il nuovo stato in un nuovo oggetto.
 
-L'utilizzo di React con Redux si basa sulla possibilità di *iscrivere* i componenti React ai pezzetti di Redux store di cui hanno bisogno. è anche possibile utilizzare Redux con un approccio simile a quello di Angular utilizzando RxJs per gestire le chimate Http facendo uso del middleware `redux-observable`.
+L'utilizzo di React con Redux si basa sulla possibilità di *iscrivere* i componenti React ai pezzetti di Redux store di cui hanno bisogno. è anche possibile utilizzare Redux con un approccio simile a quello di Angular utilizzando RxJs per gestire le chiamate Http facendo uso del middleware `redux-observable`.
 
 ### React e Redux
 
@@ -289,7 +271,7 @@ Questa è la maniera con cui in React-redux è possibile separare componenti pur
 
 ## Routing: React router e Angular router
 
-In una web application non ci sono veri e propri cambi di pagina così come non si effettuano refresh.  Inoltre sarebbe impossibile utilizzare un link tradizionale perchè non si potrebbe specificare una pagina di destinazione in `<a href="">` in quanto una web app in Angular o React è una composizione di Component, e non esiste il concetto di 'pagina'. Il _routing client-side_ serve quindi a simulare la navigazione in pagine diverse permettendo di sostituire un component con un'altro component, senza effettivamente cambiare pagina o effettuare redirezioni. Il routing abilita inoltre l'utente a salvare tra i preferiti una specifica pagina dell'applicazione e ad utilizzare i pulsanti back/forward del browser nell'applicazione.
+In una *single page application* non ci sono veri e propri cambi di pagina così come non si effettuano refresh.  Inoltre sarebbe impossibile utilizzare un link tradizionale perchè non si potrebbe specificare una pagina di destinazione in `<a href="">` in quanto una web app in Angular o React è una composizione di Component, e non esiste il concetto di 'pagina'. Il _routing client-side_ serve quindi a simulare la navigazione in pagine diverse permettendo di sostituire un component con un'altro component, senza effettivamente cambiare pagina o effettuare redirezioni. Il routing abilita inoltre l'utente a salvare tra i preferiti una specifica pagina dell'applicazione e ad utilizzare i pulsanti back/forward del browser nell'applicazione.
 
 React.js non possiede mecanismi di routing intergrati, in quanto è solo una libreria. Al contrario Angular integra il suo router tramite il pacchetto `@angular/router`. Come già accennato, vi sono varie soluzioni che assolvono allo stesso compito per React, ma la più utilizzata e una delle meglio documentate è `React-router.`
 
@@ -393,7 +375,13 @@ class Component extends React.Component {
 
 In entrambi i casi modificando il testo nella casella di input cambierebbe il valore anche nel component.
 
-OKKK
+Come si nota dai due esempi precedenti, mentre in Angular il template HTML corripondente ad un componente si trova in un file separato, specificato nei metadati del componente (*templateUrl*), in React esso viene accorpato alla calsse del componente. Precisamente viene definito all'interno del metodo `render()`. Il grado di spearazione fra HTML e JavaScript è un'altra differenza fra il framework e la libreria.
+
+## DOM e Virtual DOM
+
+React e Angular si differenziano anche nel modo con cui effettuano gli aggiornamenti della pagina web, al cambiamento dello stato. React utilizza il Virtual DOM. Quindi crea una copia del DOM della pagina e la mantiene in memoria. Quando avviene un cambiamento genererà una nuova rappresentazione del DOM e la compara con quella precedente per individuare i componenti da aggiornare. A questo punto aggiorna la pagina agendo sul DOM e aggiornando solo gli elementi che sono cambiati. 
+
+La naturale conseguenza di questi due approcci è che il primo utilizza maggiormente la memoria.
 
 
 
@@ -402,20 +390,11 @@ OKKK
 - virtual DOM vs real DOM
 - @Input vs props
 
-### Design Pattern
-
-Entrambi implementano il MVVM. 
-
-- Rx.Js: Observable Pattern
-
-
-
 
 
 ### Bibliografia
 
 - https://medium.com/dailyjs/react-and-angular-a-contrast-b19210c3fe89
-- 
 
 
 
