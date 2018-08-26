@@ -36,7 +36,7 @@ class MenuList extends Component {
       <React.Fragment>
         {(!entries || !entries.length) && (
         <span>
-          Nessun menù per questa giornata
+          Nessun piatto inserito. Aggiungi dei piatti prima.
         </span>
         )}
         {entries && entries.length > 0 && (
