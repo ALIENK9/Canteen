@@ -21,7 +21,7 @@ const CheckBox = ({
 
 CheckBox.propTypes = {
   onClick: PropTypes.func,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   checked: PropTypes.bool,
   param: PropTypes.string,

@@ -25,7 +25,7 @@ UserReservationItem.propTypes = {
   hour: PropTypes.string,
   meals: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
-    id: PropTypes.number,
+    id: PropTypes.string,
   })),
 };
 

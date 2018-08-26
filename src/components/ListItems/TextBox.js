@@ -82,7 +82,7 @@ class TextBox extends Component {
 TextBox.propTypes = {
   children: PropTypes.node,
   onDelete: PropTypes.func.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   deleteLabel: PropTypes.string.isRequired,
   confirmation: PropTypes.bool,
 };
