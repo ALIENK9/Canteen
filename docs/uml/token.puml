@@ -1,0 +1,31 @@
+@startuml token
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 2
+skinparam titleBorderColor red
+skinparam titleBackgroundColor Aqua-CadetBlue
+
+
+node Backend {
+  node "Microservizio di autenticazione" as auth
+  database Utenti as db
+  folder "Protetti da token" {
+    node "Microservizio 1" as dish
+    node "Microservizio 2"
+  } 
+}
+
+actor Utente as user
+
+node "Client Application" as client
+
+
+user -> client
+client ---> auth : login()
+auth -> db : controllo\n credenziali
+db -[#green]-> auth
+client <-[#green]- auth : token
+client -> dish : request()
+dish ---> auth : verifica \ntoken
+auth -[#green]-> dish
+dish -[#green]-> client : dati
+@enduml
