@@ -9,6 +9,10 @@ html, body, #root, #app, .container{
   height: 100%;
 }
 
+.container {
+  overflow: hidden;
+}
+
 html, body {
   word-break: break-all;
   text-align: justify;
@@ -26,6 +30,7 @@ body {
 }
 
 footer {
+  position: relative;
   background-color: rgb(190, 215, 236);
   bottom: 0;
   color: black;
@@ -68,6 +73,10 @@ button, html [type=button] {
   min-height: 5em;
   flex: 1 1 auto;
   max-width: 33%;
+}
+
+.flex-item table {
+  text-align: left;
 }
 
 .card {
@@ -189,10 +198,6 @@ label {
 
   main, footer {
     max-height: unset;
-  }
-
-  footer {
-    position: relative;
   }
 }
 

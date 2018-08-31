@@ -33,7 +33,7 @@ class App extends Component {
               <Navbar />
             </header>
             <Jumbotron componentClass="main" bsClass="jumbotron-main">
-              <Switch>
+              <Switch className="container">
                 <Route path="/reservations/:day" component={RequireRole(ResPage, { requiredRole: 'admin' })} />
                 <Route path="/menus/:day" component={RequireRole(MenuPage, { requiredRole: 'admin' })} />
                 <Route path="/menus" component={RequireRole(Menus, { requiredRole: 'admin' })} />
@@ -45,7 +45,7 @@ class App extends Component {
                 <Redirect from="/" to="/home" />
               </Switch>
             </Jumbotron>
-            <Footer />
+            {/* <Footer /> */}
           </div>
         </BrowserRouter>
       </DocumentTitle>
