@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Loader from '../components/Loader';
 
 
-export class RequireRoleBase extends Component {
+class RequireRoleBase extends Component {
   /**
    * Utility to check if user role corresponds to required role
    * @param {String|Array<String>} requiredRole Required role or array with 'admin' | 'user'
@@ -133,8 +133,10 @@ const RequireRoleConnected = connect(mapStateToProps)(RequireRoleBase);
  * @param {Object} requireRoleProps Object with { requiredRole: 'admin'|'user' }
  *  or with array of strings { requiredRole: ['admin', 'user'] }
  */
-export const RequireRole = (WrappedComponent, requireRoleProps = {}) => props => (
+const RequireRole = (WrappedComponent, requireRoleProps = {}) => props => (
   <RequireRoleConnected {...requireRoleProps}>
     <WrappedComponent {...props} />
   </RequireRoleConnected>
 );
+
+export default RequireRole;

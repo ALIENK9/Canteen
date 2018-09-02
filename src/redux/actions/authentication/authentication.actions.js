@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-// import crypto from 'crypto-js';
 import Http from '../../Http';
 import * as actionTypes from './authentication.actionTypes';
 import baseURLs from '../baseURLs';
@@ -18,8 +17,7 @@ export const loginFailure = (error, json) => {
   };
 };
 
-// HACK: magheggio bruttino per avere un'oggetto vuoto (però meno if)
-const setCurrentUser = (userObject) => {
+export const setCurrentUser = (userObject) => {
   const {
     token,
   } = userObject;

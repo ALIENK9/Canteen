@@ -18,7 +18,7 @@ import ResPage from './containers/reservations/ResPage';
 import MenuPage from './containers/menus/MenuPage';
 import LoginPage from './containers/login/LoginPage';
 import DishPage from './containers/dishes/DishPage';
-import { RequireRole } from './containers/Auth';
+import RequireRole from './containers/Auth';
 import Welcome from './containers/Welcome';
 import ForbiddenPage from './components/ForbiddenPage';
 

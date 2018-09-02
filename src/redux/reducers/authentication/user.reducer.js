@@ -4,6 +4,7 @@ const init = {
   name: '',
   admin: false,
   token: '',
+  id: '',
 };
 
 

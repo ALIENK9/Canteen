@@ -145,7 +145,7 @@ describe('reservations reducer test', () => {
     );
   });
 
-  it('should invaidate data list after failure', () => {
+  it('should invalidate data list after failure', () => {
     Reducer(reservations).withState(astate).expect(requestFailure('Errore!!')).toReturnState({
       ...astate,
       messages: {
@@ -279,7 +279,7 @@ describe('reservations reducer test', () => {
     });
   });
 
-  it('should clear all messages', () => {
+  it('should hide add panel', () => {
     Reducer(reservations).withState(Immutable({
       ...astate,
       ui: { ...astate.ui, addModalShow: true },
