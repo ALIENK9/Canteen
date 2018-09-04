@@ -29,7 +29,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "server": "nodemon src/server/server.js",
+    "server": "nodemon src/server/server.js"
   },
   "devDependencies": {
     "babel-preset-stage-0": "^6.24.1",
