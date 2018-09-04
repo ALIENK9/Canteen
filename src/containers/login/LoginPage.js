@@ -13,7 +13,7 @@ import Loader from '../../components/Loader';
 class LoginPage extends PureComponent {
   render() {
     const {
-      error, closeAlert, isAuthenticated, isRehydrated, admin,
+      error, closeAlert, isAuthenticated, isRehydrated/* ,admin */,
       // in futuro admin servirà per capire se l'user è admin
     } = this.props;
     if (!isRehydrated) return <Loader loading={!isRehydrated} />;
@@ -26,7 +26,6 @@ class LoginPage extends PureComponent {
             Login
           </PageHeader>
           { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
-          {console.log('Login admin?', isAuthenticated, admin)}
           { isAuthenticated && <Redirect to="/home" /> /* redirige se l'user è loggato */ }
           <LoginForm />
         </div>
@@ -40,14 +39,14 @@ LoginPage.propTypes = {
   isRehydrated: PropTypes.bool,
   isAuthenticated: PropTypes.bool,
   closeAlert: PropTypes.func.isRequired,
-  admin: PropTypes.bool,
+  // admin: PropTypes.bool, (inutile visto che è solo parte admin)
 };
 
 LoginPage.defaultProps = {
   error: '',
   isRehydrated: false,
   isAuthenticated: false,
-  admin: false,
+  // admin: false, (inutile visto che è solo parte admin)
 };
 
 /* eslint-disable no-underscore-dangle */

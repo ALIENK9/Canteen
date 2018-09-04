@@ -1,5 +1,4 @@
 import React from 'react';
-// import { PacmanLoader } from 'react-spinners';
 import PropTypes from 'prop-types';
 
 // TODO: add this to every component
@@ -9,6 +8,7 @@ const Loader = ({ loading }) => (
       <div className="loader-overlay">
         <div id="loader">
           Caricamento
+          {/* per accessibilità */}
         </div>
       </div>
     )}

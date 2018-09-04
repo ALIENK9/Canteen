@@ -7,28 +7,23 @@ export const loginRequest = () => ({
   type: actionTypes.LOGIN_REQUEST,
 });
 
-export const loginFailure = (error, json) => {
-  console.log(json);
-  return {
-    type: actionTypes.LOGIN_FAILURE,
-    payload: {
-      error: json ? json.message : error,
-    },
-  };
-};
+export const loginFailure = (error, json) => ({
+  type: actionTypes.LOGIN_FAILURE,
+  payload: {
+    error: json ? json.message : error,
+  },
+});
 
 export const setCurrentUser = (userObject) => {
   const {
     token,
   } = userObject;
-  console.log('Token in action', token);
   try {
-    const decoded = jwt.decode(token); // HACK: RIMUOVERE TRY SE NON USO VERIFY
+    const decoded = jwt.decode(token);
     const user = {
       ...decoded, // in realtà basta name, admin
       ...userObject, // dovrebbe contenere solo token
     };
-    console.log('Decoded token', user);
     return {
       type: actionTypes.SET_CURRENT_USER,
       payload: {
@@ -50,19 +45,9 @@ export const clearMessages = () => ({
 
 
 export const login = data => (dispatch) => {
-  // const URL = 'http://localhost:4000/login';
-  // const URL1 = 'http://192.168.30.102:9000/public/users/login';
-  // const URL3 = 'http://192.168.30.102:9000/protected/current';
-  // const URL2 = 'http://192.168.30.102:9000/public/users/test';
-  // const URL = 'http://192.168.30.102:8700/protected-resource/hello';
-  // const URL = 'http://192.168.30.102:8700/test';
   const { username, password } = data;
-  console.log(`Dati: ${username}:${password}`);
   const headers = new Map().set('Authorization', `Basic ${btoa(`${username}:${password}`)}`)
     .set('Content-Type', 'application/json');
-  /* const headers3 = new Map().set('Authorization',
-    'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYW0iLCJleHAiOjYxNdLDN5Ydwp1eNzjYQ0xkJ
-    -WXkgGdZKYGoa1K5DFHZc-yvJc-jg'); */
   return Http.get(baseURLs.auth, headers, null, dispatch, loginRequest, setCurrentUser,
     loginFailure);
 }; // ora chiama setCurrentUser

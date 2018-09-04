@@ -13,7 +13,6 @@ const Tabs = ({
   tabs, activeKey, onSelect, classes,
 }) => (
   <Nav bsStyle="tabs" activeKey={activeKey} onSelect={onSelect} className={`tab-inline-block ${classes}`}>
-    {console.log('Active tab', activeKey)}
     {tabs.map(tab => (
       <NavItem eventKey={tab.key} key={tab.key} title={tab.title}>
         {tab.title}

@@ -37,11 +37,6 @@ export const removeReservationFailure = error => ({
   payload: { error },
 });
 
-/* export const errorShow = error => ({
-  type: actionTypes.ERROR_SHOW,
-  payload: { error },
-}); */
-
 export const clearMessages = () => ({
   type: actionTypes.CLEAR_MESSAGES,
 });
@@ -61,13 +56,10 @@ export const loadFormDataStarted = () => ({
   type: actionTypes.LOAD_FORM_DATA_STARTED,
 });
 
-export const loadDayMealsSuccess = (json) => {
-  console.log('daymeals reservati', json);
-  return {
-    type: actionTypes.LOAD_DAYMEALS_SUCCESS,
-    payload: { json },
-  };
-};
+export const loadDayMealsSuccess = json => ({
+  type: actionTypes.LOAD_DAYMEALS_SUCCESS,
+  payload: { json },
+});
 
 export const loadDayMealsFailure = error => ({
   type: actionTypes.LOAD_DAYMEALS_FAILURE,
@@ -122,7 +114,6 @@ export const getReservations = (mode, date, moment) => (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
   const URL = `${baseURLs.reservations}/${mode}`;
   const params = { date, moment };
-  console.log('ISJIJISJDISJDISJDISJDIS', URL, moment, mode);
   return Http
     .get(URL, headers, params, dispatch, fetchReservationsStarted, fetchReservationsSuccess,
       requestFailure);
@@ -131,7 +122,6 @@ export const getReservations = (mode, date, moment) => (dispatch) => {
 export const deleteReservation = id => (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
   const URL = `${baseURLs.reservations}/${id}`;
-  // const URL = baseURL.concat(moment === 'lunch' ? 'userLunch/' : 'userDinner/').concat(`${id}`);
   return Http
     .delete(URL, headers, dispatch, fetchReservationsStarted,
       removeReservationSuccess.bind(this, id), removeReservationFailure);
@@ -148,7 +138,7 @@ export const getDayMenu = (date, moment) => async (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
   const URL = baseURLs.menus;
   const params = { date };
-  // TODO: fix this NOTE: HACK: FIXME:
+  // TODO: improve this HACK:
   try {
     const menu = await Http.get(URL, headers, params, dispatch, loadFormDataStarted);
     if (menu.failure) return dispatch(loadDayMealsFailure(menu.error));
@@ -162,7 +152,6 @@ export const getDayMenu = (date, moment) => async (dispatch) => {
 export const postReservation = data => (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
   const baseURL = baseURLs.reservations;
-  // const URL = baseURL.concat(moment === 'lunch' ? 'userLunch/' : 'userDinner/');
   return Http.post(baseURL, headers, dispatch, JSON.stringify(data), addReservationStarted,
     addReservationSuccess, showErrorForm);
 };

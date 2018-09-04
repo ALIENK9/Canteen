@@ -24,13 +24,11 @@ function createToken(payload) {
 
 // Verify the token
 async function verifyToken(token) {
-  const t = jwt.verify(token, SECRET_KEY);
-  console.log(t);
+  jwt.verify(token, SECRET_KEY);
 }
 
 // Check if the user exists in database
 function isAuthenticated({ username, password }) {
-  console.log(userdb);
   return userdb.users.findIndex(user => user.identifier === username
      && user.password === password) !== -1;
 }
@@ -38,41 +36,34 @@ function isAuthenticated({ username, password }) {
 // verifica credenziali e invia token todo: fornire Nome Cognome e admin
 server.get('/login', (req, res) => {
   const { authorization } = req.headers;
-  console.debug(authorization);
   const [/* bearer */, base64Auth] = authorization.split(' '); // token
   const string = Buffer.from(base64Auth, 'base64').toString(); // decode Base64 string
   const [username, password] = string.split(':'); // split username:password
   if (!isAuthenticated({ username, password })) {
     const status = 401;
-    console.log('dasasasad');
     const message = 'Incorrect email or password';
     res.status(status).json({ status, message });
     return;
   }
   const accessToken = createToken({ name: username, admin: true });
-  console.log('accesstoken cre', accessToken);
   res.status(200).json({ token: accessToken });
 });
 
 // verifica token ad ogni richiesta tranne che nella route precedente
 /* eslint-disable consistent-return */
 server.all('*', async (req, res, next) => {
-  console.log('path', req.path);
   if (req.path === '/login') return next();
   if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer') {
     const status = 401;
-    console.log(req.headers.authorization);
     const message = 'Bad authorization header';
     res.status(status).json({ status, message });
     return req;
   }
   try {
-    console.log(req.headers.authorization.split(' ')[1], typeof req.headers.authorization.split(' ')[1]);
     await verifyToken(req.headers.authorization.split(' ')[1]);
     next();
   } catch (err) {
     const status = 401;
-    console.log('Catch verify not vaid', err);
     const message = 'Error: accessToken is not valid';
     res.status(status).json({ status, message });
   }

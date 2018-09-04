@@ -18,7 +18,6 @@ import { getMenu, getMoment } from '../selectors/menufilter.selector';
 class MenuPage extends Component {
   constructor(props) {
     super(props);
-    // this.handleMomentChange = this.handleMomentChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
@@ -40,7 +39,6 @@ class MenuPage extends Component {
       lunch: lunch.filter(meal => meal.checked === true),
       dinner: dinner.filter(meal => meal.checked === true),
     };
-    console.log('before submit', processedData);
     if (processedData.lunch.length || processedData.dinner.length) onSubmit(processedData);
   }
 
@@ -68,7 +66,7 @@ class MenuPage extends Component {
 
           </Panel.Body>
           <Panel.Footer>
-            <Button // volendo aggiungere un ConfirmModal
+            <Button // TODO: aggiungere un ConfirmModal
               className="pull-left"
               bsStyle="danger"
               onClick={() => this.handleDelete()}
@@ -96,11 +94,9 @@ MenuPage.propTypes = {
   match: PropTypes.object.isRequired,
   history: PropTypes.object,
   loading: PropTypes.bool,
-  // moment: PropTypes.oneOf(['lunch', 'dinner']),
   error: PropTypes.string,
   success: PropTypes.string,
   closeAlert: PropTypes.func,
-  // onMomentChange: PropTypes.func,
   onSubmit: PropTypes.func,
   onDelete: PropTypes.func,
   allEntries: PropTypes.shape({
@@ -119,13 +115,11 @@ MenuPage.propTypes = {
 };
 
 MenuPage.defaultProps = {
-  // moment: 'lunch',
   history: null,
   loading: true,
   success: '',
   error: '',
   closeAlert: () => {},
-  // onMomentChange: () => {},
   onSubmit: () => {},
   onDelete: () => {},
   allEntries: {

@@ -10,28 +10,21 @@ import {
 import { mapTypeToString } from '../utils';
 import getVisibleMenu, { getMoment } from '../selectors/menufilter.selector';
 
-// TODO: applicare lo schema con pagina principale che ho fatto anche per reservations e dishes
-// (che vanno uniformati)
+/**
+ * Gestisce la lista di piatti nel menù
+ */
 class MenuList extends Component {
   componentDidMount() {
     const {
       day, getData,
     } = this.props;
-    // getTodayMenu(day);
     getData(day);
-    // getDishes();
   }
 
   render() {
     const {
       onItemClick, moment, entries,
     } = this.props;
-    console.log('Entrues in list', entries, entries[moment], Array.isArray(entries[moment]));
-    /* const menuIds = meals[moment].map(el => el.id);
-    const entries = dishes.map(dish => ({
-      ...dish,
-      checked: menuIds.includes(dish.id),
-    })); */
     return (
       <React.Fragment>
         {(!entries || !entries.length) && (
@@ -66,38 +59,21 @@ MenuList.propTypes = {
     name: PropTypes.string,
   })),
   onItemClick: PropTypes.func.isRequired,
-  // getTodayMenu: PropTypes.func.isRequired,
-  // getDishes: PropTypes.func.isRequired,
   getData: PropTypes.func.isRequired,
   day: PropTypes.string.isRequired,
-  // match: PropTypes.any.isRequired,
   moment: PropTypes.oneOf(['lunch', 'dinner']),
-  // error: PropTypes.string,
-  // success: PropTypes.string,
-  // closeMessage: PropTypes.func.isRequired,
 };
 
 MenuList.defaultProps = {
-  // dishes: [],
-  /* meals: {
-    lunch: [],
-    dinner: [],
-  }, */
   entries: {
     lunch: [],
     dinner: [],
   },
   moment: 'lunch',
-  // error: '', // messaggio di errore
-  // success: '', // conferma di successo oppure vuoto
 };
 
 const mapStateToProps = state => ({
-  /* meals: {
-      lunch: getVisibleMenu(state.menus), // (lunch, filter),
-      dinner: getVisibleMenu(state.menus), // (dinner, filter),
-    }, */
-  entries: getVisibleMenu(state.menus), // state.menus.data.entries,
+  entries: getVisibleMenu(state.menus), // selettore per state.menus.data.entries,
   loading: state.menus.ui.loading,
   moment: getMoment(state.menus),
   error: state.menus.messages.error,

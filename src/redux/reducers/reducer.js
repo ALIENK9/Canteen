@@ -56,20 +56,3 @@ const persistConfig = {
 };
 
 export default persistReducer(persistConfig, rootReducer);
-
-/* TRANSFORM CHE SALVA TUTTO USER E ISAUTH (quella vecchia)
-const transformAuth = createTransform(
-  stateToBePersisted => ({
-    isAuthenticated: stateToBePersisted.isAuthenticated,
-    user: stateToBePersisted.user,
-  }),
-  stateToBeRehydrated => ({
-    ...stateToBeRehydrated,
-    messages: {
-      error: '',
-      success: '',
-    },
-    ui: { loading: false },
-  }),
-  { whitelist: ['authentication'] },
-); */

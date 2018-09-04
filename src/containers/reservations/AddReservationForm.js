@@ -60,7 +60,6 @@ class AddReservationForm extends Component {
    */
   handleChange(event) {
     const { name, value } = event.target;
-    console.log(value, typeof value);
     this.setState({ [name]: value });
   }
 
@@ -75,7 +74,6 @@ class AddReservationForm extends Component {
 
   handleCheckboxChange(e) {
     const { checked } = e.target;
-    console.log(checked);
     this.setState({ lunchbag: checked, hour: '' });
   }
 
@@ -99,15 +97,15 @@ class AddReservationForm extends Component {
     const h = dateHour.getHours().toString();
     const m = dateHour.getMinutes().toString();
 
-    // TALE COSA ESISTE PER L'UNICO SCOPO DI OTTENERE IL NOME DELLA PIETANZA DA MOSTRARE
+    // OTTIENE DALL'ID IL NOME DELLA PIETANZA DA MOSTRARE
     const onlyIds = dayMeals.map(meal => meal.id);
-    const mealsIndex = [ // indici degli elementi scelti nell'array dayMeals
+    const mealsIndex = [ // indici degli elementi scelti nel form, all'interno dell'array dayMeals
       onlyIds.indexOf(maindish),
       onlyIds.indexOf(seconddish),
       onlyIds.indexOf(sidedish),
       onlyIds.indexOf(dessert),
     ];
-    // -----------------------fine tale cosa----------------------------------------------
+    // ----------------------FINE----------------------------------------------
     const userSubmit = { id: user.value, name: user.label };
 
     const selectedList = mealsIndex.filter(id => id !== -1);
@@ -135,7 +133,6 @@ class AddReservationForm extends Component {
       moment,
       hour: '--:--',
     };
-    console.warn('Dato pronto per submit: ', dato);
     onSubmit(dato, moment, view);
   }
 
@@ -223,7 +220,6 @@ class AddReservationForm extends Component {
                     disabled={!!lunchbag}
                     inline
                   >
-                    {console.log('Prentazione', state, state[obj.inputname], meal)}
                     {meal.name}
                   </Radio>
                 )) }

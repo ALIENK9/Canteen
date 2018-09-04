@@ -6,7 +6,6 @@ import React from 'react';
 import Select from 'react-select';
 import SearchArrow from './reservations/SearchArrow';
 
-// REVIEW: POTREBBE ESSERE PIÙ ESTENSIBILE
 /**
  *
  * @param {Object} props to know what buttons, searchbar and add button
@@ -39,7 +38,6 @@ const Toolbar = ({
             <label htmlFor="searchinput" className="hidden" aria-hidden="false">
               Ricerca
             </label>
-            {console.log('opzioni IN TOOLBAR', search.options)}
             <Select
               arrowRenderer={SearchArrow}
               aria-label="Ricerca elementi"

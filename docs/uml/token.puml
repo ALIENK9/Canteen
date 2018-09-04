@@ -7,7 +7,7 @@ skinparam titleBackgroundColor Aqua-CadetBlue
 
 node Backend {
   node "Microservizio di autenticazione" as auth
-  database Utenti as db
+  database "Database\n di \n utenti" as db
   folder "Protetti da token" {
     node "Microservizio 1" as dish
     node "Microservizio 2"
@@ -24,8 +24,8 @@ client ---> auth : login()
 auth -> db : controllo\n credenziali
 db -[#green]-> auth
 client <-[#green]- auth : token
-client -> dish : request()
-dish ---> auth : verifica \ntoken
+client -> dish : HttpRequest()
+dish ---> auth : verifica \ndel token
 auth -[#green]-> dish
 dish -[#green]-> client : dati
 @enduml

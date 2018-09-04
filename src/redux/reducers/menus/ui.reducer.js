@@ -19,7 +19,7 @@ const ui = (state = init, action = {}) => {
     case actionTypes.DELETE_MENU_FAILURE:
     case actionTypes.POST_MENU_SUCCESS:
     case actionTypes.PUT_MENU_SUCCESS:
-    case actionTypes.FETCH_MENU_FAILURE: // case actionTypes.FETCH_MENU_SUCCESS:
+    case actionTypes.FETCH_MENU_FAILURE:
     case actionTypes.FETCH_ALL_SUCCESS:
       return {
         ...state,

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 const UserReservationItem = ({ name, hour, meals }) => (
   <div className="card-container center">
-    {console.log('Meals array in userresItem', meals)}
     <strong>
       {name}
     </strong>

@@ -19,7 +19,7 @@ import { logout } from '../redux/actions/authentication/authentication.actions';
  */
 function createLink(linkName, eventKey, toPath, currentLocation) {
   if (currentLocation.includes(toPath)) {
-    return (
+    return ( // link attivo e disabilitato
       <li className="active">
         <NavBar.Text>
           {linkName}
@@ -27,7 +27,7 @@ function createLink(linkName, eventKey, toPath, currentLocation) {
       </li>
     );
   }
-  return (
+  return ( // link normale cliccabile
     <LinkContainer to={toPath}>
       <NavItem eventKey={eventKey}>
         {linkName}

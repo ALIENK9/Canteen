@@ -1,26 +1,26 @@
-@startuml Auth Component
+@startuml Auth
 
 class Auth implements Component {
-  {static} bool hasRequiredRole()
-  void ensureAuth()
+  {static} hasRequiredRole() : bool
+  ensureAuth() : void
   render()
 }
 
 class ConcreteComponent implements Component {
-  method()
+  ownMethod()
   render()
 }
 
 interface Component {
-  void componentDidUpdate()
-  void componentDidMount()
-  void componentShouldUpdate()
+  componentDidUpdate() : void
+  componentDidMount() : void
+  componentShouldUpdate() : void
   render()
 }
 
-note right of Auth : Decorator component
+note right of Auth : HOC component
 
-Component o--- Auth
+Component <---o Auth
 
 
 @enduml

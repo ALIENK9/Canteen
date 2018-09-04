@@ -21,7 +21,6 @@ class DishesList extends Component {
     const {
       dishes, onDelete, loading,
     } = this.props;
-    console.log('Dishes in list', dishes);
     return (
       <React.Fragment>
         {(!dishes || !dishes.length) && (
@@ -39,7 +38,6 @@ class DishesList extends Component {
                 deleteLabel={`Elimina il piatto ${dish.name}`}
                 confirmation
               >
-                {console.log('sdjkdsds', dish.id)}
                 <DishItem
                   name={dish.name}
                   type={mapTypeToString(dish.type)}

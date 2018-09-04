@@ -7,12 +7,9 @@ const noType = () => ({
 });
 
 
-const genericError = (error) => {
-  console.log('THERE WAS ERROR HERE', error);
-  return (error && error.message === 'timeout'
-    ? 'La connessione al server ha impiegato troppo tempo. Ti preghiamo di riprovare o attendere qualche minuto.'
-    : 'Qualcosa è andato storto. Per favore riprova');
-};
+const genericError = error => (error && error.message === 'timeout'
+  ? 'La connessione al server ha impiegato troppo tempo. Ti preghiamo di riprovare o attendere qualche minuto.'
+  : 'Qualcosa è andato storto. Per favore riprova');
 
 /**
  * Add a timeout with specified milliseconds. If promise doesn't resolve in time
@@ -37,7 +34,6 @@ const fetchGet = async (URL, headers, dispatch, onStart, onSuccess, onFail) => {
     let data;
     if (response.status === 404 && json.scope === 'db') data = null;
     else if (response.status === 200) {
-      console.log('Dati ', json);
       data = json;
     } else {
       const errorMessage = isEmpty(json)
@@ -51,7 +47,6 @@ const fetchGet = async (URL, headers, dispatch, onStart, onSuccess, onFail) => {
       }
       return dispatch(onFail(errorMessage));
     }
-    console.log('OnSuccess type', onSuccess, typeof onSuccess);
     if (!onSuccess || typeof onSuccess !== 'function') {
       return {
         failure: false,
@@ -60,7 +55,6 @@ const fetchGet = async (URL, headers, dispatch, onStart, onSuccess, onFail) => {
     }
     return dispatch(onSuccess(data));
   } catch (err) {
-    console.error(err);
     if (!onFail || typeof onFail !== 'function') {
       return {
         error: genericError(err),
@@ -69,29 +63,10 @@ const fetchGet = async (URL, headers, dispatch, onStart, onSuccess, onFail) => {
     }
     return dispatch(onFail(genericError(err)));
   }
-
-  /* return fetch(URL, { method: 'GET', headers })
-    .then(response => Promise.all([response, response.json()]))
-    .then(([response, json]) => {
-      if (response.status === 404 && json.scope === 'db') dispatch(onSuccess(null));
-      else if (response.status === 200) {
-        console.log('Dati ', json);
-        dispatch(onSuccess(json));
-      } else {
-        console.error('Errore GET in corso', response);
-        console.log('Dati ', json);
-        const errorMessage = isEmpty(json)
-          ? 'La richiesta GET al server è fallita'
-          : json.message;
-        dispatch(onFail(errorMessage));
-      }
-    }) // HACK: metodo di callback anche qui?
-    .catch(() => dispatch(onFail('Qualcosa è andato storto. Per favore riprova'))); */
 };
 
 
 const fetchPut = (URL, headers, dispatch, data, onStart, onSuccess, onFail) => {
-  console.log('PUT data: ', data);
   dispatch(onStart());
   const config = {
     method: 'PUT',
@@ -116,7 +91,6 @@ const fetchPut = (URL, headers, dispatch, data, onStart, onSuccess, onFail) => {
 
 const fetchDelete = (URL, headers, dispatch, onStart, onSuccess, onFail) => {
   dispatch(onStart());
-  // const headers = getFetchHeaders();
   const config = {
     method: 'DELETE',
     headers,
@@ -125,11 +99,8 @@ const fetchDelete = (URL, headers, dispatch, onStart, onSuccess, onFail) => {
     .then(response => Promise.all([response, response.json()]))
     .then(([response, json]) => {
       if (response.status === 200) {
-        console.log('deleting');
         dispatch(onSuccess());
-        console.log('deleted');
       } else {
-        console.log('error deleting');
         const errorMessage = isEmpty(json)
           ? 'Impossibile effettuare la richiesta di cancellazione'
           : json.message;
@@ -141,25 +112,18 @@ const fetchDelete = (URL, headers, dispatch, onStart, onSuccess, onFail) => {
 
 const fetchPost = (URL, headers, dispatch, data, onStart, onSuccess, onFail) => {
   dispatch(onStart());
-  // const headers = getFetchHeaders();
   const config = {
     method: 'POST',
     headers,
     body: data,
-    // mode: 'no-cors',
   };
-  console.log('Posted body', config.body);
 
   return withTimeout(5000, fetch(URL, config)
     .then(response => Promise.all([response, response.json()]))
-  // error => handleRejectionError(dispatch, onFail, error)) // gestisce il reject della fetch
     .then(([response, json]) => {
       if (response.status === 200 || response.status === 201) {
         dispatch(onSuccess(json));
-        console.log(`Post response ${JSON.stringify(json)}`);
       } else {
-        console.log('error posting data, response.json', json);
-        console.log('Risposta', response.status, response.statusText);
         const errorMessage = isEmpty(json)
           ? 'Impossibile aggiungere i dati. Per favore riprova.'
           : json.message;
@@ -189,14 +153,11 @@ export default class Http {
     onFail) {
     const headers = { ...defaultHeaders };
     headersMap.forEach((v, k) => {
-      console.log('Chiave ', k, v, typeof k);
       headers[k] = v;
     });
-    console.log('Header della GET', headers, stringURL);
     const urlParams = new URLSearchParams(searchParams || {});
     const url = new URL(stringURL);
     url.search = urlParams;
-    console.log('URL', url);
     const startFunction = onStart || noType;
     return fetchGet(url, headers, dispatch, startFunction, onSuccess, onFail);
   }
@@ -214,7 +175,6 @@ export default class Http {
   static put(stringURL, headersMap = new Map(), dispatch, data, onStart, onSuccess, onFail) {
     const headers = { ...defaultHeaders };
     headersMap.forEach((v, k) => { headers[k] = v; });
-    // console.debug('Header put', defaultHeaders, headersMap);
     const startFunction = onStart || noType;
     return fetchPut(stringURL, headers, dispatch, data, startFunction, onSuccess, onFail);
   }
@@ -233,7 +193,6 @@ export default class Http {
     const headers = { ...defaultHeaders };
     headersMap.forEach((v, k) => { headers[k] = v; });
     const startFunction = onStart || noType;
-    console.log('DELETE REQUEST');
     return fetchDelete(stringURL, headers, dispatch, startFunction, onSuccess, onFail);
   }
 
@@ -251,8 +210,6 @@ export default class Http {
     const headers = { ...defaultHeaders };
     headersMap.forEach((v, k) => { headers[k] = v; });
     const startFunction = onStart || noType;
-    console.log('Posting data: ', data);
-    console.log('URL: ', stringURL);
     return fetchPost(stringURL, headers, dispatch, data, startFunction, onSuccess, onFail);
   }
 
@@ -262,12 +219,11 @@ export default class Http {
     const urlParams = new URLSearchParams(searchParams || {});
     const url = new URL(stringURL);
     url.search = urlParams;
-    console.log('simple URL', url, headers);
     return withTimeout(5000, fetch(url, { method: 'GET', headers }));
   }
 }
 
-// VERSIONE UNA FETCH
+// HACK: EVENTUALE VERSIONE CON UNA SOLA FETCH
 /*
 const GET = 'GET';
 const POST = 'POST';

@@ -29,7 +29,6 @@ export function immutableRemove(array, index) {
     ...array.slice(0, index),
     ...array.slice(index + 1),
   ];
-  console.log(index, arr);
   return arr;
 }
 
@@ -63,13 +62,8 @@ export function getAuthFieldsFromStorage() {
   */
   const data = sessionStorage.getItem('persist:auth');
   if (!data) return new Map();
-  // console.debug('RAW DATA', data, typeof data);
-  // console.debug('PARSED DATA', rootObject, typeof rootObject);
   const { authentication } = JSON.parse(data); // || '{"token":""}';
-  // console.debug('AUTH SUBOBJECT', authentication, typeof authentication);
   const { token } = JSON.parse(authentication);
-  // console.debug('TOKEN', token, typeof token);
   const headers = token ? new Map().set('Authorization', `Bearer ${token}`) : new Map();
-  console.debug('FINAL HEADERS:', headers);
   return headers;
 }

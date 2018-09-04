@@ -16,14 +16,12 @@ class UserList extends Component {
 
   componentDidMount() {
     const { getData, day, moment } = this.props;
-    console.log('didMount userlist', moment);
     getData(day, moment);
   }
 
   componentDidUpdate(prevProps) {
     const { getData, day, moment } = this.props;
     if (moment !== prevProps.moment) {
-      console.log('updated');
       getData(day, moment);
     }
   }
@@ -37,8 +35,6 @@ class UserList extends Component {
     const {
       list,
     } = this.props;
-    // const dayMeals = getMeals(match.params.day, moment);
-    console.log('UserList list', list);
     return (
       <React.Fragment>
         {(!list || !list.length) && (
@@ -48,7 +44,6 @@ class UserList extends Component {
         )}
         {(list && list.length > 0) && (
         <List>
-          {console.log('MEALS IN USERLIST', list)}
           { list.map(reserv => (
             <TextBox
               key={reserv.id}

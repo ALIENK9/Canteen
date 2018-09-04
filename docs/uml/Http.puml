@@ -1,0 +1,12 @@
+@startuml Http
+
+class Http {
+  {static} get(URL, header, params, dispatch, onStart, onSuccess, onFail) : Promise
+  {static} put(URL, header, dispatch, data, onStart, onSuccess, onFail) : Promise
+  {static} post(URL, header, dispatch, data, onStart, onSuccess, onFail) : Promise
+  {static} delete(URL, header, dispatch, onStart, onSuccess, onFail) : Promise
+  {static} simpleGet(URL, header, params) : Promise
+}
+
+
+@enduml

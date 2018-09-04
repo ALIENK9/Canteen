@@ -16,8 +16,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       value: res.user && res.user.id,
     }),
   );
-  console.log('é un array', ownProps.view === 'users' && Array.isArray(ownProps.list));
-  console.log('eccolo: ', a);
   return {
     buttons: ownProps.view === 'meals' ? [
       {
@@ -53,7 +51,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       placeholder: 'Nome Cognome',
     },
     add: {
-    // REVIEW: trick un po' sporco per avere acesso alla prop 'view' e nascondere la barra
+    // ownProps serve per avere acesso alla prop 'view' e nascondere la barra
       presence: ownProps.view === 'users',
       func: () => dispatch(addModalShow()),
     },

@@ -18,7 +18,7 @@
 - [x] `Reselect` per selectors che rendono più efficienti i metodi di filter
 - [x] Aggiungere ricerca utenti su prenotazioni (react-select)
 - [x] Aggiungere ricerca piatti su dishes (react-select)
-- [ ] Migliorare Http API (callback si/no)
+- [\] Migliorare Http API (callback si/no)
 
 ## !
 

@@ -92,7 +92,6 @@ export const getDishes = () => (dispatch) => {
 export const deleteDish = id => (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
   const URL = `${baseURLs.dishes}/${id}`;
-  console.debug('URL DELTEE: ', URL);
   return Http
     .delete(URL, headers, dispatch, removeDishStarted, removeDishSuccess.bind(this, id),
       removeDishFailure);

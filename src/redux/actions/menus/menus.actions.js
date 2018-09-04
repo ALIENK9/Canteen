@@ -12,20 +12,9 @@ export const fetchMenuStarted = () => ({
   type: actionTypes.FETCH_MENU_STARTED,
 });
 
-/* export const fetchMenuSuccess = json => ({
-  type: actionTypes.FETCH_MENU_SUCCESS,
-  payload: { json },
-}); */
-
-/* export const fetchDishesSuccess = json => ({
-  type: actionTypes.FETCH_DISHES_SUCCESS,
-  payload: { json },
-}); */
-
 export const fetchAllDataSuccess = (menu, dishes) => {
   const menuList = menu || { id: '', lunch: [], dinner: [] };
   const dishesList = dishes || [];
-  console.log('DEUGB', menu, dishes);
   const ids = {
     lunch: (menu && menu.lunch && menu.lunch.map(el => el.id)) || [],
     dinner: (menu && menu.dinner && menu.dinner.map(el => el.id)) || [],
@@ -44,7 +33,6 @@ export const fetchAllDataSuccess = (menu, dishes) => {
       ...lunchDishes,
     ],
   };
-  console.log('TUTTI I PIATTI', entries);
   return {
     type: actionTypes.FETCH_ALL_SUCCESS,
     payload: { entries },
@@ -101,7 +89,42 @@ export const filterMeals = filter => ({
 
 // ASYNC
 
-/* // VECCHIA CHE VANNO BENISSIMo
+export const getAllData = date => async (dispatch) => {
+  const headers = getAuthFieldsFromStorage(); // Map
+  const params = { date };
+  const menuURL = baseURLs.menus; // fetch previous menu
+  const menumeals = await Http.get(menuURL, headers, params, dispatch, fetchMenuStarted);
+  if (menumeals.failure) {
+    dispatch(fetchMenuFailure(menumeals.error));
+  } else {
+    const dishesURL = baseURLs.dishes; // fetch all dishes
+    const dishes = await Http.get(dishesURL, headers, null, dispatch, fetchMenuStarted);
+    if (dishes.failure) {
+      dispatch(fetchMenuFailure(dishes.error));
+    } else {
+      dispatch(fetchAllDataSuccess(menumeals.data, dishes.data));
+    }
+  }
+};
+
+export const putMenus = meals => (dispatch) => {
+  const headers = getAuthFieldsFromStorage(); // Map
+  const URL = baseURLs.menus;
+  return meals.id
+    ? Http.put(URL, headers, dispatch, JSON.stringify(meals), postputMenuStarted,
+      putMenuSuccess, postputMenuFailure)
+    : Http.post(URL, headers, dispatch, JSON.stringify(meals), postputMenuStarted,
+      postMenuSuccess, postputMenuFailure);
+};
+
+export const deleteMenu = id => (dispatch) => {
+  const headers = getAuthFieldsFromStorage(); // Map
+  const URL = `${baseURLs.menus}/${id}`;
+  return Http.delete(URL, headers, dispatch, postputMenuStarted, deleteMenuSuccess,
+    deleteMenuFailure);
+};
+
+/* // VERSIONI VECCHIE
 export const getAllDishes = json => (dispatch) => {
   const headers = getAuthFieldsFromStorage(); // Map
   const URL = baseURLs.dishes; // fetch dei piatti
@@ -123,40 +146,3 @@ export const getAllDishes = json => (dispatch) => {
   return Http.get(URL, headers, params, dispatch, fetchMenuStarted, getAllDishes,
     fetchMenuFailure);
 }; */
-
-export const getAllData = date => async (dispatch) => {
-  const headers = getAuthFieldsFromStorage(); // Map
-  const params = { date };
-  const menuURL = baseURLs.menus; // fetch previous menu
-  const menumeals = await Http.get(menuURL, headers, params, dispatch, fetchMenuStarted);
-  if (menumeals.failure) {
-    dispatch(fetchMenuFailure(menumeals.error));
-  } else {
-    const dishesURL = baseURLs.dishes; // fetch all dishes
-    const dishes = await Http.get(dishesURL, headers, null, dispatch, fetchMenuStarted);
-    console.log('mega actions', dishes.error, dishes.data);
-    if (dishes.failure) {
-      dispatch(fetchMenuFailure(dishes.error));
-    } else {
-      dispatch(fetchAllDataSuccess(menumeals.data, dishes.data));
-    }
-  }
-};
-
-export const putMenus = meals => (dispatch) => {
-  const headers = getAuthFieldsFromStorage(); // Map
-  console.log('acction call data: ', meals, headers);
-  const URL = baseURLs.menus;
-  return meals.id
-    ? Http.put(URL, headers, dispatch, JSON.stringify(meals), postputMenuStarted,
-      putMenuSuccess, postputMenuFailure)
-    : Http.post(URL, headers, dispatch, JSON.stringify(meals), postputMenuStarted,
-      postMenuSuccess, postputMenuFailure);
-};
-
-export const deleteMenu = id => (dispatch) => {
-  const headers = getAuthFieldsFromStorage(); // Map
-  const URL = `${baseURLs.menus}/${id}`;
-  return Http.delete(URL, headers, dispatch, postputMenuStarted, deleteMenuSuccess,
-    deleteMenuFailure);
-};

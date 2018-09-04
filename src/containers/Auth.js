@@ -18,7 +18,6 @@ class RequireRoleBase extends Component {
     } else { // stringa semplice
       hasReqRole = !requiredRole || requiredRole === currentUserRole;
     }
-    console.debug('Has correct role??', hasReqRole, requiredRole, currentUserRole);
     return hasReqRole;
   }
 
@@ -54,18 +53,14 @@ class RequireRoleBase extends Component {
     const {
       isAuthenticated, isRehydrated, requiredRole, currentUserRole,
     } = props;
-    console.debug('ensureAuth', 'IsAuth', isAuthenticated, 'IsRehydrated', isRehydrated, 'reqRole', requiredRole, 'currentRole', currentUserRole);
     if (!isRehydrated) { // finchè lo stato non è settato non fa nulla
       return;
     }
     if (!isAuthenticated) {
-      console.debug('!!!!!!!!!!isAuthenticated');
       this.setState({ redirect: '/login' }); // non autenticato
     } else if (!RequireRoleBase.hasRequiredRole(requiredRole, currentUserRole)) {
-      console.debug('!!!!!!!!!!giustoRole');
       this.setState({ redirect: '/forbidden' }); // autenticato ma non ha i permessi
     } else {
-      console.debug('Ruolo giuto');
       this.setState({ redirect: null }); // autenticato e con i permessi
     }
   }

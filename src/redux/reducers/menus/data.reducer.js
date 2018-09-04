@@ -33,20 +33,9 @@ const data = (state = init, action = {}) => {
           dinner: state.entries.dinner.map(meal => ({ ...meal, checked: false })),
         },
       };
-    /* case actionTypes.FETCH_DISHES_SUCCESS:
-      return {
-        ...state,
-        dishes: action.payload.json,
-      };
-    case actionTypes.FETCH_MENU_SUCCESS:
-      return {
-        ...state,
-        meals: action.payload.json,
-      }; */
     case actionTypes.FETCH_MENU_FAILURE:
       return init;
     case actionTypes.TOGGLE_MEAL:
-      console.log('Toggling checked', action.payload.moment, action.payload.id, action.payload.value);
       return {
         ...state,
         entries: {

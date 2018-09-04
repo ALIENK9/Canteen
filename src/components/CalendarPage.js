@@ -89,7 +89,6 @@ class CalendarPage extends React.Component {
 
   redirect(date) {
     const { history, type } = this.props;
-    // todo: possibilmente rimuovere 'type' in favore di un push sull'URL precedente
     const localDate = (new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1))
       .toISOString().substring(0, 10);
     history.push(`/${type}/${localDate}`);

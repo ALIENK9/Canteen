@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-// import { withRouter } from 'react-router-dom';
 import Toolbar from '../../components/Toolbar';
 import { filterMeals } from '../../redux/actions/menus/menus.actions';
 import { FILTER_KEYS } from '../costants';

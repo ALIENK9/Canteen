@@ -11,7 +11,7 @@ import './css/App.css';
 import './css/Loader.css';
 import DocumentTitle from 'react-document-title';
 import Navbar from './containers/Navbar';
-import Footer from './components/Footer';
+// import Footer from './components/Footer';
 import Reservations from './components/homes/Reservations';
 import Menus from './components/homes/Menus';
 import ResPage from './containers/reservations/ResPage';

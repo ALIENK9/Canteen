@@ -8,7 +8,6 @@ export const getSearchKey = state => state.ui.searchtext;
 const getVisibleDishes = createSelector(
   [getFilter, getDishes],
   (visibilityFilter, dishes) => {
-    console.log('selection', dishes);
     switch (visibilityFilter) {
       case FILTER_KEYS.MAIN:
         return dishes.filter(dish => dish.type === 1);

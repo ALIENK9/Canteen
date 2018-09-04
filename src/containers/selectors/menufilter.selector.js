@@ -8,7 +8,6 @@ export const getMoment = state => state.ui.moment;
 const getVisibleMenu = createSelector(
   [getFilter, getMoment, getMenu],
   (visibilityFilter, moment, dishes) => {
-    console.log('select', dishes, visibilityFilter, typeof visibilityFilter);
     switch (visibilityFilter) {
       case FILTER_KEYS.MAIN:
         return dishes[moment].filter(dish => dish.type === 1);

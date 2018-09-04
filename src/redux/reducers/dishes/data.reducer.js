@@ -9,7 +9,6 @@ const init = {
 const data = (state = init, action = {}) => {
   switch (action.type) {
     case actionTypes.FETCH_DISHES_SUCCESS:
-      console.log('Reducing diches', action.payload.json);
       return {
         ...state,
         list: action.payload.json || [],

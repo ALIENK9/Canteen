@@ -1,8 +1,8 @@
-# dolphin
-Graphic Interface del servizio di prenotazione mensa. Per ora solo parte _admin_.
+# Canteen
+Graphic Interface del servizio di prenotazione mensa realizzata in React + Redux. Riguarda solamente la parte _admin_.
 
-## Utilizzo
-1. Eseguire `npm install` per installare le dipendenze
-2. Avviare il (finto) server JSON con `npm run server`
-3. Avviare il server frontend con `npm start`
-4. In alternativa si possono avviare assieme con `npm run all`
+## Avvio
+1. Installare Node.js da https://nodejs.org/it/;
+2. Dalla cartella della repository eseguire `npm install` per installare le dipendenze;
+3. Avviare il server frontend con `npm start`.
+**N.B**: Non sarà possibile utilizzare i microservizi backend dall'esterno, quindi non è possibile visualizzare nient'altro che la pagina di benvenuto e di login.
