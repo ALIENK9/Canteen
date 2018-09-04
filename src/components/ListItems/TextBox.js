@@ -50,35 +50,6 @@ class TextBox extends Component {
   }
 }
 
-/* class TextBox extends Component {
-  constructor(props) {
-    super(props);
-    this.handleDelete = this.handleDelete.bind(this);
-  }
-
-  handleDelete() {
-    const { onDelete, id } = this.props;
-    onDelete(id);
-  }
-
-  render() {
-    const { children, onDelete, id } = this.props;
-    const styles = 'flex-item w3-card w3-hover-shadow';
-    return (
-      <div className={styles}>
-        <div role="textbox">
-          {children}
-        </div>
-        <div className="pull-right">
-          <Button onClick={() => onDelete(id)} bsStyle="danger" aria-hidden="true">
-            <Glyphicon glyph="glyphicon glyphicon-trash" />
-          </Button>
-        </div>
-      </div>
-    );
-  }
-} */
-
 TextBox.propTypes = {
   children: PropTypes.node,
   onDelete: PropTypes.func.isRequired,

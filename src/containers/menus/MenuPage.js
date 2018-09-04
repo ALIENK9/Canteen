@@ -14,18 +14,40 @@ import Loader from '../../components/Loader';
 import MenuToolbar from './MenuToolbar';
 import MomentTabs from './MomentTabs';
 import { getMenu, getMoment } from '../selectors/menufilter.selector';
+import ConfirmModal from '../../components/ConfirmModal';
 
 class MenuPage extends Component {
   constructor(props) {
     super(props);
+    this.state = { showDeleteConfirm: false };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.askDeleteConfirmation = this.askDeleteConfirmation.bind(this);
+    this.hideDeleteConfirmation = this.hideDeleteConfirmation.bind(this);
   }
 
+  /**
+   * Handle deltion of menù and hide confirm box
+   */
   handleDelete() {
     const { allEntries, onDelete } = this.props;
     const { id } = allEntries;
     if (id) onDelete(id);
+    this.hideDeleteConfirmation();
+  }
+
+  /**
+   * Show confirm box for menù deletion
+   */
+  askDeleteConfirmation() {
+    this.setState({ showDeleteConfirm: true });
+  }
+
+  /**
+   * Hide confirm box after user clicked 'Annulla'
+   */
+  hideDeleteConfirmation() {
+    this.setState({ showDeleteConfirm: false });
   }
 
   handleSubmit(event) {
@@ -47,14 +69,22 @@ class MenuPage extends Component {
       match, error, success, closeAlert, loading, history, allEntries,
     } = this.props;
     const { day } = match.params;
+    const { showDeleteConfirm } = this.state;
     return (
       <MyPanel title={`Gestione menù del giorno ${day}`} history={history}>
+        <ConfirmModal
+          show={showDeleteConfirm}
+          confirm={this.handleDelete}
+          reject={this.hideDeleteConfirmation}
+          message={`Confermi l'eliminazione del menù del ${day}?`}
+        />
         <Panel bsStyle="primary">
           <Panel.Heading>
             <DocumentTitle title={`Menù ${day} | Servizio mensa`} />
             <MomentTabs />
           </Panel.Heading>
           <Panel.Body>
+
             <p>
               Scegli il menù disponibile in questa giornata
             </p>
@@ -69,9 +99,9 @@ class MenuPage extends Component {
             <Button // TODO: aggiungere un ConfirmModal
               className="pull-left"
               bsStyle="danger"
-              onClick={() => this.handleDelete()}
+              onClick={this.askDeleteConfirmation}
               disabled={!allEntries.id}
-              title={allEntries.id ? '' : 'Non è stato ancora salvato un menù'}
+              title={allEntries.id ? `Elimina il menù del ${day}` : 'Non è stato ancora salvato un menù'}
             >
               Elimina il menù
             </Button>

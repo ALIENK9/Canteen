@@ -50,8 +50,8 @@ class UserList extends Component {
               id={reserv.id}
               onDelete={this.handleDelete}
               deleteLabel={reserv.user
-                ? `Rimuovi la prenotazione dell'utente ${reserv.user.name} 
-                ${reserv.hour ? `delle ore ${reserv.hour}` : ''}` : ''}
+                ? `Rimuovi la prenotazione dell'utente ${reserv.user.name} ${reserv.hour
+                  ? `delle ore ${reserv.hour}` : ''}` : ''}
               confirmation
             >
               <UserReservationItem
