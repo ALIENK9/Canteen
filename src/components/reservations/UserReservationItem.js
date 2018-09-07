@@ -9,13 +9,15 @@ const UserReservationItem = ({ name, hour, meals }) => (
     <div className="card-subtitle">
       {hour}
     </div>
-    <ul>
-      {meals && meals.map(meal => (
-        <li key={meal.id}>
-          {meal.name}
-        </li>
-      )) }
-    </ul>
+    {meals && Array.isArray(meals) && (
+      <ul>
+        {meals.map(meal => (
+          <li key={meal.id}>
+            {meal.name}
+          </li>
+        )) }
+      </ul>
+    )}
   </div>
 );
 
@@ -31,7 +33,7 @@ UserReservationItem.propTypes = {
 UserReservationItem.defaultProps = {
   name: '',
   hour: '00:00',
-  meals: [],
+  meals: null,
 };
 
 export default UserReservationItem;

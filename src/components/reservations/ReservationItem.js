@@ -7,7 +7,7 @@ import { Table } from 'react-bootstrap';
  * @param {bool} viewList
  * @param {Array} reslist
  */
-const renderView = (viewList, reslist) => (
+const renderView = (viewList, reslist, dish, id) => (
   <React.Fragment>
     <p>
       Prenotazioni:
@@ -15,24 +15,34 @@ const renderView = (viewList, reslist) => (
       {reslist.length}
     </p>
     {viewList && (
-    <Table hover>
+    <Table
+      title={`Tabella di utenti che hanno prenotato il piatto ${dish}`}
+      hover
+    >
+      <caption className="accessibility">
+        Utenti che hanno prenotato il piatto
+        {' '}
+        {dish}
+        . La prima colonna contiene il nome e la seconda l&apos;orario a cui ha effettuato
+        la prenotazione
+      </caption>
       <thead>
         <tr>
-          <th>
-              Nome
+          <th scope="col" id={`user-name-${id}`}>
+            Nome
           </th>
-          <th>
-              Orario
+          <th scope="col" id={`user-hour-${id}`}>
+            Orario
           </th>
         </tr>
       </thead>
       <tbody>
         {reslist.map(item => (
           <tr key={item.id}>
-            <td>
+            <td headers={`user-name-${id}`}>
               {item.name}
             </td>
-            <td>
+            <td headers={`user-hour-${id}`}>
               {item.hour}
             </td>
           </tr>
@@ -48,7 +58,7 @@ const renderView = (viewList, reslist) => (
  * @param {Object} props
  */
 const ReservationItem = ({
-  name, type, reslist, clicked,
+  id, name, type, reslist, clicked,
 }) => (
   <div className="card-container center">
     <strong>
@@ -57,11 +67,13 @@ const ReservationItem = ({
     <div className="card-subtitle">
       {type}
     </div>
-    { renderView(clicked, reslist) /* mostra la cosa giusta a seconda del parametro 'viewList' */ }
+    { renderView(clicked, reslist, name, id)
+      /* mostra la cosa giusta a seconda del parametro 'viewList' */ }
   </div>
 );
 
 ReservationItem.propTypes = {
+  id: PropTypes.string.isRequired, // id del piatto (per la tabella)
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   reslist: PropTypes.arrayOf(PropTypes.shape({

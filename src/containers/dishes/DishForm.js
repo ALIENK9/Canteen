@@ -38,7 +38,8 @@ class DishForm extends Component {
     event.preventDefault();
     if (this.isValid()) {
       const { onSubmit } = this.props;
-      const { type, name, description } = this.state;
+      const { type, name, description: desc } = this.state;
+      const description = desc.trim() || 'Nessuna descrizione';
       onSubmit({ name, description, type: Number.parseInt(type, 10) });
     }
   }
@@ -77,7 +78,7 @@ class DishForm extends Component {
             </HelpBlock>
             )}
           </FormGroup>
-          <FormGroup required>
+          <FormGroup>
             {/* Radio buttons for type */}
             <p className="radio-label">
               Inserisci il tipo di piatto

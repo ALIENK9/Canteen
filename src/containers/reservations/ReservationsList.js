@@ -35,6 +35,7 @@ class ReservationsList extends Component {
           {list.map(item => (
             <CollapseBox key={item.id}>
               <ReservationItem
+                id={item.id}
                 name={item.name}
                 reslist={item.reslist}
                 type={mapTypeToString(item.type)}

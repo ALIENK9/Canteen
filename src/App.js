@@ -32,7 +32,7 @@ class App extends Component {
             <header className="App-header">
               <Navbar />
             </header>
-            <Jumbotron componentClass="main" bsClass="jumbotron-main">
+            <Jumbotron id="main" componentClass="main" bsClass="jumbotron-main">
               <Switch className="container">
                 <Route path="/reservations/:day" component={RequireRole(ResPage, { requiredRole: 'admin' })} />
                 <Route path="/menus/:day" component={RequireRole(MenuPage, { requiredRole: 'admin' })} />

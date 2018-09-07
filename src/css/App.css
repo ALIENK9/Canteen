@@ -14,12 +14,11 @@ html, body, #root, #app, .container{
 }
 
 html, body {
-  word-break: break-all;
   text-align: justify;
 }
 
 header {
-  background-color: rgb(190, 215, 236);
+  background-color: #93ebf3;
   padding: 1em 0.5em;
 }
 
@@ -31,7 +30,7 @@ body {
 
 footer {
   position: relative;
-  background-color: rgb(190, 215, 236);
+  background-color: #93ebf3;
   bottom: 0;
   color: black;
   height: 4em;
@@ -43,6 +42,10 @@ footer {
 
 a {
   color: inherit;
+}
+
+fieldset {
+  margin: 1em auto;
 }
 
 
@@ -69,7 +72,7 @@ button, html [type=button] {
   text-align: center;
   padding: 0.7em;
   margin: 0.5em;
-  background-color: #97ec36;
+  background-color: white;
   min-height: 5em;
   flex: 1 1 auto;
   max-width: 33%;
@@ -100,7 +103,7 @@ button, html [type=button] {
 
 .card-subtitle {
   font-size: 90%;
-  color: blueviolet;
+  color: rgb(97, 0, 187);
 }
 
 
@@ -130,9 +133,15 @@ main {
   height: 100%;
 }
 
-/* .invisible {
-  visibility: hidden;
-} */
+/*Per nascondere elementi di accessibilità*/
+.accessibility {
+  color: black;
+  background: white;
+  position: absolute !important;
+  height: 0 !important;
+  width: 0 !important;
+  overflow: hidden !important;
+}
 
 .welcome-page-blank {
   height: 400px;
@@ -141,8 +150,8 @@ main {
 
 .welcome-image {
   display: block;
-  margin: 2em 6em;
-  background-image: url('./img/welcome.png');
+  margin: 3em 6em;
+  background-image: url('./img/admin-icon.png');
   background-position: bottom;
   background-size: contain;
   background-repeat: no-repeat;
@@ -204,19 +213,25 @@ label {
 /* Accessibility rules AAA*/
 
 button.btn {
-  font-weight: 500 !important;
+  font-weight: 550 !important;
 }
 
 /* LINK DELLA NAVBAR */
 
-/* .active a {
-  background-color: rgb(228, 205, 77) !important;
-  background-image: none !important;
-  /*pointer-events: none !important;
-} */
+.navbar-default {
+  color: black !important;
+  font-weight: 400 !important;
+}
 
+.navbar-default .navbar-nav > li > a, .navbar-default .navbar-brand {
+  color: black !important;
+  font-weight: 400 !important;
+}
+
+/*LINK attivi (testo)*/
 nav li.active {
   background-color: rgb(228, 205, 77) !important;
+  color: black;
   margin: 0;
 }
 
@@ -270,6 +285,16 @@ nav p.active {
 /* Bold paragraph for radio button group */
 .radio-label {
   font-weight: bold;
+}
+
+/* Per il titolo del modale (da 550 diventa bold) */
+.modal-head {
+  font-weight: 500;
+  font-size: 1.7em;
+}
+
+#welcome-list {
+  list-style-type: circle !important;
 }
 
 

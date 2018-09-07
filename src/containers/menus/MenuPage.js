@@ -86,7 +86,12 @@ class MenuPage extends Component {
           <Panel.Body>
 
             <p>
-              Scegli il menù disponibile in questa giornata
+              Scegli il menù disponibile il giorno
+              {' '}
+              {day}
+              .
+              Se non rendi disponibile un menù non sarà possibile aggiungere
+              prenotazioni in questa giornata.
             </p>
             { error && <Alert type="danger" message={error} onDismiss={closeAlert} /> }
             { success && <Alert type="success" message={success} onDismiss={closeAlert} /> }

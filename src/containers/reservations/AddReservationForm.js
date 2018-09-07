@@ -201,7 +201,10 @@ class AddReservationForm extends Component {
             </Checkbox>
           </FormGroup>
 
-          <FormGroup>
+          <fieldset>
+            <legend className="accessibility">
+              Menù
+            </legend>
             {typesArray.map(obj => (
               <FormGroup key={obj.type}>
                 <p>
@@ -242,7 +245,7 @@ class AddReservationForm extends Component {
               {validationErrors.dishes}
             </HelpBlock>
             )}
-          </FormGroup>
+          </fieldset>
 
           <FormGroup controlId="hour">
             <ControlLabel>

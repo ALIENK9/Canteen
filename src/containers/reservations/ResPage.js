@@ -37,6 +37,21 @@ const ResPage = ({
             a
             {' '}
             {mapMomentToString(moment)}
+            .
+            <br />
+            Dalla scheda
+            {' '}
+            <em>
+              Vista utenti
+            </em>
+            {' '}
+            puoi aggiungere ed eliminare prenotazioni degli utenti. Dalla schermata
+            {' '}
+            <em>
+              Vista pasti
+            </em>
+            {' '}
+            puoi invece visualizzare i dettagli sul numero di piatti prenotati.
           </p>
           <ResToolbar view={view} list={list} />
           <Loader loading={loading} />

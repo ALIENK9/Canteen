@@ -18,7 +18,7 @@ const Toolbar = ({
       <ButtonToolbar className="button-toolbar">
         <ToggleButtonGroup role="group" type="radio" name="options" defaultValue={defaultButtonKey}>
           {buttons.map(button => (
-            <ToggleButton onClick={button.func} value={button.key} key={button.key}>
+            <ToggleButton title={`Visualizza solo i ${button.title.toLowerCase()}`} onClick={button.func} value={button.key} key={button.key}>
               {button.title}
             </ToggleButton>
           ))}

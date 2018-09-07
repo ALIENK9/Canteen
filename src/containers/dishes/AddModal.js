@@ -12,8 +12,8 @@ const AddModal = ({ close, show }) => (
     show={show}
   >
     <Modal.Header>
-      <Modal.Title>
-        Aggiungi un piatto
+      <Modal.Title componentClass="p" className="modal-head">
+        Aggiungi un nuovo piatto
       </Modal.Title>
     </Modal.Header>
     {/* Per gestire i due pulsanti nel footer DishForm si occupa di entrambi */}

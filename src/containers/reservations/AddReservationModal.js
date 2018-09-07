@@ -14,8 +14,8 @@ const AddModal = ({
     show={show}
   >
     <Modal.Header>
-      <Modal.Title>
-        Aggiungi una prenotazione per il
+      <Modal.Title componentClass="p" className="modal-head">
+        Prenota per il giorno
         {' '}
         {day}
         {' '}

@@ -23,7 +23,8 @@ const DishPage = ({
         <DocumentTitle title="Gestione piatti | Servizio mensa" />
         <p>
           Qui sono listati tutti i piatti disponibili nel sistema. &Egrave; possibile
-          aggiungerli e toglierli.
+          aggiungerli e toglierli. Se vuoi aggiungere un nuovo piatto per renderlo disponibile
+          in un men&ugrave; devi prima aggiungerlo da questa pagina.
         </p>
         <DishToolbar list={dishes} />
         <AddModal />

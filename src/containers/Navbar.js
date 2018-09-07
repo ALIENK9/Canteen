@@ -98,8 +98,12 @@ class Navbar extends PureComponent {
 
     const loginLink = createLink('Login', 4, '/login', currentLocation);
 
+    /* eslint-disable jsx-a11y/anchor-has-content */
     return (
       <NavBar collapseOnSelect>
+        <a href="#main" className="accessibility">
+          Salta il men&ugrave;
+        </a>
         <NavBar.Header>
           <NavBar.Brand>
             {brandLink('Home', '/home', currentLocation)}

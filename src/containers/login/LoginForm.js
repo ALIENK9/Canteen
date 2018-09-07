@@ -50,7 +50,6 @@ class LoginForm extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <FormGroup
-          className="form-group"
           controlId="formEmail"
           validationState={errors.identifier ? 'error' : null}
         >
@@ -72,7 +71,6 @@ class LoginForm extends Component {
           )}
         </FormGroup>
         <FormGroup
-          className="form-group"
           controlId="formPassword"
           validationState={errors.password ? 'error' : null}
         >

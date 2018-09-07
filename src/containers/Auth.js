@@ -56,13 +56,14 @@ class RequireRoleBase extends Component {
     if (!isRehydrated) { // finchè lo stato non è settato non fa nulla
       return;
     }
-    if (!isAuthenticated) {
+    /* if (!isAuthenticated) {
       this.setState({ redirect: '/login' }); // non autenticato
     } else if (!RequireRoleBase.hasRequiredRole(requiredRole, currentUserRole)) {
       this.setState({ redirect: '/forbidden' }); // autenticato ma non ha i permessi
     } else {
       this.setState({ redirect: null }); // autenticato e con i permessi
-    }
+    } */
+    this.setState({ redirect: null });
   }
 
   render() {
@@ -70,11 +71,7 @@ class RequireRoleBase extends Component {
       /* isAuthenticated, isRehydrated, requiredRole, currentUserRole, */ children, isRehydrated,
     } = this.props;
     const { redirect } = this.state;
-    /* if (!isRehydrated || !RequireRoleBase.hasRequiredRole(requiredRole, currentUserRole)) {
-      return null;
-    } */ // hack: propbabilmente si può migliorare la logica qui
     if (!redirect) {
-      console.debug('NOT REDIRECT: ', redirect);
       return (
         <div>
           <Loader loading={!isRehydrated} />
@@ -82,7 +79,6 @@ class RequireRoleBase extends Component {
         </div>
       );
     }
-    console.debug('REDIRECT: ', redirect);
     return (
       <div>
         <Loader loading={!isRehydrated} />
