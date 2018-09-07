@@ -52,7 +52,7 @@ const mapStateToProps = (state) => {
       </div>
     );
   } else {
-    welcomeText = 'Benvenuto nel serivio di prenotazione pasti';
+    welcomeText = 'Benvenuto nel serizio di prenotazione pasti';
   }
   return {
     username: auth.user.name || null,
