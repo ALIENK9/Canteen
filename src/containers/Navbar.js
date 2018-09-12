@@ -100,7 +100,7 @@ class Navbar extends PureComponent {
 
     /* eslint-disable jsx-a11y/anchor-has-content */
     return (
-      <NavBar collapseOnSelect>
+      <NavBar collapseOnSelect toggleNavKey={0}>
         <a href="#main" className="accessibility">
           Salta il men&ugrave;
         </a>

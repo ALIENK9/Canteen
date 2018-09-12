@@ -193,6 +193,10 @@ label {
 }
 
 @media screen and (max-width: 600px) {
+  body {
+    text-align: left;
+  }
+
   .tab-inline-block {
     display: block !important;
   }
@@ -208,12 +212,26 @@ label {
   main, footer {
     max-height: unset;
   }
+
+  button.btn {
+    max-width: 45%;
+  }
+
+  .button-toolbar {
+    display: inline-block;
+  }
 }
 
 /* Accessibility rules AAA*/
 
 button.btn {
   font-weight: 550 !important;
+}
+
+.btn {
+  white-space:normal !important;
+  word-wrap: break-word;
+  word-break: normal;
 }
 
 /* LINK DELLA NAVBAR */
