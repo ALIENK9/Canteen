@@ -8,3 +8,6 @@ Graphic Interface del servizio di prenotazione mensa realizzata in React + Redux
 
 
 **N.B**: Non sarà possibile utilizzare i microservizi backend dall'esterno, quindi non è possibile visualizzare nient'altro che la pagina di benvenuto e di login.
+
+## Presentazione tesi
+Google Slides: https://docs.google.com/presentation/d/1UnbI7PSc71hBNFL8ckRw1zQr3bDT8d3rEjQil4Iy_FI/edit#slide=id.gc6f73a04f_0_0

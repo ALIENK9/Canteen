@@ -23,4 +23,6 @@ yarn-error.log*
 # varie
 .eslintrc
 .editorconfig
+.vscode
+codice.js
 /out
